@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "41177098282",
+    "project_id": "eatonomy-food-app",
+    "storage_bucket": "eatonomy-food-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:41177098282:android:626be36365450b45c87b53",
+        "android_client_info": {
+          "package_name": "com.example.eatonomy_food_recommender_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCdtgPwwKkFOfDSAmJ8-ffxg2pH_ecICOU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
