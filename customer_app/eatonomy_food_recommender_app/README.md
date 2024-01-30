@@ -1,6 +1,6 @@
 # eatonomy_food_recommender_app
 
-A new Flutter project.
+Customer App which helps users to order food and also recommends users for nearby restaurants. 
 
 ## Getting Started
 
