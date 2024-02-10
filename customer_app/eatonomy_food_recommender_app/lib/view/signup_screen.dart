@@ -18,6 +18,8 @@ class SignupScreen extends StatefulWidget {
 }
 
 class _SignupState extends State<SignupScreen> {
+  bool loading = false;
+
   //Used to notify the empty from field
   final _formKey = GlobalKey<FormState>();
 
@@ -58,7 +60,7 @@ class _SignupState extends State<SignupScreen> {
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.only(left: 32, right: 32, top: 18),
+          padding: const EdgeInsets.only(left: 32, right: 32, top: 15),
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -110,7 +112,7 @@ class _SignupState extends State<SignupScreen> {
                               Utils.fieldFocusChange(context, emailFocusNode);
                             }),
                         SizedBox(
-                          height: height * .016,
+                          height: height * .010,
                         ),
                         SimpleTextField(
                             controller: _emailController,
@@ -123,7 +125,7 @@ class _SignupState extends State<SignupScreen> {
                                   context, passwordFocusNode);
                             }),
                         SizedBox(
-                          height: height * .016,
+                          height: height * .010,
                         ),
                         CustomPasswordField(
                           controller: _passwordController,
@@ -136,7 +138,7 @@ class _SignupState extends State<SignupScreen> {
                           },
                         ),
                         SizedBox(
-                          height: height * .016,
+                          height: height * .010,
                         ),
                         CustomPasswordField(
                             controller: _confirmPasswordController,
@@ -145,9 +147,6 @@ class _SignupState extends State<SignupScreen> {
                             obscurePassword: _obscurePassword),
                       ],
                     )),
-                SizedBox(
-                  height: height * .0001,
-                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   // Align items to the start
@@ -175,16 +174,40 @@ class _SignupState extends State<SignupScreen> {
                   ],
                 ),
                 SizedBox(
-                  height: height * .040,
+                  height: height * .030,
                 ),
-                CustomButton('Sign up', () {
-                  if (_formKey.currentState!.validate()) {
-                    print('hit');
-                    _auth.createUserWithEmailAndPassword(
-                        email: _emailController.text.toString(),
-                        password: _passwordController.text.toString());
-                  }
-                }, ColorsApp.splashBackgroundColorApp),
+                CustomButton(
+                  'Sign up',
+                  () {
+                    if (_formKey.currentState!.validate()) {
+                      setState(() {
+                        loading = true;
+                      });
+                      if (_passwordController.text !=
+                          _confirmPasswordController.text) {
+                        Utils.toastMessage('Please enter correct password');
+                        rePasswordFocusNode.requestFocus();
+                      } else {
+                        _auth
+                            .createUserWithEmailAndPassword(
+                                email: _emailController.text.toString(),
+                                password: _passwordController.text.toString())
+                            .then((value) {
+                          setState(() {
+                            loading = false;
+                          });
+                        }).onError((error, stackTrace) {
+                          setState(() {
+                            loading = false;
+                          });
+                          Utils.toastMessage(error.toString());
+                        });
+                      }
+                    }
+                  },
+                  ColorsApp.splashBackgroundColorApp,
+                  loading: loading,
+                ),
                 SizedBox(
                   height: height * .012,
                 ),

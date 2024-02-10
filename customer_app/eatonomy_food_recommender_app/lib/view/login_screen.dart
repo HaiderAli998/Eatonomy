@@ -3,6 +3,7 @@ import 'package:eatonomy_food_recommender_app/res/components/password_text_form_
 import 'package:eatonomy_food_recommender_app/res/components/round_button.dart';
 import 'package:eatonomy_food_recommender_app/res/components/social_media_container.dart';
 import 'package:eatonomy_food_recommender_app/utils/routes/routes_name.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -17,11 +18,13 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  bool loading = false;
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
   final ValueNotifier<bool> _obscurePassword = ValueNotifier(true);
+  final _auth = FirebaseAuth.instance;
 
   //Focus Node
   FocusNode emailFocusNode = FocusNode();
@@ -38,13 +41,35 @@ class _LoginScreenState extends State<LoginScreen> {
     super.dispose();
   }
 
+  void login() {
+    setState(() {
+      loading = true;
+    });
+    _auth
+        .signInWithEmailAndPassword(
+            email: _emailController.text,
+            password: _passwordController.text.toString())
+        .then((value) {
+      Utils.toastMessage(value.user!.email.toString());
+      Navigator.pushNamed(context, RoutesName.foodPreferences);
+      setState(() {
+        loading = false;
+      });
+    }).onError((error, stackTrace) {
+      Utils.toastMessage(error.toString());
+      setState(() {
+        loading = false;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height * 1;
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.only(left: 32, right: 32, top: 18),
+          padding: const EdgeInsets.only(left: 32, right: 32, top: 18,bottom: 195),
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -157,8 +182,11 @@ class _LoginScreenState extends State<LoginScreen> {
                 SizedBox(
                   height: height * .068,
                 ),
-                CustomButton(
-                    'Log in', () {}, ColorsApp.splashBackgroundColorApp),
+                CustomButton('Log in',loading: loading, () {
+                  if (_formKey.currentState!.validate()) {
+                    login();
+                  }
+                }, ColorsApp.splashBackgroundColorApp),
                 SizedBox(
                   height: height * .0012,
                 ),

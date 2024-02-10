@@ -19,8 +19,9 @@ class CustomPasswordField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double fieldHeight = MediaQuery.of(context).size.height * 0.07;
     return SizedBox(
-      height: 46,
+      height: fieldHeight,
       child: ValueListenableBuilder(
         valueListenable: obscurePassword,
         builder: (context, value, child) {
@@ -38,6 +39,7 @@ class CustomPasswordField extends StatelessWidget {
                     ? ColorsApp.splashBackgroundColorApp // Customize as needed
                     : Colors.grey,
               ),
+              contentPadding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
               enabledBorder: OutlineInputBorder(
                 borderSide: const BorderSide(width: 2, color: Colors.grey),
                 borderRadius: BorderRadius.circular(10),
@@ -47,6 +49,22 @@ class CustomPasswordField extends StatelessWidget {
                     width: 2, color: ColorsApp.splashBackgroundColorApp),
                 borderRadius: BorderRadius.circular(10),
               ),
+              errorBorder: OutlineInputBorder(
+                borderSide: const BorderSide(
+                  width: 2,
+                  color: Colors.red,
+                ),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              focusedErrorBorder: OutlineInputBorder(
+                borderSide: const BorderSide(
+                  width: 2,
+                  color: Colors.red,
+                ),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              errorMaxLines: 2, // Adjust this based on your UI
+              errorStyle: const TextStyle(height: 0.005),
               suffixIcon: InkWell(
                 onTap: () {
                   obscurePassword.value = !obscurePassword.value;
@@ -58,8 +76,8 @@ class CustomPasswordField extends StatelessWidget {
             ),
             onFieldSubmitted: onFieldSubmitted,
             validator: (value) {
-              if (value!.isEmpty) {
-                return 'Enter Password';
+              if (value!.isEmpty || value.length<6) {
+                return '';
               } else {
                 return null;
               }
