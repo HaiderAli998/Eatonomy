@@ -7,6 +7,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import '../res/components/Google_SignIn.dart';
 import '../res/components/simple_text_form_field.dart';
 import '../utils/Utils.dart';
 
@@ -65,11 +66,12 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    ValueNotifier userCredential = ValueNotifier('');
     final height = MediaQuery.of(context).size.height * 1;
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.only(left: 32, right: 32, top: 18,bottom: 195),
+          padding: const EdgeInsets.only(left: 32, right: 32, top: 18),
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -167,7 +169,9 @@ class _LoginScreenState extends State<LoginScreen> {
                       ],
                     ),
                     InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.pushNamed(context, RoutesName.forgetScreen);
+                      },
                       child: const Text(
                         'Forget Password ?',
                         style: TextStyle(
@@ -182,7 +186,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 SizedBox(
                   height: height * .068,
                 ),
-                CustomButton('Log in',loading: loading, () {
+                CustomButton('Log in', loading: loading, () {
                   if (_formKey.currentState!.validate()) {
                     login();
                   }
@@ -238,7 +242,13 @@ class _LoginScreenState extends State<LoginScreen> {
                   children: [
                     SocialMediaBox(
                         text: 'Google',
-                        onPress: () {},
+                        onPress: () async {
+                          userCredential.value = await signInWithGoogle();
+                          if (userCredential.value != null) {
+                            print(userCredential.value.user!.email);
+                            Navigator.pushNamed(context, RoutesName.homeScreen);
+                          }
+                        },
                         svgPath: 'assets/google_logo.svg'),
                     SocialMediaBox(
                         text: 'FACEBOOK',

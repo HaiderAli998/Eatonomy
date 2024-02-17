@@ -11,8 +11,8 @@ class SimpleTextField extends StatelessWidget {
 
   const SimpleTextField({
     super.key,
-    required this.controller,
     required this.focusNode,
+    required this.controller,
     required this.keyboardType,
     required this.hintText,
     required this.prefixIcon,
@@ -39,7 +39,7 @@ class SimpleTextField extends StatelessWidget {
                 : Colors.grey,
           ),
           contentPadding:
-          const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+              const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
           enabledBorder: OutlineInputBorder(
             borderSide: BorderSide(
               width: 2,
@@ -68,7 +68,8 @@ class SimpleTextField extends StatelessWidget {
             ),
             borderRadius: BorderRadius.circular(10),
           ),
-          errorMaxLines: 2, // Adjust this based on your UI
+          errorMaxLines: 2,
+          // Adjust this based on your UI
           errorStyle: const TextStyle(height: 0.005),
         ),
         onFieldSubmitted: onFieldSubmitted,

@@ -15,10 +15,12 @@ class SocialMediaBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
+      onTap: onPress,
       child: Container(
         height: 44,
         width: 120,
-        decoration: BoxDecoration(borderRadius: BorderRadius.circular(10),color: Colors.white),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10), color: Colors.white),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

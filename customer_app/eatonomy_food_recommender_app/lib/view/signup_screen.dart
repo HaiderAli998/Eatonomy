@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+import '../res/components/Facebook_SignIn.dart';
+import '../res/components/Google_SignIn.dart';
 import '../res/components/colors_app.dart';
 import '../res/components/round_button.dart';
 import '../res/components/social_media_container.dart';
@@ -56,6 +58,7 @@ class _SignupState extends State<SignupScreen> {
 
   @override
   Widget build(BuildContext context) {
+    ValueNotifier userCredential = ValueNotifier('');
     final height = MediaQuery.of(context).size.height * 1;
     return Scaffold(
       body: SafeArea(
@@ -260,11 +263,19 @@ class _SignupState extends State<SignupScreen> {
                   children: [
                     SocialMediaBox(
                         text: 'Google',
-                        onPress: () {},
+                        onPress: () async {
+                          userCredential.value = await signInWithGoogle();
+                          if (userCredential.value != null) {
+                            print(userCredential.value.user!.email);
+                            Navigator.pushNamed(context, RoutesName.homeScreen);
+                          }
+                        },
                         svgPath: 'assets/google_logo.svg'),
                     SocialMediaBox(
                         text: 'FACEBOOK',
-                        onPress: () {},
+                        onPress: () {
+                          signInWithFacebook();
+                        },
                         svgPath: 'assets/fb_logo.svg'),
                   ],
                 )
