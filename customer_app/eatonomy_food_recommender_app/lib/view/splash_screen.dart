@@ -1,5 +1,5 @@
 import 'package:eatonomy_food_recommender_app/res/components/colors_app.dart';
-import 'package:eatonomy_food_recommender_app/view/splash_services..dart';
+import 'package:eatonomy_food_recommender_app/view/Splash_services..dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -11,7 +11,8 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  SplashServices splashServices=SplashServices();
+  SplashServices splashServices = SplashServices();
+
   @override
   void initState() {
     super.initState();

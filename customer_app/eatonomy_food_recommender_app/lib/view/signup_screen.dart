@@ -4,6 +4,7 @@ import 'package:eatonomy_food_recommender_app/utils/Utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../res/components/Facebook_SignIn.dart';
 import '../res/components/Google_SignIn.dart';
@@ -199,6 +200,8 @@ class _SignupState extends State<SignupScreen> {
                           setState(() {
                             loading = false;
                           });
+                          Navigator.pushNamedAndRemoveUntil(
+                              context, RoutesName.login, (route) => false);
                         }).onError((error, stackTrace) {
                           setState(() {
                             loading = false;
@@ -267,7 +270,8 @@ class _SignupState extends State<SignupScreen> {
                           userCredential.value = await signInWithGoogle();
                           if (userCredential.value != null) {
                             print(userCredential.value.user!.email);
-                            Navigator.pushNamed(context, RoutesName.homeScreen);
+                            Navigator.pushNamedAndRemoveUntil(context,
+                                RoutesName.foodPreferences, (route) => false);
                           }
                         },
                         svgPath: 'assets/google_logo.svg'),
@@ -275,6 +279,8 @@ class _SignupState extends State<SignupScreen> {
                         text: 'FACEBOOK',
                         onPress: () {
                           signInWithFacebook();
+                          Navigator.pushNamedAndRemoveUntil(context,
+                              RoutesName.foodPreferences, (route) => false);
                         },
                         svgPath: 'assets/fb_logo.svg'),
                   ],
@@ -285,5 +291,10 @@ class _SignupState extends State<SignupScreen> {
         ),
       ),
     );
+  }
+
+  addNameToSP() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('Name', _nameController.text);
   }
 }

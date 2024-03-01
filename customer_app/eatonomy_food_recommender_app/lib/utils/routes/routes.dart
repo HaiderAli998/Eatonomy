@@ -1,5 +1,5 @@
 import 'package:eatonomy_food_recommender_app/utils/routes/routes_name.dart';
-import 'package:eatonomy_food_recommender_app/view/Home_Screen.dart';
+import 'package:eatonomy_food_recommender_app/view/home_screen.dart';
 import 'package:eatonomy_food_recommender_app/view/food_preferences_screen.dart';
 import 'package:eatonomy_food_recommender_app/view/forget_screen.dart';
 import 'package:eatonomy_food_recommender_app/view/login_screen.dart';

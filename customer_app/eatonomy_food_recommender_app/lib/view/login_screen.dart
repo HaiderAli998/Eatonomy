@@ -7,6 +7,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import '../res/components/Facebook_SignIn.dart';
 import '../res/components/Google_SignIn.dart';
 import '../res/components/simple_text_form_field.dart';
 import '../utils/Utils.dart';
@@ -246,13 +247,18 @@ class _LoginScreenState extends State<LoginScreen> {
                           userCredential.value = await signInWithGoogle();
                           if (userCredential.value != null) {
                             print(userCredential.value.user!.email);
-                            Navigator.pushNamed(context, RoutesName.homeScreen);
+                            Navigator.pushNamedAndRemoveUntil(context,
+                                RoutesName.foodPreferences, (route) => false);
                           }
                         },
                         svgPath: 'assets/google_logo.svg'),
                     SocialMediaBox(
                         text: 'FACEBOOK',
-                        onPress: () {},
+                        onPress: () {
+                          // signInWithFacebook();
+                          Navigator.pushNamedAndRemoveUntil(context,
+                              RoutesName.foodPreferences, (route) => false);
+                        },
                         svgPath: 'assets/fb_logo.svg'),
                   ],
                 )
