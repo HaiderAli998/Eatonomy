@@ -5,4 +5,5 @@ class RoutesName {
   static const String foodPreferences = 'Food Preferences Screen';
   static const String homeScreen = 'Home Screen';
   static const String forgetScreen = 'Forget Screen';
+  static const String loginPhone = 'Login Phone';
 }

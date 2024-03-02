@@ -1,3 +1,5 @@
+import 'package:eatonomy_food_recommender_app/res/components/Login_with_phone_number.dart';
+import 'package:eatonomy_food_recommender_app/res/components/Verify_Code.dart';
 import 'package:eatonomy_food_recommender_app/utils/routes/routes_name.dart';
 import 'package:eatonomy_food_recommender_app/view/home_screen.dart';
 import 'package:eatonomy_food_recommender_app/view/food_preferences_screen.dart';
@@ -28,6 +30,9 @@ class Routes {
       case RoutesName.forgetScreen:
         return MaterialPageRoute(
             builder: (BuildContext context) => const ForgetScreen());
+      case RoutesName.loginPhone:
+        return MaterialPageRoute(
+            builder: (BuildContext context) => const LoginWithPhoneNumber());
       default:
         return MaterialPageRoute(builder: (_) {
           return const Scaffold(

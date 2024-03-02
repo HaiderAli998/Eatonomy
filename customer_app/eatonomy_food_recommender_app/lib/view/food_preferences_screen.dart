@@ -1,6 +1,6 @@
 import 'package:eatonomy_food_recommender_app/res/components/colors_app.dart';
 import 'package:eatonomy_food_recommender_app/res/components/food_preferences_container.dart';
-import 'package:eatonomy_food_recommender_app/res/components/round_button.dart';
+import 'package:eatonomy_food_recommender_app/res/components/Custom_button.dart';
 import 'package:eatonomy_food_recommender_app/utils/routes/routes_name.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -17,7 +17,7 @@ class _FoodPreferencesState extends State<FoodPreferences> {
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height * 1;
     final width = MediaQuery.of(context).size.width * 1;
-
+    print("Whole Screen");
     return Scaffold(
         body: SafeArea(
             child: Padding(
@@ -80,15 +80,55 @@ class _FoodPreferencesState extends State<FoodPreferences> {
             spacing: width * .010,
             runSpacing: height * .010,
             alignment: WrapAlignment.start,
-            children: const [
-              FoodPreferencesContainer(text: 'Desi'),
-              FoodPreferencesContainer(text: 'Italian'),
-              FoodPreferencesContainer(text: 'Japanese'),
-              FoodPreferencesContainer(text: 'Chinese'),
-              FoodPreferencesContainer(text: 'Mexican'),
-              FoodPreferencesContainer(text: 'Italian'),
-              FoodPreferencesContainer(text: 'Italian'),
-              FoodPreferencesContainer(text: 'Italian'),
+            children: [
+              FoodPreferencesContainer(
+                text: 'Desi',
+                onContainerPressed: () {
+                  print('Desi');
+                },
+              ),
+              FoodPreferencesContainer(
+                text: 'Italian',
+                onContainerPressed: () {
+                  print('Italian');
+                },
+              ),
+              FoodPreferencesContainer(
+                text: 'Japanese',
+                onContainerPressed: () {
+                  print('Japanese');
+                },
+              ),
+              FoodPreferencesContainer(
+                text: 'Chinese',
+                onContainerPressed: () {
+                  print('Chinese');
+                },
+              ),
+              FoodPreferencesContainer(
+                text: 'Mexican',
+                onContainerPressed: () {
+                  print('Mexican');
+                },
+              ),
+              FoodPreferencesContainer(
+                text: 'Italian',
+                onContainerPressed: () {
+                  print('Italian');
+                },
+              ),
+              FoodPreferencesContainer(
+                text: 'Continental',
+                onContainerPressed: () {
+                  print('Continental');
+                },
+              ),
+              FoodPreferencesContainer(
+                text: 'Thai',
+                onContainerPressed: () {
+                  print('Thai');
+                },
+              ),
             ],
           ),
           SizedBox(

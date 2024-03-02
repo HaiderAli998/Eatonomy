@@ -1,3 +1,4 @@
+import 'package:eatonomy_food_recommender_app/res/components/colors_app.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -24,11 +25,10 @@ class SocialMediaBox extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SvgPicture.asset(
-              svgPath,
-              height: 32,
-              width: 32,
-            ),
+            SvgPicture.asset(svgPath,
+                color: ColorsApp.splashBackgroundColorApp,
+                height: 32,
+                width: 32),
             Text(text)
           ],
         ),

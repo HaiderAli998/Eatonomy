@@ -1,29 +1,45 @@
-  import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
+import 'colors_app.dart';
 
-  import 'colors_app.dart';
+class FoodPreferencesContainer extends StatefulWidget {
+  final String text;
+  final Function()? onContainerPressed;
 
-  class FoodPreferencesContainer extends StatefulWidget {
-    final String text;
+  const FoodPreferencesContainer({
+    super.key,
+    required this.text,
+    required this.onContainerPressed,
+  });
 
-    const FoodPreferencesContainer({Key? key, required this.text})
-        : super(key: key);
+  @override
+  State<FoodPreferencesContainer> createState() =>
+      _FoodPreferencesContainerState();
+}
 
-    @override
-    State<FoodPreferencesContainer> createState() =>
-        _FoodPreferencesContainerState();
-  }
+class _FoodPreferencesContainerState extends State<FoodPreferencesContainer> {
+  bool flag = false;
 
-  class _FoodPreferencesContainerState extends State<FoodPreferencesContainer> {
-    @override
-    Widget build(BuildContext context) {
-      return Container(
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () {
+        if (widget.onContainerPressed != null) {
+          widget.onContainerPressed!();
+          setState(() {
+            flag = !flag;
+          });
+        }
+      },
+      child: Container(
         height: 30,
         width: 96,
         decoration: BoxDecoration(
-          color: ColorsApp.backgroundColorApp,
+          color: flag ? Colors.white : ColorsApp.backgroundColorApp,
           borderRadius: BorderRadius.circular(20),
           border: Border.all(
-            color: ColorsApp.neutralN60,
+            color: flag
+                ? ColorsApp.splashBackgroundColorApp
+                : ColorsApp.neutralN60,
           ),
         ),
         child: Center(
@@ -31,10 +47,13 @@
             fit: BoxFit.contain,
             child: Text(
               widget.text,
-              style: const TextStyle(color: ColorsApp.neutralN60),
+              style: const TextStyle(
+                color: ColorsApp.neutralN60,
+              ),
             ),
           ),
         ),
-      );
-    }
+      ),
+    );
   }
+}

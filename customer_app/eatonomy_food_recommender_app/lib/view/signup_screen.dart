@@ -1,3 +1,4 @@
+import 'package:eatonomy_food_recommender_app/res/components/Login_with_phone_number.dart';
 import 'package:eatonomy_food_recommender_app/res/components/password_text_form_field.dart';
 import 'package:eatonomy_food_recommender_app/res/components/simple_text_form_field.dart';
 import 'package:eatonomy_food_recommender_app/utils/Utils.dart';
@@ -9,7 +10,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../res/components/Facebook_SignIn.dart';
 import '../res/components/Google_SignIn.dart';
 import '../res/components/colors_app.dart';
-import '../res/components/round_button.dart';
+import '../res/components/Custom_button.dart';
 import '../res/components/social_media_container.dart';
 import '../utils/routes/routes_name.dart';
 
@@ -276,13 +277,13 @@ class _SignupState extends State<SignupScreen> {
                         },
                         svgPath: 'assets/google_logo.svg'),
                     SocialMediaBox(
-                        text: 'FACEBOOK',
+                        text: 'Phone ',
                         onPress: () {
-                          signInWithFacebook();
-                          Navigator.pushNamedAndRemoveUntil(context,
-                              RoutesName.foodPreferences, (route) => false);
+                          const LoginWithPhoneNumber();
+                          Navigator.pushNamedAndRemoveUntil(
+                              context, RoutesName.loginPhone, (route) => false);
                         },
-                        svgPath: 'assets/fb_logo.svg'),
+                        svgPath: 'assets/phone_icon.svg'),
                   ],
                 )
               ],
