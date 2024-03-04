@@ -1,35 +1,32 @@
-import 'package:eatonomy_food_recommender_app/res/components/colors_app.dart';
-import 'package:eatonomy_food_recommender_app/view/Drawer.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:geolocator/geolocator.dart';
-import '../res/components/Current_Location.dart';
-
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart'
-as smooth_page_indicator;
+    as smooth_page_indicator;
+import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:eatonomy_food_recommender_app/view/home_page/home_page_model.dart';
-export 'package:eatonomy_food_recommender_app/view/home_page/home_page_model.dart';
+import 'home_page_model.dart';
+export 'home_page_model.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key,this.pageHalf,});
+class HomePageWidget extends StatefulWidget {
+  const HomePageWidget({
+    super.key,
+    this.pageHalf,
+  });
+
   final double? pageHalf;
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<HomePageWidget> createState() => _HomePageWidgetState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomePageWidgetState extends State<HomePageWidget> {
   late HomePageModel _model;
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  late Position _currentPosition;
-  String _currentAddress = 'Loading...';
+
+  final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
@@ -38,34 +35,15 @@ class _HomeScreenState extends State<HomeScreen> {
 
     _model.textController ??= TextEditingController();
     _model.textFieldFocusNode ??= FocusNode();
-    _getCurrentPosition();
   }
 
-  Future<void> _getCurrentPosition() async {
-    final position =
-        await LocationService.getCurrentPosition(context);
-
-    if (position != null) {
-      setState(() {
-        _currentPosition = position;
-        _getAddressFromLatLng(_currentPosition);
-      });
-    }
-  }
-
-  Future<void> _getAddressFromLatLng(Position position) async {
-    final address = await LocationService.getAddressFromLatLng(position);
-
-    setState(() {
-      _currentAddress = address;
-    });
-  }
   @override
   void dispose() {
     _model.dispose();
 
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -73,16 +51,18 @@ class _HomeScreenState extends State<HomeScreen> {
           ? FocusScope.of(context).requestFocus(_model.unfocusNode)
           : FocusScope.of(context).unfocus(),
       child: Scaffold(
-        key: _scaffoldKey,
+        key: scaffoldKey,
         backgroundColor: Color(0xFFFFF9E1),
-        drawer: const MyDrawer(),
+        drawer: Drawer(
+          elevation: 16.0,
+        ),
         body: NestedScrollView(
           floatHeaderSlivers: true,
           headerSliverBuilder: (context, _) => [
             SliverAppBar(
               pinned: true,
               floating: false,
-              backgroundColor: Color(0xFFFFF9E1),// backgroundColorApp
+              backgroundColor: Color(0xFFFFF9E1),
               iconTheme: IconThemeData(
                   color: FlutterFlowTheme.of(context).secondaryText),
               automaticallyImplyLeading: true,
@@ -95,14 +75,14 @@ class _HomeScreenState extends State<HomeScreen> {
                       'Delivery Address',
                       style: FlutterFlowTheme.of(context).labelSmall.override(
                             fontFamily: 'Readex Pro',
-                            color: Color(0xFFFE724C), // splashBackgroundColorApp
+                            color: Color(0xFFFE724C),
                           ),
                     ),
                   ),
                   Align(
                     alignment: AlignmentDirectional(-0.09, -0.95),
                     child: Text(
-                      _currentAddress ?? "Address Placeholder",
+                      'Address Placeholder',
                       style: FlutterFlowTheme.of(context).labelMedium,
                     ),
                   ),
@@ -736,38 +716,5 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
     );
-    // return Scaffold(
-    //   key: _scaffoldKey,
-    //   drawer: const MyDrawer(),
-    //   appBar: AppBar(
-    //     title: Column(
-    //       children: [
-    //         const Text(
-    //           'Delivery Address',
-    //           style: TextStyle(
-    //               color: ColorsApp.splashBackgroundColorApp, fontSize: 12),
-    //         ),
-    //         Text(
-    //           _currentAddress ?? "",
-    //           style: const TextStyle(color: ColorsApp.stormGrey, fontSize: 14),
-    //         )
-    //       ],
-    //     ),
-    //     leading: IconButton(
-    //       icon: const Icon(Icons.menu_outlined,
-    //           size: 33, color: ColorsApp.stormGrey),
-    //       onPressed: () => _scaffoldKey.currentState?.openDrawer(),
-    //     ),
-    //     backgroundColor: ColorsApp.backgroundColorApp,
-    //     centerTitle: true,
-    //     actions: [
-    //       Padding(
-    //           padding: const EdgeInsets.only(right: 19),
-    //           child: SvgPicture.asset(
-    //             'assets/App_cart_logo.svg',
-    //           ))
-    //     ],
-    //   ),
-    // );
   }
 }
