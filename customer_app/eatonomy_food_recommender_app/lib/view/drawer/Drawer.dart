@@ -3,7 +3,7 @@ import 'package:eatonomy_food_recommender_app/res/components/colors_app.dart';
 import 'package:eatonomy_food_recommender_app/utils/routes/routes_name.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import '../res/components/Drawer_List_Item.dart';
+import '../../res/components/Drawer_Components/Drawer_List_Item.dart';
 
 class MyDrawer extends StatelessWidget {
   const MyDrawer({super.key});

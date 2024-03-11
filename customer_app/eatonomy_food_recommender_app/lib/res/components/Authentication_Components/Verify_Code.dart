@@ -2,8 +2,8 @@ import 'package:eatonomy_food_recommender_app/utils/Utils.dart';
 import 'package:eatonomy_food_recommender_app/utils/routes/routes_name.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'Custom_button.dart';
-import 'colors_app.dart';
+import '../Custom_Containers/Custom_button.dart';
+import '../colors_app.dart';
 
 class VerifyCodeScreen extends StatefulWidget {
   final String verificationID;

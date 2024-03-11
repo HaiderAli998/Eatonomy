@@ -6,4 +6,6 @@ class RoutesName {
   static const String homeScreen = 'Home Screen';
   static const String forgetScreen = 'Forget Screen';
   static const String loginPhone = 'Login Phone';
+  static const String fireStoreScreen = 'Fire Store Screen';
+  static const String fireStoreAdd = 'Fire Store Add Data';
 }

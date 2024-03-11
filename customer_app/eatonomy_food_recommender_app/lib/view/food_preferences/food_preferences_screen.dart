@@ -1,6 +1,6 @@
 import 'package:eatonomy_food_recommender_app/res/components/colors_app.dart';
-import 'package:eatonomy_food_recommender_app/res/components/food_preferences_container.dart';
-import 'package:eatonomy_food_recommender_app/res/components/Custom_button.dart';
+import 'package:eatonomy_food_recommender_app/res/components/Custom_Containers/food_preferences_container.dart';
+import 'package:eatonomy_food_recommender_app/res/components/Custom_Containers/Custom_button.dart';
 import 'package:eatonomy_food_recommender_app/utils/routes/routes_name.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';

@@ -127,9 +127,7 @@ class LocationService {
   static Future<String> getPlacemarks(double lat, double long) async {
     try {
       List<Placemark> placemarks = await placemarkFromCoordinates(lat, long);
-
       var address = '';
-
       if (placemarks.isNotEmpty) {
         // Concatenate non-null components of the address
         var streets = placemarks.reversed
@@ -151,7 +149,6 @@ class LocationService {
         address += ', ${placemarks.reversed.last.administrativeArea ?? ''}';
       }
 
-      print("Your Address for ($lat, $long) is: $address");
 
       return address;
     } catch (e) {

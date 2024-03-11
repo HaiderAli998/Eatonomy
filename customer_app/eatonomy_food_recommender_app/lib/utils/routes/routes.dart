@@ -1,13 +1,14 @@
-import 'package:eatonomy_food_recommender_app/res/components/Login_with_phone_number.dart';
-import 'package:eatonomy_food_recommender_app/res/components/Verify_Code.dart';
+import 'package:eatonomy_food_recommender_app/Firestore_screens/firestore_list_screen.dart';
+import 'package:eatonomy_food_recommender_app/res/components/Authentication_Components/Login_with_phone_number.dart';
 import 'package:eatonomy_food_recommender_app/utils/routes/routes_name.dart';
-import 'package:eatonomy_food_recommender_app/view/home_screen.dart';
-import 'package:eatonomy_food_recommender_app/view/food_preferences_screen.dart';
-import 'package:eatonomy_food_recommender_app/view/forget_screen.dart';
-import 'package:eatonomy_food_recommender_app/view/login_screen.dart';
-import 'package:eatonomy_food_recommender_app/view/signup_screen.dart';
-import 'package:eatonomy_food_recommender_app/view/splash_screen.dart';
+import 'package:eatonomy_food_recommender_app/view/home_page/home_screen.dart';
+import 'package:eatonomy_food_recommender_app/view/food_preferences/food_preferences_screen.dart';
+import 'package:eatonomy_food_recommender_app/view/authentication/forget_screen.dart';
+import 'package:eatonomy_food_recommender_app/view/authentication/login_screen.dart';
+import 'package:eatonomy_food_recommender_app/view/authentication/signup_screen.dart';
+import 'package:eatonomy_food_recommender_app/view/splash_screen/splash_screen.dart';
 import 'package:flutter/material.dart';
+import '../../Firestore_screens/firestore_add_data.dart';
 
 class Routes {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -33,6 +34,12 @@ class Routes {
       case RoutesName.loginPhone:
         return MaterialPageRoute(
             builder: (BuildContext context) => const LoginWithPhoneNumber());
+      case RoutesName.fireStoreScreen:
+        return MaterialPageRoute(
+            builder: (BuildContext context) => const FireStoreScreen());
+      case RoutesName.fireStoreAdd:
+        return MaterialPageRoute(
+            builder: (BuildContext context) => const FireStoreAddData());
       default:
         return MaterialPageRoute(builder: (_) {
           return const Scaffold(

@@ -6,8 +6,6 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart'
     as smooth_page_indicator;
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 import 'home_page_model.dart';
 export 'home_page_model.dart';
 
@@ -52,8 +50,8 @@ class _HomePageWidgetState extends State<HomePageWidget> {
           : FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
-        backgroundColor: Color(0xFFFFF9E1),
-        drawer: Drawer(
+        backgroundColor: const Color(0xFFFFF9E1),
+        drawer: const Drawer(
           elevation: 16.0,
         ),
         body: NestedScrollView(
@@ -62,7 +60,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
             SliverAppBar(
               pinned: true,
               floating: false,
-              backgroundColor: Color(0xFFFFF9E1),
+              backgroundColor: const Color(0xFFFFF9E1),
               iconTheme: IconThemeData(
                   color: FlutterFlowTheme.of(context).secondaryText),
               automaticallyImplyLeading: true,
@@ -70,17 +68,17 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                 mainAxisSize: MainAxisSize.max,
                 children: [
                   Align(
-                    alignment: AlignmentDirectional(-0.09, -1.0),
+                    alignment: const AlignmentDirectional(-0.09, -1.0),
                     child: Text(
                       'Delivery Address',
                       style: FlutterFlowTheme.of(context).labelSmall.override(
                             fontFamily: 'Readex Pro',
-                            color: Color(0xFFFE724C),
+                            color: const Color(0xFFFE724C),
                           ),
                     ),
                   ),
                   Align(
-                    alignment: AlignmentDirectional(-0.09, -0.95),
+                    alignment: const AlignmentDirectional(-0.09, -0.95),
                     child: Text(
                       'Address Placeholder',
                       style: FlutterFlowTheme.of(context).labelMedium,
@@ -116,7 +114,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                 child: Container(
                   width: MediaQuery.sizeOf(context).width,
                   height: MediaQuery.sizeOf(context).height,
-                  decoration: BoxDecoration(),
+                  decoration: const BoxDecoration(),
                   child: ListView(
                     padding: EdgeInsets.zero,
                     scrollDirection: Axis.vertical,
@@ -126,7 +124,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                         children: [
                           Expanded(
                             child: Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
                                   8.0, 0.0, 8.0, 0.0),
                               child: TextFormField(
                                 controller: _model.textController,
@@ -144,7 +142,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                   hintStyle:
                                       FlutterFlowTheme.of(context).labelMedium,
                                   enabledBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(
+                                    borderSide: const BorderSide(
                                       color: Color(0xFFFFF9E1),
                                       width: 2.0,
                                     ),
@@ -175,14 +173,14 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                   filled: true,
                                   fillColor: FlutterFlowTheme.of(context)
                                       .secondaryBackground,
-                                  prefixIcon: FaIcon(
+                                  prefixIcon: const FaIcon(
                                     FontAwesomeIcons.search,
                                   ),
                                 ),
                                 style: FlutterFlowTheme.of(context)
                                     .labelMedium
                                     .override(
-                                      fontFamily: 'Readex Pro',
+                                      fontFamily: 'Reade Pro',
                                       fontSize: 12.0,
                                     ),
                                 validator: _model.textControllerValidator
@@ -218,9 +216,9 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Align(
-                            alignment: AlignmentDirectional(-1.0, 0.0),
+                            alignment: const AlignmentDirectional(-1.0, 0.0),
                             child: Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
                                   15.0, 0.0, 0.0, 0.0),
                               child: Text(
                                 'Categories',
@@ -237,22 +235,23 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                             ),
                           ),
                           Align(
-                            alignment: AlignmentDirectional(1.0, 0.0),
+                            alignment: const AlignmentDirectional(1.0, 0.0),
                             child: FFButtonWidget(
                               onPressed: () {
                                 print('Button pressed ...');
                               },
                               text: 'View all',
-                              icon: Icon(
+                              icon: const Icon(
                                 Icons.arrow_forward_ios,
                                 size: 15.0,
                               ),
                               options: FFButtonOptions(
                                 height: 40.0,
-                                padding: EdgeInsetsDirectional.fromSTEB(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
                                     24.0, 0.0, 24.0, 0.0),
-                                iconPadding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 0.0, 0.0),
+                                iconPadding:
+                                    const EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 0.0, 0.0, 0.0),
                                 color: FlutterFlowTheme.of(context)
                                     .primaryBackground,
                                 textStyle: FlutterFlowTheme.of(context)
@@ -264,7 +263,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                       fontWeight: FontWeight.w300,
                                     ),
                                 elevation: 0.0,
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                   color: Colors.transparent,
                                   width: 1.0,
                                 ),
@@ -279,11 +278,11 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                         color: FlutterFlowTheme.of(context).accent4,
                       ),
                       Container(
-                        decoration: BoxDecoration(),
+                        decoration: const BoxDecoration(),
                         child: GridView(
                           padding: EdgeInsets.zero,
                           gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
+                              const SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 4,
                             crossAxisSpacing: 10.0,
                             mainAxisSpacing: 10.0,
@@ -395,13 +394,13 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                         thickness: 1.0,
                         color: FlutterFlowTheme.of(context).accent4,
                       ),
-                      Container(
+                      SizedBox(
                         width: double.infinity,
                         height: 500.0,
                         child: Stack(
                           children: [
                             Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
                                   0.0, 0.0, 0.0, 40.0),
                               child: PageView(
                                 controller: _model.pageViewController1 ??=
@@ -436,9 +435,9 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                               ),
                             ),
                             Align(
-                              alignment: AlignmentDirectional(-1.0, 1.0),
+                              alignment: const AlignmentDirectional(-1.0, 1.0),
                               child: Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
                                     16.0, 0.0, 0.0, 16.0),
                                 child:
                                     smooth_page_indicator.SmoothPageIndicator(
@@ -450,7 +449,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                     await _model.pageViewController1!
                                         .animateToPage(
                                       i,
-                                      duration: Duration(milliseconds: 500),
+                                      duration: const Duration(milliseconds: 500),
                                       curve: Curves.ease,
                                     );
                                   },
@@ -482,9 +481,9 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Align(
-                            alignment: AlignmentDirectional(-1.0, 0.0),
+                            alignment: const AlignmentDirectional(-1.0, 0.0),
                             child: Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
                                   15.0, 0.0, 0.0, 0.0),
                               child: Text(
                                 'Restaurants near you',
@@ -501,22 +500,23 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                             ),
                           ),
                           Align(
-                            alignment: AlignmentDirectional(1.0, 0.0),
+                            alignment: const AlignmentDirectional(1.0, 0.0),
                             child: FFButtonWidget(
                               onPressed: () {
                                 print('Button pressed ...');
                               },
                               text: 'View all',
-                              icon: Icon(
+                              icon: const Icon(
                                 Icons.arrow_forward_ios,
                                 size: 15.0,
                               ),
                               options: FFButtonOptions(
                                 height: 40.0,
-                                padding: EdgeInsetsDirectional.fromSTEB(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
                                     0.0, 0.0, 24.0, 0.0),
-                                iconPadding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 0.0, 0.0),
+                                iconPadding:
+                                    const EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 0.0, 0.0, 0.0),
                                 color: FlutterFlowTheme.of(context)
                                     .primaryBackground,
                                 textStyle: FlutterFlowTheme.of(context)
@@ -528,7 +528,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                       fontWeight: FontWeight.w300,
                                     ),
                                 elevation: 0.0,
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                   color: Colors.transparent,
                                   width: 1.0,
                                 ),
@@ -543,14 +543,14 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                         color: FlutterFlowTheme.of(context).accent4,
                       ),
                       Container(
-                        decoration: BoxDecoration(),
+                        decoration: const BoxDecoration(),
                         child: Container(
                           width: double.infinity,
                           height: 500.0,
                           child: Stack(
                             children: [
                               Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
                                     0.0, 0.0, 0.0, 40.0),
                                 child: PageView(
                                   controller: _model.pageViewController2 ??=
@@ -585,9 +585,10 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                 ),
                               ),
                               Align(
-                                alignment: AlignmentDirectional(-1.0, 1.0),
+                                alignment:
+                                    const AlignmentDirectional(-1.0, 1.0),
                                 child: Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
                                       16.0, 0.0, 0.0, 16.0),
                                   child:
                                       smooth_page_indicator.SmoothPageIndicator(
@@ -599,7 +600,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                       await _model.pageViewController2!
                                           .animateToPage(
                                         i,
-                                        duration: Duration(milliseconds: 500),
+                                        duration: const Duration(milliseconds: 500),
                                         curve: Curves.ease,
                                       );
                                     },
@@ -659,11 +660,11 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                       Container(
                         width: MediaQuery.sizeOf(context).width,
                         height: MediaQuery.sizeOf(context).height,
-                        decoration: BoxDecoration(),
+                        decoration: const BoxDecoration(),
                         child: GridView(
                           padding: EdgeInsets.zero,
                           gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
+                              const SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 2,
                             crossAxisSpacing: 3.0,
                             mainAxisSpacing: 10.0,

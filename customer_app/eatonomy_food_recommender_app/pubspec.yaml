@@ -28,6 +28,8 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  flutter_web_plugins:
+    sdk: flutter
   flutter:
     sdk: flutter
 
@@ -40,6 +42,7 @@ dependencies:
   firebase_core: ^2.24.2
   firebase_auth: ^4.16.0
   cloud_firestore: ^4.14.0
+  firebase_database: ^10.4.7
   google_sign_in: ^6.2.1
   flutter_facebook_auth: ^6.0.4
   shared_preferences: ^2.2.2
@@ -51,7 +54,6 @@ dependencies:
   another_flushbar: ^1.12.30
   provider: ^6.1.1
   flutter_svg: ^2.0.9
-
   flutter_localizations:
     sdk: flutter
   auto_size_text: 3.0.0
@@ -73,7 +75,7 @@ dependencies:
   shared_preferences_android: 2.2.1
   shared_preferences_foundation: ^2.3.5
   shared_preferences_platform_interface: ^2.3.2
-  shared_preferences_web: ^2.3.0
+  shared_preferences_web: 2.2.2
   smooth_page_indicator: 1.1.0
   sqflite: ^2.3.2
   timeago: ^3.6.1
@@ -111,6 +113,7 @@ flutter:
     - assets/lottie_animations/
     - assets/rive_animations/
     - assets/pdfs/
+    - assets/icons/
   fonts:
     - family: Eatonomy
       fonts:

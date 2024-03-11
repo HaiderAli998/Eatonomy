@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 
-import '../utils/routes/routes_name.dart';
+import '../../utils/routes/routes_name.dart';
 
 class SplashServices {
   void isLogin(BuildContext context) {

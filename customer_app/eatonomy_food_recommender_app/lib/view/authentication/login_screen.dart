@@ -1,15 +1,15 @@
 import 'package:eatonomy_food_recommender_app/res/components/colors_app.dart';
-import 'package:eatonomy_food_recommender_app/res/components/password_text_form_field.dart';
-import 'package:eatonomy_food_recommender_app/res/components/Custom_button.dart';
-import 'package:eatonomy_food_recommender_app/res/components/social_media_container.dart';
+import 'package:eatonomy_food_recommender_app/res/components/Custom_Containers/Custom_button.dart';
+import 'package:eatonomy_food_recommender_app/res/components/Authentication_Components/social_media_container.dart';
 import 'package:eatonomy_food_recommender_app/utils/routes/routes_name.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import '../res/components/Google_SignIn.dart';
-import '../res/components/Login_with_phone_number.dart';
-import '../res/components/simple_text_form_field.dart';
-import '../utils/Utils.dart';
+import '../../res/components/Authentication_Components/Google_SignIn.dart';
+import '../../res/components/Authentication_Components/Login_with_phone_number.dart';
+import '../../res/components/Custom_Containers/password_text_form_field.dart';
+import '../../res/components/Custom_Containers/simple_text_form_field.dart';
+import '../../utils/Utils.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});

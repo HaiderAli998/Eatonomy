@@ -1,24 +1,28 @@
+import 'package:eatonomy_food_recommender_app/res/components/HomePage_Components/categories_container.dart';
 import 'package:eatonomy_food_recommender_app/res/components/colors_app.dart';
-import 'package:eatonomy_food_recommender_app/view/Drawer.dart';
+import 'package:eatonomy_food_recommender_app/view/drawer/Drawer.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:geolocator/geolocator.dart';
-import '../res/components/Current_Location.dart';
-
+import '../../res/components/HomePage_Components/Current_Location.dart';
+import '../../res/components/HomePage_Components/Home_appbar.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart'
-as smooth_page_indicator;
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
+    as smooth_page_indicator;
 import 'package:eatonomy_food_recommender_app/view/home_page/home_page_model.dart';
 export 'package:eatonomy_food_recommender_app/view/home_page/home_page_model.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key,this.pageHalf,});
+  const HomeScreen({
+    super.key,
+    this.pageHalf,
+  });
+
   final double? pageHalf;
 
   @override
@@ -35,16 +39,13 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     _model = createModel(context, () => HomePageModel());
-
     _model.textController ??= TextEditingController();
     _model.textFieldFocusNode ??= FocusNode();
     _getCurrentPosition();
   }
 
   Future<void> _getCurrentPosition() async {
-    final position =
-        await LocationService.getCurrentPosition(context);
-
+    final position = await LocationService.getCurrentPosition(context);
     if (position != null) {
       setState(() {
         _currentPosition = position;
@@ -55,78 +56,39 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Future<void> _getAddressFromLatLng(Position position) async {
     final address = await LocationService.getAddressFromLatLng(position);
-
     setState(() {
       _currentAddress = address;
     });
   }
+
   @override
   void dispose() {
     _model.dispose();
-
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
+    final height = MediaQuery.of(context).size.height * 1;
+    final width = MediaQuery.of(context).size.width * 1;
     return GestureDetector(
       onTap: () => _model.unfocusNode.canRequestFocus
           ? FocusScope.of(context).requestFocus(_model.unfocusNode)
           : FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: _scaffoldKey,
-        backgroundColor: Color(0xFFFFF9E1),
+        backgroundColor: ColorsApp.backgroundColorApp,
         drawer: const MyDrawer(),
         body: NestedScrollView(
           floatHeaderSlivers: true,
           headerSliverBuilder: (context, _) => [
-            SliverAppBar(
-              pinned: true,
-              floating: false,
-              backgroundColor: Color(0xFFFFF9E1),// backgroundColorApp
-              iconTheme: IconThemeData(
-                  color: FlutterFlowTheme.of(context).secondaryText),
-              automaticallyImplyLeading: true,
-              title: Column(
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Align(
-                    alignment: AlignmentDirectional(-0.09, -1.0),
-                    child: Text(
-                      'Delivery Address',
-                      style: FlutterFlowTheme.of(context).labelSmall.override(
-                            fontFamily: 'Readex Pro',
-                            color: Color(0xFFFE724C), // splashBackgroundColorApp
-                          ),
-                    ),
-                  ),
-                  Align(
-                    alignment: AlignmentDirectional(-0.09, -0.95),
-                    child: Text(
-                      _currentAddress ?? "Address Placeholder",
-                      style: FlutterFlowTheme.of(context).labelMedium,
-                    ),
-                  ),
-                ],
-              ),
-              actions: [
-                FlutterFlowIconButton(
-                  borderColor: FlutterFlowTheme.of(context).primaryBackground,
-                  borderRadius: 20.0,
-                  borderWidth: 1.0,
-                  buttonSize: 40.0,
-                  fillColor: FlutterFlowTheme.of(context).primaryBackground,
-                  icon: Icon(
-                    Icons.shopping_bag_outlined,
-                    color: FlutterFlowTheme.of(context).secondaryText,
-                    size: 24.0,
-                  ),
-                  onPressed: () async {
-                    context.pushNamed('cart');
-                  },
-                ),
-              ],
-              centerTitle: true,
-              elevation: 1.0,
+            CustomSliverAppBar(
+              titleText: 'Delivery Address',
+              addressText: 'Address Placeholder',
+              currentAddress: _currentAddress,
+              onCartPressed: () {
+                // Handle cart button pressed
+              },
             )
           ],
           body: Builder(
@@ -136,7 +98,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Container(
                   width: MediaQuery.sizeOf(context).width,
                   height: MediaQuery.sizeOf(context).height,
-                  decoration: BoxDecoration(),
+                  constraints: BoxConstraints(
+                    maxWidth: MediaQuery.sizeOf(context).width,
+                    maxHeight: MediaQuery.sizeOf(context).height,
+                  ),
+                  decoration: const BoxDecoration(),
                   child: ListView(
                     padding: EdgeInsets.zero,
                     scrollDirection: Axis.vertical,
@@ -146,7 +112,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         children: [
                           Expanded(
                             child: Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
                                   8.0, 0.0, 8.0, 0.0),
                               child: TextFormField(
                                 controller: _model.textController,
@@ -154,51 +120,51 @@ class _HomeScreenState extends State<HomeScreen> {
                                 autofocus: true,
                                 obscureText: false,
                                 decoration: InputDecoration(
-                                  labelText: 'Food, Restaurants,etc',
-                                  labelStyle: FlutterFlowTheme.of(context)
-                                      .labelMedium
-                                      .override(
-                                        fontFamily: 'Readex Pro',
-                                        fontSize: 14.0,
+                                    labelText: 'Food, Restaurants,etc',
+                                    labelStyle: FlutterFlowTheme.of(context)
+                                        .labelMedium
+                                        .override(
+                                          fontFamily: 'Readex Pro',
+                                          fontSize: 14.0,
+                                        ),
+                                    hintStyle: FlutterFlowTheme.of(context)
+                                        .labelMedium,
+                                    enabledBorder: UnderlineInputBorder(
+                                      borderSide: const BorderSide(
+                                        color: Color(0xFFFFF9E1),
+                                        width: 2.0,
                                       ),
-                                  hintStyle:
-                                      FlutterFlowTheme.of(context).labelMedium,
-                                  enabledBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Color(0xFFFFF9E1),
-                                      width: 2.0,
+                                      borderRadius: BorderRadius.circular(8.0),
                                     ),
-                                    borderRadius: BorderRadius.circular(8.0),
-                                  ),
-                                  focusedBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color:
-                                          FlutterFlowTheme.of(context).primary,
-                                      width: 2.0,
+                                    focusedBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: FlutterFlowTheme.of(context)
+                                            .primary,
+                                        width: 2.0,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8.0),
                                     ),
-                                    borderRadius: BorderRadius.circular(8.0),
-                                  ),
-                                  errorBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: FlutterFlowTheme.of(context).error,
-                                      width: 2.0,
+                                    errorBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color:
+                                            FlutterFlowTheme.of(context).error,
+                                        width: 2.0,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8.0),
                                     ),
-                                    borderRadius: BorderRadius.circular(8.0),
-                                  ),
-                                  focusedErrorBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: FlutterFlowTheme.of(context).error,
-                                      width: 2.0,
+                                    focusedErrorBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color:
+                                            FlutterFlowTheme.of(context).error,
+                                        width: 2.0,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8.0),
                                     ),
-                                    borderRadius: BorderRadius.circular(8.0),
-                                  ),
-                                  filled: true,
-                                  fillColor: FlutterFlowTheme.of(context)
-                                      .secondaryBackground,
-                                  prefixIcon: FaIcon(
-                                    FontAwesomeIcons.search,
-                                  ),
-                                ),
+                                    filled: true,
+                                    fillColor: FlutterFlowTheme.of(context)
+                                        .secondaryBackground,
+                                    prefixIcon:
+                                        const Icon(Icons.search_rounded)),
                                 style: FlutterFlowTheme.of(context)
                                     .labelMedium
                                     .override(
@@ -224,7 +190,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               size: 24.0,
                             ),
                             onPressed: () {
-                              print('IconButton pressed ...');
+                              //Place the code of cart
                             },
                           ),
                         ],
@@ -238,9 +204,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Align(
-                            alignment: AlignmentDirectional(-1.0, 0.0),
+                            alignment: const AlignmentDirectional(-1.0, 0.0),
                             child: Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
                                   15.0, 0.0, 0.0, 0.0),
                               child: Text(
                                 'Categories',
@@ -257,22 +223,25 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           ),
                           Align(
-                            alignment: AlignmentDirectional(1.0, 0.0),
+                            alignment: const AlignmentDirectional(1.0, 0.0),
                             child: FFButtonWidget(
                               onPressed: () {
-                                print('Button pressed ...');
+                                if (kDebugMode) {
+                                  print('Button pressed ...');
+                                }
                               },
                               text: 'View all',
-                              icon: Icon(
+                              icon: const Icon(
                                 Icons.arrow_forward_ios,
                                 size: 15.0,
                               ),
                               options: FFButtonOptions(
                                 height: 40.0,
-                                padding: EdgeInsetsDirectional.fromSTEB(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
                                     24.0, 0.0, 24.0, 0.0),
-                                iconPadding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 0.0, 0.0),
+                                iconPadding:
+                                    const EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 0.0, 0.0, 0.0),
                                 color: FlutterFlowTheme.of(context)
                                     .primaryBackground,
                                 textStyle: FlutterFlowTheme.of(context)
@@ -284,7 +253,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       fontWeight: FontWeight.w300,
                                     ),
                                 elevation: 0.0,
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                   color: Colors.transparent,
                                   width: 1.0,
                                 ),
@@ -298,199 +267,178 @@ class _HomeScreenState extends State<HomeScreen> {
                         thickness: 1.0,
                         color: FlutterFlowTheme.of(context).accent4,
                       ),
-                      Container(
-                        decoration: BoxDecoration(),
-                        child: GridView(
-                          padding: EdgeInsets.zero,
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 4,
-                            crossAxisSpacing: 10.0,
-                            mainAxisSpacing: 10.0,
-                            childAspectRatio: 1.0,
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: Container(
+                          decoration: const BoxDecoration(),
+                          child: GridView(
+                            padding: EdgeInsets.zero,
+                            gridDelegate:
+                                const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 4,
+                              crossAxisSpacing: 10.0,
+                              mainAxisSpacing: 10.0,
+                              childAspectRatio: 1.0,
+                            ),
+                            shrinkWrap: true,
+                            scrollDirection: Axis.vertical,
+                            children: [
+                              CustomCategoryContainer(
+                                  svgPath: 'assets/icons/hamburger.svg',
+                                  text: 'Burger',
+                                  onTap: () {}),
+                              CustomCategoryContainer(
+                                  svgPath: 'assets/icons/pizza-pie.svg',
+                                  text: 'Pizza',
+                                  onTap: () {}),
+                              CustomCategoryContainer(
+                                  svgPath: 'assets/icons/bbq-2.svg',
+                                  text: 'BBQ',
+                                  onTap: () {}),
+                              CustomCategoryContainer(
+                                  svgPath: 'assets/icons/chicken.svg',
+                                  text: 'Broast',
+                                  onTap: () {}),
+                              CustomCategoryContainer(
+                                  svgPath: 'assets/icons/chinese-2.svg',
+                                  text: 'Chinese',
+                                  onTap: () {}),
+                              CustomCategoryContainer(
+                                  svgPath: 'assets/icons/biryani.svg',
+                                  text: 'Biryani',
+                                  onTap: () {}),
+                              CustomCategoryContainer(
+                                  svgPath: 'assets/icons/desi.svg',
+                                  text: 'Desi',
+                                  onTap: () {}),
+                              CustomCategoryContainer(
+                                  svgPath: 'assets/icons/sandwich-01.svg',
+                                  text: 'Sandwich',
+                                  onTap: () {}),
+                              CustomCategoryContainer(
+                                  svgPath: 'assets/icons/pasta.svg',
+                                  text: 'Pasta',
+                                  onTap: () {}),
+                              CustomCategoryContainer(
+                                  svgPath: 'assets/icons/shawarma.svg',
+                                  text: 'Shawarma',
+                                  onTap: () {}),
+                              CustomCategoryContainer(
+                                svgPath: 'assets/icons/ice-cream.svg',
+                                text: 'Ice-Cream',
+                                onTap: () {},
+                              ),
+                              CustomCategoryContainer(
+                                svgPath: 'assets/icons/tea.svg',
+                                text: 'Tea',
+                                onTap: () {},
+                              ),
+                            ],
                           ),
-                          shrinkWrap: true,
-                          scrollDirection: Axis.vertical,
-                          children: [
-                            Container(
-                              width: 100.0,
-                              height: 100.0,
-                              decoration: BoxDecoration(
-                                color: FlutterFlowTheme.of(context)
-                                    .secondaryBackground,
-                              ),
-                            ),
-                            Container(
-                              width: 100.0,
-                              height: 100.0,
-                              decoration: BoxDecoration(
-                                color: FlutterFlowTheme.of(context)
-                                    .secondaryBackground,
-                              ),
-                            ),
-                            Container(
-                              width: 100.0,
-                              height: 100.0,
-                              decoration: BoxDecoration(
-                                color: FlutterFlowTheme.of(context)
-                                    .secondaryBackground,
-                              ),
-                            ),
-                            Container(
-                              width: 100.0,
-                              height: 100.0,
-                              decoration: BoxDecoration(
-                                color: FlutterFlowTheme.of(context)
-                                    .secondaryBackground,
-                              ),
-                            ),
-                            Container(
-                              width: 100.0,
-                              height: 100.0,
-                              decoration: BoxDecoration(
-                                color: FlutterFlowTheme.of(context)
-                                    .secondaryBackground,
-                              ),
-                            ),
-                            Container(
-                              width: 100.0,
-                              height: 100.0,
-                              decoration: BoxDecoration(
-                                color: FlutterFlowTheme.of(context)
-                                    .secondaryBackground,
-                              ),
-                            ),
-                            Container(
-                              width: 100.0,
-                              height: 100.0,
-                              decoration: BoxDecoration(
-                                color: FlutterFlowTheme.of(context)
-                                    .secondaryBackground,
-                              ),
-                            ),
-                            Container(
-                              width: 100.0,
-                              height: 100.0,
-                              decoration: BoxDecoration(
-                                color: FlutterFlowTheme.of(context)
-                                    .secondaryBackground,
-                              ),
-                            ),
-                            Container(
-                              width: 100.0,
-                              height: 100.0,
-                              decoration: BoxDecoration(
-                                color: FlutterFlowTheme.of(context)
-                                    .secondaryBackground,
-                              ),
-                            ),
-                            Container(
-                              width: 100.0,
-                              height: 100.0,
-                              decoration: BoxDecoration(
-                                color: FlutterFlowTheme.of(context)
-                                    .secondaryBackground,
-                              ),
-                            ),
-                            Container(
-                              width: 100.0,
-                              height: 100.0,
-                              decoration: BoxDecoration(
-                                color: FlutterFlowTheme.of(context)
-                                    .secondaryBackground,
-                              ),
-                            ),
-                            Container(
-                              width: 100.0,
-                              height: 100.0,
-                              decoration: BoxDecoration(
-                                color: FlutterFlowTheme.of(context)
-                                    .secondaryBackground,
-                              ),
-                            ),
-                          ],
                         ),
                       ),
                       Divider(
                         thickness: 1.0,
                         color: FlutterFlowTheme.of(context).accent4,
                       ),
-                      Container(
-                        width: double.infinity,
-                        height: 500.0,
-                        child: Stack(
-                          children: [
-                            Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 0.0, 0.0, 40.0),
-                              child: PageView(
-                                controller: _model.pageViewController1 ??=
-                                    PageController(initialPage: 0),
-                                scrollDirection: Axis.horizontal,
-                                children: [
-                                  Container(
-                                    width: 100.0,
-                                    height: 100.0,
-                                    decoration: BoxDecoration(
-                                      color: FlutterFlowTheme.of(context)
-                                          .secondaryBackground,
-                                    ),
-                                  ),
-                                  Container(
-                                    width: 100.0,
-                                    height: 100.0,
-                                    decoration: BoxDecoration(
-                                      color: FlutterFlowTheme.of(context)
-                                          .secondaryBackground,
-                                    ),
-                                  ),
-                                  Container(
-                                    width: 100.0,
-                                    height: 100.0,
-                                    decoration: BoxDecoration(
-                                      color: FlutterFlowTheme.of(context)
-                                          .secondaryBackground,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Align(
-                              alignment: AlignmentDirectional(-1.0, 1.0),
-                              child: Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    16.0, 0.0, 0.0, 16.0),
-                                child:
-                                    smooth_page_indicator.SmoothPageIndicator(
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        child: Container(
+                          decoration: const BoxDecoration(),
+                          width: double.infinity,
+                          height: height * .190,
+                          child: Stack(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 0.0, 0.0, 40.0),
+                                child: PageView(
                                   controller: _model.pageViewController1 ??=
                                       PageController(initialPage: 0),
-                                  count: 3,
-                                  axisDirection: Axis.horizontal,
-                                  onDotClicked: (i) async {
-                                    await _model.pageViewController1!
-                                        .animateToPage(
-                                      i,
-                                      duration: Duration(milliseconds: 500),
-                                      curve: Curves.ease,
-                                    );
-                                  },
-                                  effect:
-                                      smooth_page_indicator.ExpandingDotsEffect(
-                                    expansionFactor: 3.0,
-                                    spacing: 8.0,
-                                    radius: 16.0,
-                                    dotWidth: 16.0,
-                                    dotHeight: 8.0,
-                                    dotColor:
-                                        FlutterFlowTheme.of(context).accent1,
-                                    activeDotColor:
-                                        FlutterFlowTheme.of(context).primary,
-                                    paintStyle: PaintingStyle.fill,
+                                  scrollDirection: Axis.horizontal,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                                      child: Container(
+                                        width: width*.50,
+                                        height: height*.120,
+                                        decoration: const BoxDecoration(
+                                          image: DecorationImage(
+                                              image: AssetImage('assets/images/Banner1.png'),
+                                              fit: BoxFit.fill),
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(20)),
+                                        ),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                                      child: Container(
+                                        width: width*.50,
+                                        height: height*.120,
+                                        decoration: const BoxDecoration(
+                                          image: DecorationImage(
+                                              image: AssetImage('assets/images/Banner1.png'),
+                                              fit: BoxFit.fill),
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(20)),
+                                        ),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                                      child: Container(
+                                        width: width*.50,
+                                        height: height*.120,
+                                        decoration: const BoxDecoration(
+                                          image: DecorationImage(
+                                              image: AssetImage('assets/images/Banner1.png'),
+                                              fit: BoxFit.fill),
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(20)),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Align(
+                                alignment: AlignmentDirectional(-1.0, 1.0),
+                                child: Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      16.0, 0.0, 0.0, 16.0),
+                                  child:
+                                      smooth_page_indicator.SmoothPageIndicator(
+                                    controller: _model.pageViewController1 ??=
+                                        PageController(initialPage: 0),
+                                    count: 3,
+                                    axisDirection: Axis.horizontal,
+                                    onDotClicked: (i) async {
+                                      await _model.pageViewController1!
+                                          .animateToPage(
+                                        i,
+                                        duration: Duration(milliseconds: 500),
+                                        curve: Curves.ease,
+                                      );
+                                    },
+                                    effect: smooth_page_indicator
+                                        .ExpandingDotsEffect(
+                                      expansionFactor: 3.0,
+                                      spacing: 8.0,
+                                      radius: 16.0,
+                                      dotWidth: 16.0,
+                                      dotHeight: 8.0,
+                                      dotColor:
+                                          FlutterFlowTheme.of(context).accent1,
+                                      activeDotColor:
+                                          FlutterFlowTheme.of(context).primary,
+                                      paintStyle: PaintingStyle.fill,
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                       Divider(

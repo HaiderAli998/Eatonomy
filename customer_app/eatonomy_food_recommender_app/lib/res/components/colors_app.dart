@@ -9,6 +9,7 @@ class ColorsApp {
   static const Color stormGrey = Color(0xFF76777D);
   static const Color neutralN40 = Color(0xFF83858A);
   static const Color neutralN30 = Color(0xFFEDEDEE);
+  static const Color neutralN200 = Color(0xFF76777D);
   static const Color royalBlue = Color(0xFF1A237E);
   static const Color green = Color(0xFF00C853);
   static const Color salmon = Color(0xFFFF6F61);
