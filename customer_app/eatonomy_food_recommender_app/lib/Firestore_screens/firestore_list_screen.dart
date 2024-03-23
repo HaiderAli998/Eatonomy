@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:eatonomy_food_recommender_app/utils/Utils.dart';
 import 'package:eatonomy_food_recommender_app/utils/routes/routes_name.dart';
 import 'package:flutter/material.dart';
 
@@ -11,9 +10,11 @@ class FireStoreScreen extends StatefulWidget {
 }
 
 class _FireStoreScreenState extends State<FireStoreScreen> {
-  final firestore1 = FirebaseFirestore.instance.collection('users').snapshots();
-  CollectionReference reference =
-      FirebaseFirestore.instance.collection('users');
+  final firestore1 =
+      FirebaseFirestore.instance.collection('Restaurants').snapshots();
+  // CollectionReference reference =
+  //     FirebaseFirestore.instance.collection('Restaurants');
+  List<String> titleList = [];
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +25,6 @@ class _FireStoreScreenState extends State<FireStoreScreen> {
       ),
       body: Column(
         children: [
-          //Stream Builder is used to get the update data in form of stream form database
           StreamBuilder<QuerySnapshot>(
               stream: firestore1,
               builder: (BuildContext context,
@@ -36,37 +36,45 @@ class _FireStoreScreenState extends State<FireStoreScreen> {
                 } else if (!snapshot.hasData) {
                   return const Text('No Data Available');
                 } else {
-                  return Expanded(
-                    child: ListView.builder(
-                        itemCount: snapshot.data?.docs.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return ListTile(
-                            onTap: () {
-                              // Update Operation
-                              reference
-                                  .doc(snapshot.data!.docs[index]['id']
-                                      .toString())
-                                  .update({
-                                'title': 'Muhammad Ali Bukhari'
-                              }).then((value) {
-                                Utils.toastMessage('Update Massage');
-                              }).onError((error, stackTrace) {
-                                Utils.toastMessage(error.toString());
-                              });
-                              //Delete Operation
-                              reference
-                                  .doc(snapshot.data!.docs[index]['id']
-                                      .toString())
-                                  .delete();
-                            },
-                            //Read Operation
-                            title: Text(
-                                snapshot.data!.docs[index]['title'].toString()),
-                            subtitle: Text(
-                                snapshot.data!.docs[index]['id'].toString()),
-                          );
-                        }),
+                  return ListView.builder(
+                    itemCount: snapshot.data?.docs.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      String title = snapshot.data!.docs[index]['title'].toString();
+                      return Container();
+                    },
                   );
+
+                  // return Expanded(
+                  // child: ListView.builder(
+                  //     itemCount: snapshot.data?.docs.length,
+                  //     itemBuilder: (BuildContext context, int index) {
+                  //       return ListTile(
+                  //         onTap: () {
+                  //           // Update Operation
+                  //           reference
+                  //               .doc(snapshot.data!.docs[index]['id']
+                  //                   .toString())
+                  //               .update({
+                  //             'title': 'Muhammad Ali Bukhari'
+                  //           }).then((value) {
+                  //             Utils.toastMessage('Update Massage');
+                  //           }).onError((error, stackTrace) {
+                  //             Utils.toastMessage(error.toString());
+                  //           });
+                  //           //Delete Operation
+                  //           reference
+                  //               .doc(snapshot.data!.docs[index]['id']
+                  //                   .toString())
+                  //               .delete();
+                  //         },
+                  //         //Read Operation
+                  //         title: Text(
+                  //             snapshot.data!.docs[index]['title'].toString()),
+                  //         subtitle: Text(
+                  //             snapshot.data!.docs[index]['id'].toString()),
+                  //       );
+                  //     }),
+                  // );
                 }
               }),
         ],
@@ -79,4 +87,6 @@ class _FireStoreScreenState extends State<FireStoreScreen> {
       ),
     );
   }
+
+   List<String> get getTitleList => titleList;
 }

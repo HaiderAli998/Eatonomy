@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eatonomy_food_recommender_app/res/components/HomePage_Components/categories_container.dart';
 import 'package:eatonomy_food_recommender_app/res/components/HomePage_Components/dish_card.dart';
 import 'package:eatonomy_food_recommender_app/res/components/HomePage_Components/restaurants_card.dart';
@@ -6,6 +7,7 @@ import 'package:eatonomy_food_recommender_app/view/drawer/Drawer.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import '../../Firestore_screens/firestore_list_screen.dart';
 import '../../res/components/HomePage_Components/Current_Location.dart';
 import '../../res/components/HomePage_Components/Home_appbar.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
@@ -33,7 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   late Position _currentPosition;
   String _currentAddress = 'Loading...';
-
+  final firestore1 = FirebaseFirestore.instance.collection('Restaurants').snapshots();
   @override
   void initState() {
     super.initState();
@@ -516,58 +518,96 @@ class _HomeScreenState extends State<HomeScreen> {
                         thickness: 1.0,
                         color: FlutterFlowTheme.of(context).accent4,
                       ),
-                      Container(
-                        width: 100.0,
-                        height: MediaQuery.sizeOf(context).height * 0.275,
-                        decoration: BoxDecoration(
-                          color: FlutterFlowTheme.of(context).primaryBackground,
-                        ),
-                        child: ListView(
-                          padding: EdgeInsets.zero,
-                          scrollDirection: Axis.horizontal,
-                          children: const [
-                            CustomRestaurantCard(
-                              imageUrl: 'https://picsum.photos/seed/435/600',
-                              restaurantName: 'McDonald,s',
-                              rating: 4.5,
-                              numberOfReviews: 25,
-                              isDeliveryFree: true,
-                              foodCategories: [
-                                'Burger',
-                                'Chicken',
-                                'Fast Food'
-                              ],
-                              deliveryTime: '10-15 mins',
-                            ),
-                            CustomRestaurantCard(
-                              imageUrl: 'https://picsum.photos/seed/435/600',
-                              restaurantName: 'KFC',
-                              rating: 4.5,
-                              numberOfReviews: 25,
-                              isDeliveryFree: true,
-                              foodCategories: [
-                                'Burger',
-                                'Chicken',
-                                'Fast Food'
-                              ],
-                              deliveryTime: '10-15 mins',
-                            ),
-                            CustomRestaurantCard(
-                              imageUrl: 'https://picsum.photos/seed/435/600',
-                              restaurantName: 'Lahori Restaurants',
-                              rating: 4.5,
-                              numberOfReviews: 25,
-                              isDeliveryFree: true,
-                              foodCategories: [
-                                'Burger',
-                                'Chicken',
-                                'Fast Food'
-                              ],
-                              deliveryTime: '10-15 mins',
-                            ),
-                          ],
-                        ),
+                      StreamBuilder<QuerySnapshot>(
+                        stream: firestore1,
+                        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                          if (snapshot.connectionState == ConnectionState.waiting) {
+                            return const CircularProgressIndicator();
+                          } else if (snapshot.hasError) {
+                            return Text('Error: ${snapshot.error}');
+                          } else if (!snapshot.hasData) {
+                            return const Text('No Data Available');
+                          } else {
+                            return Container(
+                              width: 100.0,
+                              height: MediaQuery.of(context).size.height * 0.275,
+                              decoration: BoxDecoration(
+                                color: FlutterFlowTheme.of(context).primaryBackground,
+                              ),
+                              child: ListView.builder(
+                                padding: EdgeInsets.zero,
+                                scrollDirection: Axis.horizontal,
+                                itemCount: snapshot.data!.docs.length,
+                                itemBuilder: (BuildContext context, int index) {
+                                  var restaurantData = snapshot.data!.docs[index];
+                                  return CustomRestaurantCard(
+                                    imageUrl: 'https://picsum.photos/seed/435/600',
+                                    restaurantName: restaurantData['title'].toString(),
+                                    rating: restaurantData['rating'],
+                                    numberOfReviews: 25,
+                                    isDeliveryFree: false,
+                                    foodCategories: const ['Chicken','Burger','Sandwich'],
+                                    deliveryTime: restaurantData['delivery time'].toString(),
+                                  );
+                                },
+                              ),
+                            );
+                          }
+                        },
                       ),
+
+                      // Container(
+                      //   width: 100.0,
+                      //   height: MediaQuery.sizeOf(context).height * 0.275,
+                      //   decoration: BoxDecoration(
+                      //     color: FlutterFlowTheme.of(context).primaryBackground,
+                      //   ),
+                      //   child: ListView(
+                      //     padding: EdgeInsets.zero,
+                      //     scrollDirection: Axis.horizontal,
+                      //     children:  const [
+                      //       CustomRestaurantCard(
+                      //         imageUrl: 'https://picsum.photos/seed/435/600',
+                      //         restaurantName: '',
+                      //         rating: 4.5,
+                      //         numberOfReviews: 25,
+                      //         isDeliveryFree: true,
+                      //         foodCategories: [
+                      //           'Burger',
+                      //           'Chicken',
+                      //           'Fast Food'
+                      //         ],
+                      //         deliveryTime: '10-15 mins',
+                      //       ),
+                      //       CustomRestaurantCard(
+                      //         imageUrl: 'https://picsum.photos/seed/435/600',
+                      //         restaurantName: 'KFC',
+                      //         rating: 4.5,
+                      //         numberOfReviews: 25,
+                      //         isDeliveryFree: true,
+                      //         foodCategories: [
+                      //           'Burger',
+                      //           'Chicken',
+                      //           'Fast Food'
+                      //         ],
+                      //         deliveryTime: '10-15 mins',
+                      //       ),
+                      //       CustomRestaurantCard(
+                      //         imageUrl: 'https://picsum.photos/seed/435/600',
+                      //         restaurantName: 'Lahori Restaurants',
+                      //         rating: 4.5,
+                      //         numberOfReviews: 25,
+                      //         isDeliveryFree: true,
+                      //         foodCategories: [
+                      //           'Burger',
+                      //           'Chicken',
+                      //           'Fast Food'
+                      //         ],
+                      //         deliveryTime: '10-15 mins',
+                      //       ),
+                      //     ],
+                      //   ),
+                      // ),
                       Divider(
                         thickness: 1.0,
                         color: FlutterFlowTheme.of(context).accent4,
@@ -602,17 +642,17 @@ class _HomeScreenState extends State<HomeScreen> {
                         color: FlutterFlowTheme.of(context).accent4,
                       ),
                       Container(
-                        width: MediaQuery.sizeOf(context).width,
-                        height: MediaQuery.sizeOf(context).height,
+                        width: MediaQuery.of(context).size.width,
+                        height: MediaQuery.of(context).size.height,
                         constraints: BoxConstraints(
-                          maxWidth: MediaQuery.sizeOf(context).width,
-                          maxHeight: MediaQuery.sizeOf(context).height,
+                          maxWidth: MediaQuery.of(context).size.width,
+                          maxHeight: MediaQuery.of(context).size.height,
                         ),
                         decoration: const BoxDecoration(),
                         child: ListView(
                           padding: EdgeInsets.zero,
                           shrinkWrap: true,
-                          scrollDirection: Axis.vertical,
+                          physics: const NeverScrollableScrollPhysics(),
                           children: [
                             const DishCard(
                               imageUrl: 'https://picsum.photos/seed/435/600',
@@ -653,6 +693,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ].divide(const SizedBox(height: 10.0)),
                         ),
                       ),
+
                     ],
                   ),
                 ),

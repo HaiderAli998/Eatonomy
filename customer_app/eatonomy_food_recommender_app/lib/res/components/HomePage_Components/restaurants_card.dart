@@ -236,7 +236,7 @@ class CustomRestaurantCard extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsetsDirectional.fromSTEB(5.0, 0.0, 0.0, 0.0),
                       child: Text(
-                        deliveryTime,
+                        '${deliveryTime}mins' ,
                         style: FlutterFlowTheme.of(context).labelSmall.override(
                           fontFamily: 'Readex Pro',
                           fontSize: 9.0,
