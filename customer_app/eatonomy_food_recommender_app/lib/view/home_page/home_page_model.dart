@@ -1,16 +1,17 @@
+import 'package:eatonomy_food_recommender_app/view/home_page/home_screen.dart';
+
 import '/flutter_flow/flutter_flow_util.dart';
 import 'home_page_widget.dart' show HomePageWidget;
 import 'package:smooth_page_indicator/smooth_page_indicator.dart'
     as smooth_page_indicator;
 import 'package:flutter/material.dart';
 
-class HomePageModel extends FlutterFlowModel<HomePageWidget> {
+class HomePageModel extends FlutterFlowModel<HomeScreen> {
   ///  State fields for stateful widgets in this page.
 
   final unfocusNode = FocusNode();
 
   // State field(s) for TextField widget.
-  FocusNode? textFieldFocusNode;
   TextEditingController? textController;
   String? Function(BuildContext, String?)? textControllerValidator;
 
@@ -40,7 +41,6 @@ class HomePageModel extends FlutterFlowModel<HomePageWidget> {
   @override
   void dispose() {
     unfocusNode.dispose();
-    textFieldFocusNode?.dispose();
     textController?.dispose();
   }
 

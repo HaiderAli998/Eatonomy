@@ -30,7 +30,7 @@ class _FoodPreferencesState extends State<FoodPreferences> {
               const Icon(Icons.arrow_back),
               InkWell(
                 onTap: () {
-                  Navigator.pushNamed(context, RoutesName.homeScreen);
+                  Navigator.pushNamed(context, RoutesName.navBarScreen);
                 },
                 child: const Text(
                   'Skip',

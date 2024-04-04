@@ -1,6 +1,7 @@
 import 'package:eatonomy_food_recommender_app/Firestore_screens/firestore_list_screen.dart';
 import 'package:eatonomy_food_recommender_app/res/components/Authentication_Components/Login_with_phone_number.dart';
 import 'package:eatonomy_food_recommender_app/utils/routes/routes_name.dart';
+import 'package:eatonomy_food_recommender_app/view/burger_screen/burger_screen_list.dart';
 import 'package:eatonomy_food_recommender_app/view/home_page/home_screen.dart';
 import 'package:eatonomy_food_recommender_app/view/food_preferences/food_preferences_screen.dart';
 import 'package:eatonomy_food_recommender_app/view/authentication/forget_screen.dart';
@@ -9,6 +10,7 @@ import 'package:eatonomy_food_recommender_app/view/authentication/signup_screen.
 import 'package:eatonomy_food_recommender_app/view/splash_screen/splash_screen.dart';
 import 'package:flutter/material.dart';
 import '../../Firestore_screens/firestore_add_data.dart';
+import '../../view/BottomNavBar.dart';
 
 class Routes {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -28,6 +30,9 @@ class Routes {
       case RoutesName.homeScreen:
         return MaterialPageRoute(
             builder: (BuildContext context) => const HomeScreen());
+      case RoutesName.navBarScreen:
+        return MaterialPageRoute(
+            builder: (BuildContext context) => const NavBarPage());
       case RoutesName.forgetScreen:
         return MaterialPageRoute(
             builder: (BuildContext context) => const ForgetScreen());
@@ -40,6 +45,9 @@ class Routes {
       case RoutesName.fireStoreAdd:
         return MaterialPageRoute(
             builder: (BuildContext context) => const FireStoreAddData());
+      case RoutesName.burgerScreen:
+        return MaterialPageRoute(
+            builder: (BuildContext context) => const BurgerScreen());
       default:
         return MaterialPageRoute(builder: (_) {
           return const Scaffold(

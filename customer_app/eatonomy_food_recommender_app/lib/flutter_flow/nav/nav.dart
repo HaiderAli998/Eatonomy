@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 
+import '../../view/home_page/home_screen.dart';
 import '/index.dart';
 import 'package:eatonomy_food_recommender_app/view/BottomNavBar.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -22,6 +23,7 @@ class AppStateNotifier extends ChangeNotifier {
   AppStateNotifier._();
 
   static AppStateNotifier? _instance;
+
   static AppStateNotifier get instance => _instance ??= AppStateNotifier._();
 
   bool showSplashImage = true;
@@ -48,7 +50,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           path: '/homePage',
           builder: (context, params) => params.isEmpty
               ? NavBarPage(initialPage: 'homePage')
-              : HomePageWidget(
+              : HomeScreen(
                   pageHalf: params.getParam('pageHalf', ParamType.double),
                 ),
         ),
@@ -101,19 +103,18 @@ extension NavigationExtensions on BuildContext {
   }
 }
 
-
 extension _GoRouterStateExtensions on GoRouterState {
-  Map<String, dynamic> get extraMap => extra != null ? extra as Map<String, dynamic> : {};
+  Map<String, dynamic> get extraMap =>
+      extra != null ? extra as Map<String, dynamic> : {};
 
-  Map<String, dynamic> get allParams => <String, dynamic>{
-    ...pathParameters,
-    ...uri.queryParameters,
-    ...extraMap
-  };
+  Map<String, dynamic> get allParams =>
+      <String, dynamic>{...pathParameters, ...uri.queryParameters, ...extraMap};
+
   TransitionInfo get transitionInfo => extraMap.containsKey(kTransitionInfoKey)
       ? extraMap[kTransitionInfoKey] as TransitionInfo
       : TransitionInfo.appDefault();
 }
+
 class FFParameters {
   FFParameters(this.state, [this.asyncParams = const {}]);
 
@@ -128,9 +129,12 @@ class FFParameters {
       state.allParams.isEmpty ||
       (state.extraMap.length == 1 &&
           state.extraMap.containsKey(kTransitionInfoKey));
+
   bool isAsyncParam(MapEntry<String, dynamic> param) =>
       asyncParams.containsKey(param.key) && param.value is String;
+
   bool get hasFutures => state.allParams.entries.any(isAsyncParam);
+
   Future<bool> completeFutures() => Future.wait(
         state.allParams.entries.where(isAsyncParam).map(
           (param) async {
@@ -246,6 +250,7 @@ class TransitionInfo {
 
 class RootPageContext {
   const RootPageContext(this.isRootPage, [this.errorRoute]);
+
   final bool isRootPage;
   final String? errorRoute;
 
@@ -261,11 +266,13 @@ class RootPageContext {
   static bool isInactiveRootPage(BuildContext context) {
     final rootPageContext = context.read<RootPageContext?>();
     final isRootPage = rootPageContext?.isRootPage ?? false;
-    final location = GoRouter.of(context).routerDelegate.currentConfiguration.uri.toString();
+    final location =
+        GoRouter.of(context).routerDelegate.currentConfiguration.uri.toString();
     return isRootPage &&
         location != '/' &&
         location != rootPageContext?.errorRoute;
   }
+
   static Widget wrap(Widget child, {String? errorRoute}) => Provider.value(
         value: RootPageContext(true, errorRoute),
         child: child,

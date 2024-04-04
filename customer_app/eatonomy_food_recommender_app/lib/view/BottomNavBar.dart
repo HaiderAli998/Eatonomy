@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../index.dart';
+import 'home_page/home_screen.dart';
 
 class NavBarPage extends StatefulWidget {
-  NavBarPage({Key? key, this.initialPage, this.page}) : super(key: key);
+  const NavBarPage({super.key, this.initialPage, this.page});
 
   final String? initialPage;
   final Widget? page;
@@ -28,10 +29,10 @@ class _NavBarPageState extends State<NavBarPage> {
   @override
   Widget build(BuildContext context) {
     final tabs = {
-      'homePage': HomePageWidget(),
-      'orders': OrdersWidget(),
-      'favorite': FavoriteWidget(),
-      'profile': ProfileWidget(),
+      'homePage': const HomeScreen(),
+      'orders': const OrdersWidget(),
+      'favorite': const FavoriteWidget(),
+      'profile': const ProfileWidget(),
     };
     final currentIndex = tabs.keys.toList().indexOf(_currentPageName);
 
@@ -45,7 +46,7 @@ class _NavBarPageState extends State<NavBarPage> {
         }),
         backgroundColor: Colors.white,
         selectedItemColor: FlutterFlowTheme.of(context).primary,
-        unselectedItemColor: Color(0x8A000000),
+        unselectedItemColor: const Color(0x8A000000),
         showSelectedLabels: false,
         showUnselectedLabels: false,
         type: BottomNavigationBarType.fixed,
@@ -62,7 +63,7 @@ class _NavBarPageState extends State<NavBarPage> {
               FFIcons.kclipboard,
               size: 24.0,
             ),
-            label: 'Home',
+            label: 'Orders',
             tooltip: '',
           ),
           BottomNavigationBarItem(
@@ -70,7 +71,7 @@ class _NavBarPageState extends State<NavBarPage> {
               FFIcons.kheart,
               size: 24.0,
             ),
-            label: 'Home',
+            label: 'Favourite',
             tooltip: '',
           ),
           BottomNavigationBarItem(
@@ -78,7 +79,7 @@ class _NavBarPageState extends State<NavBarPage> {
               Icons.person,
               size: 24.0,
             ),
-            label: 'Home',
+            label: 'Profile',
             tooltip: '',
           )
         ],

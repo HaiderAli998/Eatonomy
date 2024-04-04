@@ -9,9 +9,8 @@ import '../colors_app.dart';
 class DishCard extends StatelessWidget {
   final String imageUrl;
   final String productName;
-  final double price;
+  final int price;
   final bool isDeliveryFree;
-  final String deliveryTime;
   final double rating;
   final int numberOfReviews;
 
@@ -21,7 +20,6 @@ class DishCard extends StatelessWidget {
     required this.productName,
     required this.price,
     required this.isDeliveryFree,
-    required this.deliveryTime,
     required this.rating,
     required this.numberOfReviews,
   });
