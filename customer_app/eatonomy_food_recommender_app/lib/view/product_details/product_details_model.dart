@@ -1,8 +1,8 @@
 import '/flutter_flow/flutter_flow_util.dart';
-import 'cart_widget.dart' show CartWidget;
+import 'product_details_widget.dart' show ProductDetailsWidget;
 import 'package:flutter/material.dart';
 
-class CartModel extends FlutterFlowModel<CartWidget> {
+class ProductDetailsModel extends FlutterFlowModel<ProductDetailsWidget> {
   ///  State fields for stateful widgets in this page.
 
   final unfocusNode = FocusNode();
