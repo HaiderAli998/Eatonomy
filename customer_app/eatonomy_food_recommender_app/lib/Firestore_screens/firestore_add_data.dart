@@ -55,6 +55,7 @@ class _FireStoreAddDataState extends State<FireStoreAddData> {
                   loading = false;
                 });
               });
+
               firestore2
                   .doc()
                   .set({'Owner': 'Ali', 'Timing': '9 to 5'}).then((value) {

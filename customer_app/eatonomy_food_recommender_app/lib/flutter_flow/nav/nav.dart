@@ -4,13 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
-
+import '../../view/cart/cart_widget.dart';
+import '../../view/favorite/favorite_widget.dart';
 import '../../view/home_page/home_screen.dart';
-import '/index.dart';
 import 'package:eatonomy_food_recommender_app/view/BottomNavBar.dart';
-import '/flutter_flow/flutter_flow_theme.dart';
-import '/flutter_flow/lat_lng.dart';
-import '/flutter_flow/place.dart';
+import '../../view/orders/orders_widget.dart';
+import '../../view/profile/profile_widget.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'serialization_util.dart';
 
@@ -43,13 +42,13 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: '_initialize',
           path: '/',
-          builder: (context, _) => NavBarPage(),
+          builder: (context, _) => const NavBarPage(),
         ),
         FFRoute(
           name: 'homePage',
           path: '/homePage',
           builder: (context, params) => params.isEmpty
-              ? NavBarPage(initialPage: 'homePage')
+              ? const NavBarPage(initialPage: 'homePage')
               : HomeScreen(
                   pageHalf: params.getParam('pageHalf', ParamType.double),
                 ),
@@ -63,22 +62,22 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'orders',
           path: '/orders',
           builder: (context, params) => params.isEmpty
-              ? NavBarPage(initialPage: 'orders')
-              : OrdersWidget(),
+              ? const NavBarPage(initialPage: 'orders')
+              : const OrdersWidget(),
         ),
         FFRoute(
           name: 'favorite',
           path: '/favorite',
           builder: (context, params) => params.isEmpty
-              ? NavBarPage(initialPage: 'favorite')
-              : FavoriteWidget(),
+              ? const NavBarPage(initialPage: 'favorite')
+              : const FavoriteWidget(),
         ),
         FFRoute(
           name: 'profile',
           path: '/profile',
           builder: (context, params) => params.isEmpty
-              ? NavBarPage(initialPage: 'profile')
-              : ProfileWidget(),
+              ? const NavBarPage(initialPage: 'profile')
+              : const ProfileWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );

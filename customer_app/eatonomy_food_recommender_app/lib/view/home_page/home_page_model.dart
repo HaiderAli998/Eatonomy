@@ -1,15 +1,17 @@
 import 'package:eatonomy_food_recommender_app/view/home_page/home_screen.dart';
+import 'package:geolocator/geolocator.dart';
 
+import '../../res/components/HomePage_Components/Current_Location.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import 'home_page_widget.dart' show HomePageWidget;
-import 'package:smooth_page_indicator/smooth_page_indicator.dart'
-    as smooth_page_indicator;
 import 'package:flutter/material.dart';
 
-class HomePageModel extends FlutterFlowModel<HomeScreen> {
-  ///  State fields for stateful widgets in this page.
+class HomePageModel extends FlutterFlowModel<HomeScreen> with ChangeNotifier {
+  final BuildContext context; // Add this field
 
-  final unfocusNode = FocusNode();
+  HomePageModel(this.context);
+
+  late Position _currentPosition;
+  String currentAddress = 'Loading...';
 
   // State field(s) for TextField widget.
   TextEditingController? textController;
@@ -40,9 +42,25 @@ class HomePageModel extends FlutterFlowModel<HomeScreen> {
 
   @override
   void dispose() {
-    unfocusNode.dispose();
+    super.dispose();
     textController?.dispose();
   }
+
+  Future<void> getCurrentPosition() async {
+    final position = await LocationService.getCurrentPosition(context);
+    if (position != null) {
+      _currentPosition = position;
+      _getAddressFromLatLng(_currentPosition);
+    }
+  }
+
+  Future<void> _getAddressFromLatLng(Position position) async {
+    final address = await LocationService.getAddressFromLatLng(position);
+    currentAddress = address;
+    notifyListeners();
+  }
+
+  String get getAddress => currentAddress;
 
   /// Action blocks are added here.
 

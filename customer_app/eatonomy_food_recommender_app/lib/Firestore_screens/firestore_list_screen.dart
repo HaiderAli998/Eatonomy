@@ -12,6 +12,7 @@ class FireStoreScreen extends StatefulWidget {
 class _FireStoreScreenState extends State<FireStoreScreen> {
   final firestore1 =
       FirebaseFirestore.instance.collection('Restaurants').snapshots();
+
   // CollectionReference reference =
   //     FirebaseFirestore.instance.collection('Restaurants');
   List<String> titleList = [];
@@ -39,7 +40,8 @@ class _FireStoreScreenState extends State<FireStoreScreen> {
                   return ListView.builder(
                     itemCount: snapshot.data?.docs.length,
                     itemBuilder: (BuildContext context, int index) {
-                      String title = snapshot.data!.docs[index]['title'].toString();
+                      String title =
+                          snapshot.data!.docs[index]['title'].toString();
                       return Container();
                     },
                   );
@@ -88,5 +90,5 @@ class _FireStoreScreenState extends State<FireStoreScreen> {
     );
   }
 
-   List<String> get getTitleList => titleList;
+  List<String> get getTitleList => titleList;
 }

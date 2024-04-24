@@ -5,12 +5,12 @@ import 'package:eatonomy_food_recommender_app/res/components/HomePage_Components
 import 'package:eatonomy_food_recommender_app/res/components/colors_app.dart';
 import 'package:eatonomy_food_recommender_app/utils/routes/routes_name.dart';
 import 'package:eatonomy_food_recommender_app/view/drawer/Drawer.dart';
+import 'package:eatonomy_food_recommender_app/view/product_details/product_details_widget.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
-import '../../res/components/HomePage_Components/Current_Location.dart';
 import '../../res/components/HomePage_Components/Home_appbar.dart';
 import '../../res/components/HomePage_Components/appbar_textfield.dart';
+import '../restaurant_menu/restaurant_menu_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -35,41 +35,15 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   late HomePageModel _model;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  late Position _currentPosition;
-  String _currentAddress = 'Loading...';
   final restaurantData =
       FirebaseFirestore.instance.collection('Restaurants').snapshots();
-  final firestore2 = FirebaseFirestore.instance
-      .collection('Restaurants')
-      .doc('kfc')
-      .collection('menu')
-      .doc('HQN76ZamRcHxKo9dpv4M')
-      .collection('burger')
-      .snapshots();
 
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => HomePageModel());
+    _model = createModel(context, () => HomePageModel(context));
     _model.textController ??= TextEditingController();
-    _getCurrentPosition();
-  }
-
-  Future<void> _getCurrentPosition() async {
-    final position = await LocationService.getCurrentPosition(context);
-    if (position != null) {
-      setState(() {
-        _currentPosition = position;
-        _getAddressFromLatLng(_currentPosition);
-      });
-    }
-  }
-
-  Future<void> _getAddressFromLatLng(Position position) async {
-    final address = await LocationService.getAddressFromLatLng(position);
-    setState(() {
-      _currentAddress = address;
-    });
+    _model.getCurrentPosition();
   }
 
   @override
@@ -83,9 +57,6 @@ class _HomeScreenState extends State<HomeScreen> {
     final height = MediaQuery.of(context).size.height * 1;
     final width = MediaQuery.of(context).size.width * 1;
     return GestureDetector(
-      onTap: () => _model.unfocusNode.canRequestFocus
-          ? FocusScope.of(context).requestFocus(_model.unfocusNode)
-          : FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: _scaffoldKey,
         backgroundColor: ColorsApp.backgroundColorApp,
@@ -96,9 +67,9 @@ class _HomeScreenState extends State<HomeScreen> {
             CustomSliverAppBar(
               titleText: 'Delivery Address',
               addressText: 'Address Placeholder',
-              currentAddress: _currentAddress,
+              currentAddress: _model.getAddress,
               onCartPressed: () {
-                // Handle cart button pressed
+                Navigator.pushNamed(context, RoutesName.cartScreen);
               },
             )
           ],
@@ -122,9 +93,10 @@ class _HomeScreenState extends State<HomeScreen> {
                         mainAxisSize: MainAxisSize.max,
                         children: [
                           Expanded(
+                            flex: 1,
                             child: Padding(
                               padding: const EdgeInsetsDirectional.fromSTEB(
-                                  8.0, 0.0, 8.0, 0.0),
+                                  8.0, 0.0, 8.0, 15.0),
                               child: HomePageTextField(
                                 controller: _model.textController,
                                 autofocus: true,
@@ -260,11 +232,17 @@ class _HomeScreenState extends State<HomeScreen> {
                               CustomCategoryContainer(
                                   svgPath: 'assets/icons/pizza-pie.svg',
                                   text: 'Pizza',
-                                  onTap: () {}),
+                                  onTap: () {
+                                    Navigator.pushNamed(
+                                        context, RoutesName.burgerScreen);
+                                  }),
                               CustomCategoryContainer(
                                   svgPath: 'assets/icons/bbq-2.svg',
                                   text: 'BBQ',
-                                  onTap: () {}),
+                                  onTap: () {
+                                    Navigator.pushNamed(
+                                        context, RoutesName.bbqScreen);
+                                  }),
                               CustomCategoryContainer(
                                   svgPath: 'assets/icons/chicken.svg',
                                   text: 'Broast',
@@ -292,7 +270,10 @@ class _HomeScreenState extends State<HomeScreen> {
                               CustomCategoryContainer(
                                   svgPath: 'assets/icons/shawarma.svg',
                                   text: 'Shawarma',
-                                  onTap: () {}),
+                                  onTap: () {
+                                    Navigator.pushNamed(
+                                        context, RoutesName.shawarmaScreen);
+                                  }),
                               CustomCategoryContainer(
                                 svgPath: 'assets/icons/ice-cream.svg',
                                 text: 'Ice-Cream',
@@ -516,17 +497,39 @@ class _HomeScreenState extends State<HomeScreen> {
                                       snapshot.data!.docs[index];
 
                                   return CustomRestaurantCard(
-                                    imageUrl:
-                                        'https://picsum.photos/seed/435/600',
+                                    imageUrl: restaurantData['imageurl'],
                                     restaurantName: restaurantData['title'],
                                     rating: restaurantData['rating'],
-                                    numberOfReviews: 25,
+                                    numberOfReviews:
+                                        restaurantData['numberOfReviews'],
                                     isDeliveryFree: false,
-                                    foodCategories: const [
-                                      'Chicken',
-                                      'Burger',
-                                      'Sandwich'
-                                    ],
+                                    onTap: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  RestaurantMenuWidget(
+                                                    imageUrl: restaurantData[
+                                                        'imageurl'],
+                                                    id: restaurantData['id'],
+                                                    restaurantName:
+                                                        restaurantData['title'],
+                                                    openingHours: const [
+                                                      '2:00-12:00',
+                                                      '2:00-2:00'
+                                                    ],
+                                                    categories: List.from(
+                                                        restaurantData[
+                                                            'Categories']),
+                                                    rating: restaurantData[
+                                                        'rating'],
+                                                    deliveryTime:
+                                                        restaurantData[
+                                                            'delivery time'],
+                                                  )));
+                                    },
+                                    foodCategories:
+                                        List.from(restaurantData['Categories']),
                                     deliveryTime: '20',
                                   );
                                 },
@@ -568,67 +571,112 @@ class _HomeScreenState extends State<HomeScreen> {
                         thickness: 1.0,
                         color: FlutterFlowTheme.of(context).accent4,
                       ),
-                      Container(
-                        width: MediaQuery.of(context).size.width,
-                        height: MediaQuery.of(context).size.height,
-                        constraints: BoxConstraints(
-                          maxWidth: MediaQuery.of(context).size.width,
-                          maxHeight: MediaQuery.of(context).size.height,
-                        ),
-                        decoration: const BoxDecoration(),
-                        child: ListView(
-                          padding: EdgeInsets.zero,
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          children: [
-                            StreamBuilder(
-                                stream: restaurantData,
-                                builder: (BuildContext context,
-                                    AsyncSnapshot<QuerySnapshot> snapshot) {
-                                  if (snapshot.connectionState ==
-                                      ConnectionState.waiting) {
-                                    return const CircularProgressIndicator();
-                                  } else if (snapshot.hasError) {
-                                    return Text('Error: ${snapshot.error}');
-                                  } else if (!snapshot.hasData) {
-                                    return const Text('No Data Available');
-                                  } else {
-                                    return Container();
-                                  }
-                                }),
-                            const DishCard(
-                              imageUrl: 'https://picsum.photos/seed/435/600',
-                              productName: 'Crispy Burger',
-                              price: 1000,
-                              isDeliveryFree: true,
-                              rating: 4.5,
-                              numberOfReviews: 25,
-                            ),
-                            const DishCard(
-                              imageUrl: 'https://picsum.photos/seed/435/600',
-                              productName: 'Crispy Burger',
-                              price: 1000,
-                              isDeliveryFree: true,
-                              rating: 4.5,
-                              numberOfReviews: 25,
-                            ),
-                            const DishCard(
-                              imageUrl: 'https://picsum.photos/seed/435/600',
-                              productName: 'Mighty Burger',
-                              price: 1000,
-                              isDeliveryFree: true,
-                              rating: 4.5,
-                              numberOfReviews: 25,
-                            ),
-                            const DishCard(
-                              imageUrl: 'https://picsum.photos/seed/435/600',
-                              productName: 'Crust Pizza',
-                              price: 1000,
-                              isDeliveryFree: true,
-                              rating: 4.5,
-                              numberOfReviews: 25,
-                            ),
-                          ].divide(const SizedBox(height: 10.0)),
+                      Expanded(
+                        child: Container(
+                          decoration: const BoxDecoration(),
+                          child: ListView(
+                            padding: EdgeInsets.zero,
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            children: [
+                              DishCard(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const ProductDetailsWidget(
+                                                imageurl: '',
+                                                productName: '',
+                                                price: 0,
+                                                isDeliveryFree: true,
+                                                rating: 0.0,
+                                                numberOfReviews: 0,
+                                                deliveryTime: '',
+                                                description: '',
+                                              )));
+                                },
+                                imageUrl: 'https://picsum.photos/seed/435/600',
+                                productName: 'Crispy Burger',
+                                price: 1000,
+                                isDeliveryFree: true,
+                                rating: 4.5,
+                                numberOfReviews: 25,
+                              ),
+                              DishCard(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const ProductDetailsWidget(
+                                                imageurl: '',
+                                                productName: '',
+                                                price: 0,
+                                                isDeliveryFree: true,
+                                                rating: 0.0,
+                                                numberOfReviews: 0,
+                                                deliveryTime: '',
+                                                description: '',
+                                              )));
+                                },
+                                imageUrl: 'https://picsum.photos/seed/435/600',
+                                productName: 'Crispy Burger',
+                                price: 1000,
+                                isDeliveryFree: true,
+                                rating: 4.5,
+                                numberOfReviews: 25,
+                              ),
+                              DishCard(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const ProductDetailsWidget(
+                                                imageurl: '',
+                                                productName: '',
+                                                price: 0,
+                                                isDeliveryFree: true,
+                                                rating: 0.0,
+                                                numberOfReviews: 0,
+                                                deliveryTime: '',
+                                                description: '',
+                                              )));
+                                },
+                                imageUrl: 'https://picsum.photos/seed/435/600',
+                                productName: 'Mighty Burger',
+                                price: 1000,
+                                isDeliveryFree: true,
+                                rating: 4.5,
+                                numberOfReviews: 25,
+                              ),
+                              DishCard(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const ProductDetailsWidget(
+                                                imageurl: '',
+                                                productName: '',
+                                                price: 0,
+                                                isDeliveryFree: true,
+                                                rating: 0.0,
+                                                numberOfReviews: 0,
+                                                deliveryTime: '',
+                                                description: '',
+                                              )));
+                                },
+                                imageUrl: 'https://picsum.photos/seed/435/600',
+                                productName: 'Mighty Burger',
+                                price: 1000,
+                                isDeliveryFree: true,
+                                rating: 4.5,
+                                numberOfReviews: 25,
+                              ),
+                            ].divide(const SizedBox(height: 10.0)),
+                          ),
                         ),
                       ),
                     ],

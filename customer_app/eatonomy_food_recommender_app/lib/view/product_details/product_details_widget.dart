@@ -1,14 +1,36 @@
+import 'package:eatonomy_food_recommender_app/utils/routes/routes_name.dart';
+import 'package:flutter/foundation.dart';
+
+import '../../res/components/Custom_Containers/Custom_button.dart';
+import '../../res/components/colors_app.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'product_details_model.dart';
 export 'product_details_model.dart';
 
 class ProductDetailsWidget extends StatefulWidget {
-  const ProductDetailsWidget({super.key});
+  final String productName;
+  final int price;
+  final bool isDeliveryFree;
+  final String deliveryTime;
+  final String imageurl;
+  final double rating;
+  final int numberOfReviews;
+  final String description;
+
+  const ProductDetailsWidget(
+      {super.key,
+      required this.productName,
+      required this.price,
+      required this.isDeliveryFree,
+      required this.rating,
+      required this.numberOfReviews,
+      required this.deliveryTime,
+      required this.description,
+      required this.imageurl});
 
   @override
   State<ProductDetailsWidget> createState() => _ProductDetailsWidgetState();
@@ -65,7 +87,9 @@ class _ProductDetailsWidgetState extends State<ProductDetailsWidget> {
                       size: 24.0,
                     ),
                     onPressed: () {
-                      print('IconButton pressed ...');
+                      if (kDebugMode) {
+                        print('IconButton pressed ...');
+                      }
                     },
                   ),
                 ],
@@ -75,7 +99,7 @@ class _ProductDetailsWidgetState extends State<ProductDetailsWidget> {
               background: ClipRRect(
                 borderRadius: BorderRadius.circular(8.0),
                 child: Image.network(
-                  'https://img.freepik.com/free-photo/chicken-wings-barbecue-sweetly-sour-sauce-picnic-summer-menu-tasty-food-top-view-flat-lay_2829-6471.jpg',
+                  widget.imageurl,
                   width: MediaQuery.sizeOf(context).width * 1.0,
                   height: MediaQuery.sizeOf(context).height * 0.1,
                   fit: BoxFit.cover,
@@ -117,7 +141,7 @@ class _ProductDetailsWidgetState extends State<ProductDetailsWidget> {
                                 padding: const EdgeInsetsDirectional.fromSTEB(
                                     20.0, 20.0, 0.0, 5.0),
                                 child: Text(
-                                  'DishName',
+                                  widget.productName,
                                   textAlign: TextAlign.start,
                                   style: FlutterFlowTheme.of(context)
                                       .headlineMedium
@@ -149,7 +173,9 @@ class _ProductDetailsWidgetState extends State<ProductDetailsWidget> {
                                   padding: const EdgeInsetsDirectional.fromSTEB(
                                       5.0, 0.0, 0.0, 0.0),
                                   child: Text(
-                                    'Free delivery',
+                                    widget.isDeliveryFree
+                                        ? 'Free delivery'
+                                        : 'Paid delivery',
                                     style: FlutterFlowTheme.of(context)
                                         .bodyMedium
                                         .override(
@@ -180,7 +206,7 @@ class _ProductDetailsWidgetState extends State<ProductDetailsWidget> {
                                   padding: const EdgeInsetsDirectional.fromSTEB(
                                       5.0, 0.0, 0.0, 0.0),
                                   child: Text(
-                                    '10-15mins',
+                                    'Delivery: ${widget.deliveryTime}',
                                     style: FlutterFlowTheme.of(context)
                                         .labelSmall
                                         .override(
@@ -217,16 +243,17 @@ class _ProductDetailsWidgetState extends State<ProductDetailsWidget> {
                                         ),
                                   ),
                                   Padding(
-                                    padding: const EdgeInsetsDirectional.fromSTEB(
-                                        2.0, 0.0, 20.0, 0.0),
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            2.0, 0.0, 20.0, 0.0),
                                     child: Text(
-                                      'ItemPrice',
+                                      widget.price.toString(),
                                       style: FlutterFlowTheme.of(context)
                                           .bodyMedium
                                           .override(
                                             fontFamily: 'Readex Pro',
                                             color: const Color(0xFF43464D),
-                                            fontSize: 20.0,
+                                            fontSize: 15.0,
                                             letterSpacing: 0.0,
                                             fontWeight: FontWeight.w600,
                                           ),
@@ -275,7 +302,7 @@ class _ProductDetailsWidgetState extends State<ProductDetailsWidget> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Text(
-                                  '4.5',
+                                  widget.rating.toString(),
                                   style: FlutterFlowTheme.of(context)
                                       .bodyMedium
                                       .override(
@@ -293,7 +320,7 @@ class _ProductDetailsWidgetState extends State<ProductDetailsWidget> {
                                   size: 15.0,
                                 ),
                                 Text(
-                                  '(25+ )',
+                                  '(${widget.numberOfReviews})+',
                                   style: FlutterFlowTheme.of(context)
                                       .bodyMedium
                                       .override(
@@ -309,93 +336,16 @@ class _ProductDetailsWidgetState extends State<ProductDetailsWidget> {
                             ),
                           ),
                         ),
-                        Align(
-                          alignment: const AlignmentDirectional(1.0, 1.0),
-                          child: Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                0.0, 5.0, 20.0, 5.0),
-                            child: Container(
-                              width: MediaQuery.sizeOf(context).width * 0.2,
-                              height: MediaQuery.sizeOf(context).height * 0.03,
-                              decoration: BoxDecoration(
-                                color: FlutterFlowTheme.of(context)
-                                    .secondaryBackground,
-                                borderRadius: const BorderRadius.only(
-                                  bottomLeft: Radius.circular(8.0),
-                                  bottomRight: Radius.circular(8.0),
-                                  topLeft: Radius.circular(8.0),
-                                  topRight: Radius.circular(8.0),
-                                ),
-                                shape: BoxShape.rectangle,
-                                border: Border.all(
-                                  color: FlutterFlowTheme.of(context)
-                                      .secondaryBackground,
-                                  width: 0.0,
-                                ),
-                              ),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  FlutterFlowIconButton(
-                                    borderColor: const Color(0xFFEDEDEE),
-                                    borderRadius: 8.0,
-                                    borderWidth: 0.0,
-                                    buttonSize:
-                                        MediaQuery.sizeOf(context).width *
-                                            0.065,
-                                    fillColor: FlutterFlowTheme.of(context)
-                                        .secondaryBackground,
-                                    icon: FaIcon(
-                                      FontAwesomeIcons.minus,
-                                      color:
-                                          FlutterFlowTheme.of(context).primary,
-                                      size: 11.0,
-                                    ),
-                                    onPressed: () {
-                                      print('IconButton pressed ...');
-                                    },
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsetsDirectional.fromSTEB(
-                                        10.0, 0.0, 10.0, 0.0),
-                                    child: Text(
-                                      '1',
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            fontFamily: 'Readex Pro',
-                                            color: const Color(0xFF5C5F65),
-                                            letterSpacing: 0.0,
-                                          ),
-                                    ),
-                                  ),
-                                  FlutterFlowIconButton(
-                                    borderColor: const Color(0xFFEDEDEE),
-                                    borderRadius: 8.0,
-                                    borderWidth: 0.0,
-                                    buttonSize:
-                                        MediaQuery.sizeOf(context).width *
-                                            0.065,
-                                    fillColor: FlutterFlowTheme.of(context)
-                                        .secondaryBackground,
-                                    icon: FaIcon(
-                                      FontAwesomeIcons.plus,
-                                      color:
-                                          FlutterFlowTheme.of(context).primary,
-                                      size: 11.0,
-                                    ),
-                                    onPressed: () {
-                                      print('IconButton pressed ...');
-                                    },
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
+                        // Generated code for this CountController Widget...
+                        // Padding(
+                        //   padding: const EdgeInsets.symmetric(
+                        //       horizontal: 15, vertical: 0.0),
+                        //   child: CountSelector(
+                        //     initialValue: _model.countControllerValue ?? 0,
+                        //     onChanged: (count) => setState(
+                        //         () => _model.countControllerValue = count),
+                        //   ),
+                        // ),
                       ],
                     ),
                     Column(
@@ -422,61 +372,34 @@ class _ProductDetailsWidgetState extends State<ProductDetailsWidget> {
                             ),
                           ],
                         ),
-                        Row(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  20.0, 5.0, 20.0, 0.0),
-                              child: Text(
-                                'Product description',
-                                style: FlutterFlowTheme.of(context)
-                                    .bodyMedium
-                                    .override(
-                                      fontFamily: 'Readex Pro',
-                                      color: const Color(0xFF5C5F65),
-                                      letterSpacing: 0.0,
-                                    ),
-                              ),
+                        Padding(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              20.0, 5.0, 20.0, 0.0),
+                          child: Flexible(
+                            child: Text(
+                              widget.description,
+                              softWrap: true,
+                              textAlign: TextAlign.center,
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .override(
+                                    fontFamily: 'Readex Pro',
+                                    color: const Color(0xFF5C5F65),
+                                    letterSpacing: 0.0,
+                                  ),
                             ),
-                          ],
+                          ),
                         ),
                       ],
                     ),
                   ],
                 ),
-                Column(
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    FFButtonWidget(
-                      onPressed: () {
-                        print('Button pressed ...');
-                      },
-                      text: 'Place Order',
-                      options: FFButtonOptions(
-                        width: MediaQuery.sizeOf(context).width * 0.9,
-                        height: MediaQuery.sizeOf(context).height * 0.055,
-                        padding: const EdgeInsetsDirectional.fromSTEB(
-                            24.0, 0.0, 24.0, 0.0),
-                        iconPadding:
-                            const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                        color: FlutterFlowTheme.of(context).primary,
-                        textStyle:
-                            FlutterFlowTheme.of(context).titleSmall.override(
-                                  fontFamily: 'Readex Pro',
-                                  color: Colors.white,
-                                  letterSpacing: 0.0,
-                                ),
-                        elevation: 3.0,
-                        borderSide: const BorderSide(
-                          color: Colors.transparent,
-                          width: 1.0,
-                        ),
-                        borderRadius: BorderRadius.circular(16.0),
-                      ),
-                    ),
-                  ],
-                ),
+                Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: CustomButton('ADD TO Cart', () {
+                    Navigator.pushNamed(context, RoutesName.cartScreen);
+                  }, ColorsApp.splashBackgroundColorApp),
+                )
               ],
             ),
           ),

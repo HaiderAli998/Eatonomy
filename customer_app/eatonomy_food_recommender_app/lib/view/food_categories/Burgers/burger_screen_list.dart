@@ -1,8 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-import '../../flutter_flow/flutter_flow_theme.dart';
-import '../../res/components/HomePage_Components/dish_card.dart';
+import '../../../flutter_flow/flutter_flow_theme.dart';
+import '../../../res/components/HomePage_Components/dish_card.dart';
+import '../../../res/components/colors_app.dart';
 
 class BurgerScreen extends StatefulWidget {
   const BurgerScreen({super.key});
@@ -18,10 +19,23 @@ class _BurgerScreenState extends State<BurgerScreen> {
         FirebaseFirestore.instance.collection('Burgers').snapshots();
     return SafeArea(
       child: Scaffold(
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          title: const Center(
+            child: Text(
+              'Burgers',
+              style: TextStyle(
+                  color: ColorsApp.grey,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 24),
+            ),
+          ),
+          backgroundColor: ColorsApp.backgroundColorApp,
+        ),
         body: StreamBuilder<QuerySnapshot>(
           stream: burgerData,
-          builder: (BuildContext context,
-              AsyncSnapshot<QuerySnapshot> snapshot) {
+          builder:
+              (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const CircularProgressIndicator();
             } else if (snapshot.hasError) {
@@ -40,15 +54,18 @@ class _BurgerScreenState extends State<BurgerScreen> {
                   itemBuilder: (BuildContext context, int index) {
                     var burgerData = snapshot.data!.docs[index];
 
-                    return  Padding(
-                      padding:  EdgeInsets.all(8.0),
-                      child:  DishCard(
-                        imageUrl: 'https://picsum.photos/seed/435/600',
-                        productName: burgerData['title'],
-                        price: burgerData['price'],
-                        isDeliveryFree: burgerData['delivery free'],
-                        rating: burgerData['rating'],
-                        numberOfReviews: burgerData['reviews'],
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Expanded(
+                        child: DishCard(
+                          onTap: () {},
+                          imageUrl: 'https://picsum.photos/seed/435/600',
+                          productName: burgerData['title'],
+                          price: burgerData['price'],
+                          isDeliveryFree: burgerData['delivery free'],
+                          rating: burgerData['rating'],
+                          numberOfReviews: burgerData['reviews'],
+                        ),
                       ),
                     );
                   },

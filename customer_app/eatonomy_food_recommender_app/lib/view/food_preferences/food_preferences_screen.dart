@@ -17,7 +17,6 @@ class _FoodPreferencesState extends State<FoodPreferences> {
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height * 1;
     final width = MediaQuery.of(context).size.width * 1;
-    print("Whole Screen");
     return Scaffold(
         body: SafeArea(
             child: Padding(
@@ -25,9 +24,8 @@ class _FoodPreferencesState extends State<FoodPreferences> {
       child: Column(
         children: [
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              const Icon(Icons.arrow_back),
               InkWell(
                 onTap: () {
                   Navigator.pushNamed(context, RoutesName.navBarScreen);
