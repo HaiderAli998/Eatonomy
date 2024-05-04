@@ -1,8 +1,8 @@
 import '/flutter_flow/flutter_flow_util.dart';
-import 'profile_widget.dart' show ProfileWidget;
+import 'address_widget.dart' show AddressWidget;
 import 'package:flutter/material.dart';
 
-class ProfileModel extends FlutterFlowModel<ProfileWidget> {
+class AddressModel extends FlutterFlowModel<AddressWidget> {
   ///  State fields for stateful widgets in this page.
 
   final unfocusNode = FocusNode();
