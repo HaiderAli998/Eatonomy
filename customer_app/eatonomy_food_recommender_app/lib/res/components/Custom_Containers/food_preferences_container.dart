@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../colors_app.dart';
+import '../Colors/colors_app.dart';
 
 class FoodPreferencesContainer extends StatefulWidget {
   final String text;

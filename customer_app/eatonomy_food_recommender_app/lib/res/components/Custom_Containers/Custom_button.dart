@@ -1,4 +1,4 @@
-import 'package:eatonomy_food_recommender_app/res/components/colors_app.dart';
+import 'package:eatonomy_food_recommender_app/res/components/Colors/colors_app.dart';
 import 'package:flutter/material.dart';
 
 class CustomButton extends StatelessWidget {
@@ -12,8 +12,8 @@ class CustomButton extends StatelessWidget {
     this.onPress,
     this.buttonColor, {
     this.loading = false,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {

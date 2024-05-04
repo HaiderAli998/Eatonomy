@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eatonomy_food_recommender_app/res/components/Custom_Containers/Custom_button.dart';
-import 'package:eatonomy_food_recommender_app/res/components/colors_app.dart';
+import 'package:eatonomy_food_recommender_app/res/components/Colors/colors_app.dart';
 import 'package:eatonomy_food_recommender_app/utils/Utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

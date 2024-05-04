@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eatonomy_food_recommender_app/res/components/HomePage_Components/categories_container.dart';
 import 'package:eatonomy_food_recommender_app/res/components/HomePage_Components/dish_card.dart';
 import 'package:eatonomy_food_recommender_app/res/components/HomePage_Components/restaurants_card.dart';
-import 'package:eatonomy_food_recommender_app/res/components/colors_app.dart';
+import 'package:eatonomy_food_recommender_app/res/components/Colors/colors_app.dart';
 import 'package:eatonomy_food_recommender_app/utils/routes/routes_name.dart';
 import 'package:eatonomy_food_recommender_app/view/drawer/Drawer.dart';
 import 'package:eatonomy_food_recommender_app/view/product_details/product_details_widget.dart';
@@ -571,114 +571,118 @@ class _HomeScreenState extends State<HomeScreen> {
                         thickness: 1.0,
                         color: FlutterFlowTheme.of(context).accent4,
                       ),
-                      Expanded(
-                        child: Container(
-                          decoration: const BoxDecoration(),
-                          child: ListView(
-                            padding: EdgeInsets.zero,
-                            shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
-                            children: [
-                              DishCard(
-                                onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              const ProductDetailsWidget(
-                                                imageurl: '',
-                                                productName: '',
-                                                price: 0,
-                                                isDeliveryFree: true,
-                                                rating: 0.0,
-                                                numberOfReviews: 0,
-                                                deliveryTime: '',
-                                                description: '',
-                                              )));
-                                },
-                                imageUrl: 'https://picsum.photos/seed/435/600',
-                                productName: 'Crispy Burger',
-                                price: 1000,
-                                isDeliveryFree: true,
-                                rating: 4.5,
-                                numberOfReviews: 25,
-                              ),
-                              DishCard(
-                                onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              const ProductDetailsWidget(
-                                                imageurl: '',
-                                                productName: '',
-                                                price: 0,
-                                                isDeliveryFree: true,
-                                                rating: 0.0,
-                                                numberOfReviews: 0,
-                                                deliveryTime: '',
-                                                description: '',
-                                              )));
-                                },
-                                imageUrl: 'https://picsum.photos/seed/435/600',
-                                productName: 'Crispy Burger',
-                                price: 1000,
-                                isDeliveryFree: true,
-                                rating: 4.5,
-                                numberOfReviews: 25,
-                              ),
-                              DishCard(
-                                onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              const ProductDetailsWidget(
-                                                imageurl: '',
-                                                productName: '',
-                                                price: 0,
-                                                isDeliveryFree: true,
-                                                rating: 0.0,
-                                                numberOfReviews: 0,
-                                                deliveryTime: '',
-                                                description: '',
-                                              )));
-                                },
-                                imageUrl: 'https://picsum.photos/seed/435/600',
-                                productName: 'Mighty Burger',
-                                price: 1000,
-                                isDeliveryFree: true,
-                                rating: 4.5,
-                                numberOfReviews: 25,
-                              ),
-                              DishCard(
-                                onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              const ProductDetailsWidget(
-                                                imageurl: '',
-                                                productName: '',
-                                                price: 0,
-                                                isDeliveryFree: true,
-                                                rating: 0.0,
-                                                numberOfReviews: 0,
-                                                deliveryTime: '',
-                                                description: '',
-                                              )));
-                                },
-                                imageUrl: 'https://picsum.photos/seed/435/600',
-                                productName: 'Mighty Burger',
-                                price: 1000,
-                                isDeliveryFree: true,
-                                rating: 4.5,
-                                numberOfReviews: 25,
-                              ),
-                            ].divide(const SizedBox(height: 10.0)),
-                          ),
-                        ),
-                      ),
+                      // Expanded(
+                      //   child: Container(
+                      //     decoration: const BoxDecoration(),
+                      //     child: ListView(
+                      //       padding: EdgeInsets.zero,
+                      //       shrinkWrap: true,
+                      //       physics: const NeverScrollableScrollPhysics(),
+                      //       children: [
+                      //         DishCard(
+                      //           onTap: () {
+                      //             Navigator.push(
+                      //                 context,
+                      //                 MaterialPageRoute(
+                      //                     builder: (context) =>
+                      //                         const ProductDetailsWidget(
+                      //                           imageurl: '',
+                      //                           productName: '',
+                      //                           price: 0,
+                      //                           isDeliveryFree: true,
+                      //                           rating: 0.0,
+                      //                           numberOfReviews: 0,
+                      //                           deliveryTime: '',
+                      //                           description: '',
+                      //                           productID: 0,
+                      //                         )));
+                      //           },
+                      //           imageUrl: 'https://picsum.photos/seed/435/600',
+                      //           productName: 'Crispy Burger',
+                      //           price: 1000,
+                      //           isDeliveryFree: true,
+                      //           rating: 4.5,
+                      //           numberOfReviews: 25,
+                      //         ),
+                      //         DishCard(
+                      //           onTap: () {
+                      //             Navigator.push(
+                      //                 context,
+                      //                 MaterialPageRoute(
+                      //                     builder: (context) =>
+                      //                         const ProductDetailsWidget(
+                      //                           imageurl: '',
+                      //                           productName: '',
+                      //                           price: 0,
+                      //                           isDeliveryFree: true,
+                      //                           rating: 0.0,
+                      //                           numberOfReviews: 0,
+                      //                           deliveryTime: '',
+                      //                           description: '',
+                      //                           productID: 0,
+                      //                         )));
+                      //           },
+                      //           imageUrl: 'https://picsum.photos/seed/435/600',
+                      //           productName: 'Crispy Burger',
+                      //           price: 1000,
+                      //           isDeliveryFree: true,
+                      //           rating: 4.5,
+                      //           numberOfReviews: 25,
+                      //         ),
+                      //         DishCard(
+                      //           onTap: () {
+                      //             Navigator.push(
+                      //                 context,
+                      //                 MaterialPageRoute(
+                      //                     builder: (context) =>
+                      //                         const ProductDetailsWidget(
+                      //                           imageurl: '',
+                      //                           productName: '',
+                      //                           price: 0,
+                      //                           isDeliveryFree: true,
+                      //                           rating: 0.0,
+                      //                           numberOfReviews: 0,
+                      //                           deliveryTime: '',
+                      //                           description: '',
+                      //                           productID: 0,
+                      //                         )));
+                      //           },
+                      //           imageUrl: 'https://picsum.photos/seed/435/600',
+                      //           productName: 'Mighty Burger',
+                      //           price: 1000,
+                      //           isDeliveryFree: true,
+                      //           rating: 4.5,
+                      //           numberOfReviews: 25,
+                      //         ),
+                      //         DishCard(
+                      //           onTap: () {
+                      //             Navigator.push(
+                      //                 context,
+                      //                 MaterialPageRoute(
+                      //                     builder: (context) =>
+                      //                         const ProductDetailsWidget(
+                      //                           imageurl: '',
+                      //                           productName: '',
+                      //                           price: 0,
+                      //                           isDeliveryFree: true,
+                      //                           rating: 0.0,
+                      //                           numberOfReviews: 0,
+                      //                           deliveryTime: '',
+                      //                           description: '',
+                      //                           productID: 0,
+                      //                         )));
+                      //           },
+                      //           imageUrl: 'https://picsum.photos/seed/435/600',
+                      //           productName: 'Mighty Burger',
+                      //           price: 1000,
+                      //           isDeliveryFree: true,
+                      //           rating: 4.5,
+                      //           numberOfReviews: 25,
+                      //         ),
+                      //       ].divide(const SizedBox(height: 10.0)),
+                      //     ),
+                      //   ),
+                      // ),
                     ],
                   ),
                 ),

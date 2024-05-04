@@ -1,5 +1,8 @@
-import 'package:eatonomy_food_recommender_app/res/components/colors_app.dart';
+import 'package:eatonomy_food_recommender_app/res/components/Colors/colors_app.dart';
 import 'package:flutter/material.dart';
+
+import '../../../utils/routes/routes_name.dart';
+import '../../../view/cart/persistent_shopping_cart.dart';
 
 class CustomSliverAppBar extends StatelessWidget {
   final String titleText;
@@ -56,19 +59,18 @@ class CustomSliverAppBar extends StatelessWidget {
         ],
       ),
       actions: [
-        IconButton(
-          icon: const Icon(
-            Icons.shopping_bag_outlined,
-            size: 24.0,
-          ),
-          onPressed: () {
-            onCartPressed();
-          },
-        ),
+        PersistentShoppingCart().showCartItemCountWidget(
+            cartItemCountWidgetBuilder: (itemCount) => IconButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, RoutesName.cartScreen);
+                },
+                icon: Badge(
+                  label: Text(itemCount.toString()),
+                  child: const Icon(Icons.shopping_bag_outlined),
+                )))
       ],
       centerTitle: true,
       elevation: 1.0,
     );
   }
 }
-

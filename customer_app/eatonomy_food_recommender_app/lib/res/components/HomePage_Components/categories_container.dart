@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../colors_app.dart';
+import '../Colors/colors_app.dart';
 
 class CustomCategoryContainer extends StatelessWidget {
   final String svgPath;

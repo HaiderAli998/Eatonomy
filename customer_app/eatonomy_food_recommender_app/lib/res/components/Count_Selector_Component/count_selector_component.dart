@@ -1,14 +1,17 @@
-import 'package:eatonomy_food_recommender_app/res/components/colors_app.dart';
+import 'package:eatonomy_food_recommender_app/res/components/Colors/colors_app.dart';
+import 'package:eatonomy_food_recommender_app/view/cart/persistent_shopping_cart.dart';
 import 'package:flutter/material.dart';
 
 class CountSelector extends StatefulWidget {
   final int initialValue;
   final ValueChanged<int> onChanged;
+  final String productID;
 
   const CountSelector({
     super.key,
-    this.initialValue = 0,
+    this.initialValue = 1,
     required this.onChanged,
+    required this.productID,
   });
 
   @override
@@ -64,6 +67,7 @@ class _CountSelectorState extends State<CountSelector> {
   void _increment() {
     setState(() {
       _count++;
+      PersistentShoppingCart().incrementCartItemQuantity(widget.productID);
       widget.onChanged(_count);
     });
   }
@@ -72,6 +76,7 @@ class _CountSelectorState extends State<CountSelector> {
     setState(() {
       if (_count > 0) {
         _count--;
+        PersistentShoppingCart().decrementCartItemQuantity(widget.productID);
         widget.onChanged(_count);
       }
     });

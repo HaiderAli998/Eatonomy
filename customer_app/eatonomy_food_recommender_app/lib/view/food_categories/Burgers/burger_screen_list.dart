@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../../../flutter_flow/flutter_flow_theme.dart';
 import '../../../res/components/HomePage_Components/dish_card.dart';
-import '../../../res/components/colors_app.dart';
+import '../../../res/components/Colors/colors_app.dart';
 
 class BurgerScreen extends StatefulWidget {
   const BurgerScreen({super.key});

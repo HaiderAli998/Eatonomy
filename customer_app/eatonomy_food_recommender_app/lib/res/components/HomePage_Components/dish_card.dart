@@ -4,7 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../../flutter_flow/flutter_flow_theme.dart';
 import '../../../flutter_flow/flutter_flow_widgets.dart';
-import '../colors_app.dart';
+import '../Colors/colors_app.dart';
 
 class DishCard extends StatelessWidget {
   final String imageUrl;

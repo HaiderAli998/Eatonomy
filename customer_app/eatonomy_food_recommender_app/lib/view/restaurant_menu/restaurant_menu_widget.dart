@@ -1,6 +1,9 @@
 import 'package:eatonomy_food_recommender_app/view/restaurant_menu/restaurant_menu_tab_item_list.dart';
 import 'package:flutter/material.dart';
-import '../../res/components/colors_app.dart';
+import 'package:persistent_shopping_cart/model/cart_model.dart';
+import '../../res/components/Colors/colors_app.dart';
+import '../../utils/routes/routes_name.dart';
+import '../cart/persistent_shopping_cart.dart';
 import 'restaurant_menu_model.dart';
 
 class RestaurantMenuWidget extends StatefulWidget {
@@ -60,7 +63,7 @@ class _RestaurantMenuWidgetState extends State<RestaurantMenuWidget>
           child: AppBar(
             backgroundColor: Colors.white,
             iconTheme: const IconThemeData(color: Colors.black),
-            automaticallyImplyLeading: true,
+            automaticallyImplyLeading: false,
             actions: [
               Row(
                 mainAxisSize: MainAxisSize.max,
@@ -75,16 +78,18 @@ class _RestaurantMenuWidgetState extends State<RestaurantMenuWidget>
                       // Favorite button pressed
                     },
                   ),
-                  IconButton(
-                    icon: const Icon(
-                      Icons.shopping_bag_outlined,
-                      color: Colors.white,
-                      size: 24.0,
-                    ),
-                    onPressed: () {
-                      // Shopping bag button pressed
-                    },
-                  ),
+                  PersistentShoppingCart().showCartItemCountWidget(
+                      cartItemCountWidgetBuilder: (itemCount) => IconButton(
+                          onPressed: () {
+                            Navigator.pushNamed(context, RoutesName.cartScreen);
+                          },
+                          icon: Badge(
+                            label: Text(itemCount.toString()),
+                            child: const Icon(
+                              Icons.shopping_bag_outlined,
+                              color: Colors.white,
+                            ),
+                          ))),
                 ],
               ),
             ],

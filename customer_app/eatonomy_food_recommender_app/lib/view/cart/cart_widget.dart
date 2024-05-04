@@ -1,6 +1,8 @@
-import 'package:eatonomy_food_recommender_app/res/components/Cart_Component/cart_component.dart';
 import 'package:eatonomy_food_recommender_app/res/components/Custom_Containers/Custom_button.dart';
-import 'package:eatonomy_food_recommender_app/res/components/colors_app.dart';
+import 'package:eatonomy_food_recommender_app/res/components/Colors/colors_app.dart';
+import 'package:eatonomy_food_recommender_app/view/cart/persistent_shopping_cart.dart';
+import 'package:flutter/cupertino.dart';
+import '../../res/components/Cart_Component/cart_component.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +18,7 @@ class CartWidget extends StatefulWidget {
 
 class _CartWidgetState extends State<CartWidget> {
   late CartModel _model;
+  double deliveryFee = 300;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -39,6 +42,7 @@ class _CartWidgetState extends State<CartWidget> {
           ? FocusScope.of(context).requestFocus(_model.unfocusNode)
           : FocusScope.of(context).unfocus(),
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
         appBar: AppBar(
@@ -82,12 +86,7 @@ class _CartWidgetState extends State<CartWidget> {
                   color: FlutterFlowTheme.of(context).primaryBackground,
                 ),
                 child: ListView(
-                  padding: const EdgeInsets.fromLTRB(
-                    0,
-                    10.0,
-                    0,
-                    0,
-                  ),
+                  padding: const EdgeInsets.all(0.0),
                   shrinkWrap: true,
                   scrollDirection: Axis.vertical,
                   children: [
@@ -103,15 +102,27 @@ class _CartWidgetState extends State<CartWidget> {
                             ),
                       ),
                     ),
-                    CartComponent(
-                        onChanged: (count) =>
-                            setState(() => _model.countControllerValue = count),
-                        imageURL: 'https://picsum.photos/seed/435/600',
-                        dishName: 'Crown Crust',
-                        ratingsCount: 25,
-                        deliveryInfo: 'Delivery Paid',
-                        deliveryTime: '10 to 40',
-                        price: 1000)
+                    SingleChildScrollView(
+                      child: SizedBox(
+                        height: 500,
+                        child: Column(
+                          children: [
+                            Expanded(
+                              child: PersistentShoppingCart().showCartItems(
+                                cartTileWidget: ({required data}) =>
+                                    CartComponent(
+                                        productID: data.productId,
+                                        imageURL: data.productThumbnail,
+                                        dishName: data.productName,
+                                        price: data.unitPrice),
+                                showEmptyCartMsgWidget:
+                                    const Text('Cart is Empty'),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    )
                   ].divide(const SizedBox(height: 10.0)),
                 ),
               ),
@@ -168,16 +179,24 @@ class _CartWidgetState extends State<CartWidget> {
                             Padding(
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   0.0, 0.0, 15.0, 0.0),
-                              child: Text(
-                                'ItemPrice',
-                                style: FlutterFlowTheme.of(context)
-                                    .bodyMedium
-                                    .override(
-                                      fontFamily: 'Readex Pro',
-                                      color: const Color(0xFF5C5F65),
-                                      letterSpacing: 0.0,
-                                    ),
-                              ),
+                              child: PersistentShoppingCart()
+                                  .showTotalAmountWidget(
+                                      cartTotalAmountWidgetBuilder:
+                                          (totalAmount) {
+                                return Visibility(
+                                  visible: totalAmount == 0.0 ? false : true,
+                                  child: Text(
+                                    totalAmount.toString(),
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          fontFamily: 'Readex Pro',
+                                          color: const Color(0xFF5C5F65),
+                                          letterSpacing: 0.0,
+                                        ),
+                                  ),
+                                );
+                              }),
                             ),
                           ],
                         ),
@@ -225,7 +244,7 @@ class _CartWidgetState extends State<CartWidget> {
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   0.0, 0.0, 15.0, 0.0),
                               child: Text(
-                                'DeliveryFee',
+                                deliveryFee.toString(),
                                 style: FlutterFlowTheme.of(context)
                                     .bodyMedium
                                     .override(
@@ -284,18 +303,14 @@ class _CartWidgetState extends State<CartWidget> {
                             Padding(
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   0.0, 0.0, 15.0, 0.0),
-                              child: Text(
-                                'orderTotal',
-                                style: FlutterFlowTheme.of(context)
-                                    .bodyMedium
-                                    .override(
-                                      fontFamily: 'Readex Pro',
-                                      color: const Color(0xFF5C5F65),
-                                      fontSize: 16.0,
-                                      letterSpacing: 0.0,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                              ),
+                              child: PersistentShoppingCart()
+                                  .showTotalAmountWidget(
+                                      cartTotalAmountWidgetBuilder:
+                                          (totalAmount) {
+                                return Text(
+                                  (totalAmount + deliveryFee).toString(),
+                                );
+                              }),
                             ),
                           ],
                         ),

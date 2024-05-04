@@ -7,7 +7,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../res/components/Authentication_Components/Google_SignIn.dart';
 import '../../res/components/Custom_Containers/password_text_form_field.dart';
-import '../../res/components/colors_app.dart';
+import '../../res/components/Colors/colors_app.dart';
 import '../../res/components/Custom_Containers/Custom_button.dart';
 import '../../res/components/Authentication_Components/social_media_container.dart';
 import '../../utils/routes/routes_name.dart';

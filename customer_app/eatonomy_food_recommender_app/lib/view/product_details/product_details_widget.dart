@@ -1,8 +1,9 @@
-import 'package:eatonomy_food_recommender_app/utils/routes/routes_name.dart';
+import 'package:eatonomy_food_recommender_app/view/cart/persistent_shopping_cart.dart';
 import 'package:flutter/foundation.dart';
+import 'package:persistent_shopping_cart/model/cart_model.dart';
 
-import '../../res/components/Custom_Containers/Custom_button.dart';
-import '../../res/components/colors_app.dart';
+import '../../res/components/Colors/colors_app.dart';
+import '../../utils/routes/routes_name.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -13,6 +14,7 @@ export 'product_details_model.dart';
 
 class ProductDetailsWidget extends StatefulWidget {
   final String productName;
+  final int productID;
   final int price;
   final bool isDeliveryFree;
   final String deliveryTime;
@@ -20,6 +22,7 @@ class ProductDetailsWidget extends StatefulWidget {
   final double rating;
   final int numberOfReviews;
   final String description;
+  final Widget shoppingCartWidget;
 
   const ProductDetailsWidget(
       {super.key,
@@ -30,7 +33,9 @@ class ProductDetailsWidget extends StatefulWidget {
       required this.numberOfReviews,
       required this.deliveryTime,
       required this.description,
-      required this.imageurl});
+      required this.imageurl,
+      required this.productID,
+      required this.shoppingCartWidget});
 
   @override
   State<ProductDetailsWidget> createState() => _ProductDetailsWidgetState();
@@ -74,24 +79,41 @@ class _ProductDetailsWidgetState extends State<ProductDetailsWidget> {
             actions: [
               Row(
                 mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  FlutterFlowIconButton(
-                    borderColor: Colors.transparent,
-                    borderRadius: 0.0,
-                    borderWidth: 0.0,
-                    buttonSize: 40.0,
-                    fillColor: Colors.transparent,
-                    icon: Icon(
-                      Icons.favorite_border,
-                      color: FlutterFlowTheme.of(context).secondaryBackground,
-                      size: 24.0,
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: FlutterFlowIconButton(
+                      borderColor: Colors.transparent,
+                      borderRadius: 0.0,
+                      borderWidth: 0.0,
+                      buttonSize: 40.0,
+                      fillColor: Colors.transparent,
+                      icon: Icon(
+                        Icons.favorite_border,
+                        color: FlutterFlowTheme.of(context).secondaryBackground,
+                        size: 24.0,
+                      ),
+                      onPressed: () {
+                        if (kDebugMode) {
+                          print('IconButton pressed ...');
+                        }
+                      },
                     ),
-                    onPressed: () {
-                      if (kDebugMode) {
-                        print('IconButton pressed ...');
-                      }
-                    },
                   ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: PersistentShoppingCart().showCartItemCountWidget(
+                        cartItemCountWidgetBuilder: (itemCount) => IconButton(
+                            onPressed: () {
+                              Navigator.pushNamed(
+                                  context, RoutesName.cartScreen);
+                            },
+                            icon: Badge(
+                              label: Text(itemCount.toString()),
+                              child: const Icon(Icons.shopping_bag_outlined),
+                            ))),
+                  )
                 ],
               ),
             ],
@@ -336,16 +358,6 @@ class _ProductDetailsWidgetState extends State<ProductDetailsWidget> {
                             ),
                           ),
                         ),
-                        // Generated code for this CountController Widget...
-                        // Padding(
-                        //   padding: const EdgeInsets.symmetric(
-                        //       horizontal: 15, vertical: 0.0),
-                        //   child: CountSelector(
-                        //     initialValue: _model.countControllerValue ?? 0,
-                        //     onChanged: (count) => setState(
-                        //         () => _model.countControllerValue = count),
-                        //   ),
-                        // ),
                       ],
                     ),
                     Column(
@@ -394,12 +406,7 @@ class _ProductDetailsWidgetState extends State<ProductDetailsWidget> {
                     ),
                   ],
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(15.0),
-                  child: CustomButton('ADD TO Cart', () {
-                    Navigator.pushNamed(context, RoutesName.cartScreen);
-                  }, ColorsApp.splashBackgroundColorApp),
-                )
+                widget.shoppingCartWidget
               ],
             ),
           ),

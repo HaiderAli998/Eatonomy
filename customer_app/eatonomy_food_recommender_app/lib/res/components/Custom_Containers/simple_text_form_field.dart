@@ -1,4 +1,4 @@
-import 'package:eatonomy_food_recommender_app/res/components/colors_app.dart';
+import 'package:eatonomy_food_recommender_app/res/components/Colors/colors_app.dart';
 import 'package:flutter/material.dart';
 
 class SimpleTextField extends StatelessWidget {

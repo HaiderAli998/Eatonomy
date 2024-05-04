@@ -1,6 +1,7 @@
-import 'package:eatonomy_food_recommender_app/res/components/colors_app.dart';
+import 'package:eatonomy_food_recommender_app/res/components/Colors/colors_app.dart';
 import 'package:eatonomy_food_recommender_app/utils/routes/routes.dart';
 import 'package:eatonomy_food_recommender_app/utils/routes/routes_name.dart';
+import 'package:eatonomy_food_recommender_app/view/cart/persistent_shopping_cart.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
@@ -10,7 +11,7 @@ import 'flutter_flow/flutter_flow_theme.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   usePathUrlStrategy();
-
+  await PersistentShoppingCart().init();
   await FlutterFlowTheme.initialize();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
