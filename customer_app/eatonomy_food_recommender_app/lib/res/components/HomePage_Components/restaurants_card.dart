@@ -157,9 +157,7 @@ class CustomRestaurantCard extends StatelessWidget {
                                   horizontal: 10, vertical: 10),
                               child: FFButtonWidget(
                                 onPressed: () {
-                                  if (kDebugMode) {
-                                    print('Button pressed ...');
-                                  }
+                                  //for fav screen
                                 },
                                 text: '',
                                 icon: const FaIcon(

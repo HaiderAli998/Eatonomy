@@ -1,11 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eatonomy_food_recommender_app/res/components/HomePage_Components/categories_container.dart';
-import 'package:eatonomy_food_recommender_app/res/components/HomePage_Components/dish_card.dart';
 import 'package:eatonomy_food_recommender_app/res/components/HomePage_Components/restaurants_card.dart';
 import 'package:eatonomy_food_recommender_app/res/components/Colors/colors_app.dart';
 import 'package:eatonomy_food_recommender_app/utils/routes/routes_name.dart';
 import 'package:eatonomy_food_recommender_app/view/drawer/Drawer.dart';
-import 'package:eatonomy_food_recommender_app/view/product_details/product_details_widget.dart';
+import 'package:eatonomy_food_recommender_app/view/food_categories/Burgers/burger_screen_list.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import '../../res/components/HomePage_Components/Home_appbar.dart';
@@ -224,65 +223,181 @@ class _HomeScreenState extends State<HomeScreen> {
                             children: [
                               CustomCategoryContainer(
                                   svgPath: 'assets/icons/hamburger.svg',
-                                  text: 'Burger',
+                                  text: 'Burgers',
                                   onTap: () {
-                                    Navigator.pushNamed(
-                                        context, RoutesName.burgerScreen);
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                CategoryScreen(
+                                                  appBarTitle: 'Burgers',
+                                                  dataStream: FirebaseFirestore
+                                                      .instance
+                                                      .collection('Burgers')
+                                                      .snapshots(),
+                                                )));
                                   }),
                               CustomCategoryContainer(
                                   svgPath: 'assets/icons/pizza-pie.svg',
                                   text: 'Pizza',
                                   onTap: () {
-                                    Navigator.pushNamed(
-                                        context, RoutesName.burgerScreen);
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                CategoryScreen(
+                                                  appBarTitle: 'Pizza',
+                                                  dataStream: FirebaseFirestore
+                                                      .instance
+                                                      .collection('Pizza')
+                                                      .snapshots(),
+                                                )));
                                   }),
                               CustomCategoryContainer(
                                   svgPath: 'assets/icons/bbq-2.svg',
                                   text: 'BBQ',
                                   onTap: () {
-                                    Navigator.pushNamed(
-                                        context, RoutesName.bbqScreen);
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                CategoryScreen(
+                                                  appBarTitle: 'BBQ',
+                                                  dataStream: FirebaseFirestore
+                                                      .instance
+                                                      .collection('BBQ')
+                                                      .snapshots(),
+                                                )));
                                   }),
                               CustomCategoryContainer(
                                   svgPath: 'assets/icons/chicken.svg',
                                   text: 'Broast',
-                                  onTap: () {}),
+                                  onTap: () {
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                CategoryScreen(
+                                                  appBarTitle: 'Broast',
+                                                  dataStream: FirebaseFirestore
+                                                      .instance
+                                                      .collection('Broast')
+                                                      .snapshots(),
+                                                )));
+                                  }),
                               CustomCategoryContainer(
                                   svgPath: 'assets/icons/chinese-2.svg',
                                   text: 'Chinese',
-                                  onTap: () {}),
+                                  onTap: () {
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                CategoryScreen(
+                                                  appBarTitle: 'Chinese',
+                                                  dataStream: FirebaseFirestore
+                                                      .instance
+                                                      .collection('Chinese')
+                                                      .snapshots(),
+                                                )));
+                                  }),
                               CustomCategoryContainer(
                                   svgPath: 'assets/icons/biryani.svg',
                                   text: 'Biryani',
-                                  onTap: () {}),
+                                  onTap: () {
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                CategoryScreen(
+                                                  appBarTitle: 'Biryani',
+                                                  dataStream: FirebaseFirestore
+                                                      .instance
+                                                      .collection('Biryani')
+                                                      .snapshots(),
+                                                )));
+                                  }),
                               CustomCategoryContainer(
                                   svgPath: 'assets/icons/desi.svg',
                                   text: 'Desi',
-                                  onTap: () {}),
+                                  onTap: () {
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                CategoryScreen(
+                                                  appBarTitle: 'Desi',
+                                                  dataStream: FirebaseFirestore
+                                                      .instance
+                                                      .collection('Desi')
+                                                      .snapshots(),
+                                                )));
+                                  }),
                               CustomCategoryContainer(
                                   svgPath: 'assets/icons/sandwich-01.svg',
                                   text: 'Sandwich',
-                                  onTap: () {}),
+                                  onTap: () {
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                CategoryScreen(
+                                                  appBarTitle: 'Sandwich',
+                                                  dataStream: FirebaseFirestore
+                                                      .instance
+                                                      .collection('Sandwich')
+                                                      .snapshots(),
+                                                )));
+                                  }),
                               CustomCategoryContainer(
                                   svgPath: 'assets/icons/pasta.svg',
                                   text: 'Pasta',
-                                  onTap: () {}),
+                                  onTap: () {
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                CategoryScreen(
+                                                  appBarTitle: 'Pasta',
+                                                  dataStream: FirebaseFirestore
+                                                      .instance
+                                                      .collection('Pasta')
+                                                      .snapshots(),
+                                                )));
+                                  }),
                               CustomCategoryContainer(
                                   svgPath: 'assets/icons/shawarma.svg',
                                   text: 'Shawarma',
                                   onTap: () {
-                                    Navigator.pushNamed(
-                                        context, RoutesName.shawarmaScreen);
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                CategoryScreen(
+                                                  appBarTitle: 'Shawarma',
+                                                  dataStream: FirebaseFirestore
+                                                      .instance
+                                                      .collection('Shawarma')
+                                                      .snapshots(),
+                                                )));
                                   }),
                               CustomCategoryContainer(
                                 svgPath: 'assets/icons/ice-cream.svg',
                                 text: 'Ice-Cream',
-                                onTap: () {},
+                                onTap: () {
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) => CategoryScreen(
+                                            appBarTitle: 'Ice-Cream',
+                                            dataStream: FirebaseFirestore
+                                                .instance
+                                                .collection('Ice-Cream')
+                                                .snapshots(),
+                                          )));
+                                },
                               ),
                               CustomCategoryContainer(
                                 svgPath: 'assets/icons/tea.svg',
                                 text: 'Tea',
-                                onTap: () {},
+                                onTap: () {
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) => CategoryScreen(
+                                            appBarTitle: 'Tea',
+                                            dataStream: FirebaseFirestore
+                                                .instance
+                                                .collection('Tea')
+                                                .snapshots(),
+                                          )));
+                                },
                               ),
                             ],
                           ),

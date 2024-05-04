@@ -9,8 +9,6 @@ class RoutesName {
   static const String loginPhone = 'Login Phone';
   static const String fireStoreScreen = 'Fire Store Screen';
   static const String fireStoreAdd = 'Fire Store Add Data';
-  static const String burgerScreen = 'Burger Screen';
-  static const String shawarmaScreen = 'Shawarma Screen';
-  static const String bbqScreen = 'BBQ Screen';
+
   static const String cartScreen = 'Cart Screen';
 }

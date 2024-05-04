@@ -48,15 +48,6 @@ class Routes {
       case RoutesName.fireStoreAdd:
         return MaterialPageRoute(
             builder: (BuildContext context) => const FireStoreAddData());
-      case RoutesName.burgerScreen:
-        return MaterialPageRoute(
-            builder: (BuildContext context) => const BurgerScreen());
-      case RoutesName.shawarmaScreen:
-        return MaterialPageRoute(
-            builder: (BuildContext context) => const ShawarmaScreen());
-      case RoutesName.bbqScreen:
-        return MaterialPageRoute(
-            builder: (BuildContext context) => const BBQScreen());
       case RoutesName.cartScreen:
         return MaterialPageRoute(
             builder: (BuildContext context) => const CartWidget());

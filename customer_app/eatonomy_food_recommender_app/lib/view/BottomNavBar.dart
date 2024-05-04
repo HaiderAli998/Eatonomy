@@ -7,7 +7,7 @@ import 'orders/orders_widget.dart';
 import 'profile/profile_widget.dart';
 
 class NavBarPage extends StatefulWidget {
-  const NavBarPage({Key? key, this.initialPage, this.page}) : super(key: key);
+  const NavBarPage({super.key, this.initialPage, this.page});
 
   final String? initialPage;
   final Widget? page;

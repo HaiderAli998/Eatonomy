@@ -29,9 +29,10 @@ class _DeliveryAddressAddAddress2WidgetState
   void initState() {
     super.initState();
     _model = createModel(context, () => DeliveryAddressAddAddress2Model());
-
-    getCurrentUserLocation(defaultLocation: const LatLng(0.0, 0.0), cached: true)
-        .then((loc) => setState(() => currentUserLocationValue = loc));
+    //
+    // getCurrentUserLocation(
+    //         defaultLocation: const LatLng(0.0, 0.0), cached: true)
+    //     .then((loc) => setState(() => currentUserLocationValue = loc));
   }
 
   @override
@@ -83,7 +84,8 @@ class _DeliveryAddressAddAddress2WidgetState
             },
           ),
           title: Padding(
-            padding: const EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 0.0, 16.0),
+            padding:
+                const EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 0.0, 16.0),
             child: Text(
               'Address',
               style: FlutterFlowTheme.of(context).headlineLarge.override(
@@ -107,8 +109,8 @@ class _DeliveryAddressAddAddress2WidgetState
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Padding(
-                    padding:
-                        const EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 20.0, 0.0),
+                    padding: const EdgeInsetsDirectional.fromSTEB(
+                        20.0, 0.0, 20.0, 0.0),
                     child: FlutterFlowStaticMap(
                       location: currentUserLocationValue!,
                       apiKey:
@@ -129,8 +131,8 @@ class _DeliveryAddressAddAddress2WidgetState
                     ),
                   ),
                   Padding(
-                    padding:
-                        const EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 0.0, 0.0),
+                    padding: const EdgeInsetsDirectional.fromSTEB(
+                        20.0, 0.0, 0.0, 0.0),
                     child: Row(
                       mainAxisSize: MainAxisSize.max,
                       children: [
@@ -152,8 +154,8 @@ class _DeliveryAddressAddAddress2WidgetState
                     ),
                   ),
                   Padding(
-                    padding:
-                        const EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 0.0, 0.0),
+                    padding: const EdgeInsetsDirectional.fromSTEB(
+                        20.0, 0.0, 0.0, 0.0),
                     child: Row(
                       mainAxisSize: MainAxisSize.max,
                       children: [
@@ -220,13 +222,14 @@ class _DeliveryAddressAddAddress2WidgetState
                 ],
               ),
               Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 0.0, 0.0),
+                padding:
+                    const EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 0.0, 0.0),
                 child: Row(
                   mainAxisSize: MainAxisSize.max,
                   children: [
                     Padding(
-                      padding:
-                          const EdgeInsetsDirectional.fromSTEB(0.0, 15.0, 0.0, 0.0),
+                      padding: const EdgeInsetsDirectional.fromSTEB(
+                          0.0, 15.0, 0.0, 0.0),
                       child: Text(
                         'Delivery Option',
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
@@ -244,7 +247,11 @@ class _DeliveryAddressAddAddress2WidgetState
                     FormFieldController<String>(
                   _model.dropDownValue ??= 'Meet at door',
                 ),
-                options: const ['Meet at door', 'Meet outside', 'Leave at door'],
+                options: const [
+                  'Meet at door',
+                  'Meet outside',
+                  'Leave at door'
+                ],
                 onChanged: (val) => setState(() => _model.dropDownValue = val),
                 width: MediaQuery.sizeOf(context).width * 0.9,
                 height: 56.0,
@@ -264,14 +271,16 @@ class _DeliveryAddressAddAddress2WidgetState
                 borderColor: FlutterFlowTheme.of(context).secondaryBackground,
                 borderWidth: 2.0,
                 borderRadius: 8.0,
-                margin: const EdgeInsetsDirectional.fromSTEB(16.0, 4.0, 16.0, 4.0),
+                margin:
+                    const EdgeInsetsDirectional.fromSTEB(16.0, 4.0, 16.0, 4.0),
                 hidesUnderline: true,
                 isOverButton: true,
                 isSearchable: false,
                 isMultiSelect: false,
               ),
               Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(0.0, 30.0, 0.0, 0.0),
+                padding:
+                    const EdgeInsetsDirectional.fromSTEB(0.0, 30.0, 0.0, 0.0),
                 child: FFButtonWidget(
                   onPressed: () {
                     print('Button pressed ...');
@@ -280,10 +289,10 @@ class _DeliveryAddressAddAddress2WidgetState
                   options: FFButtonOptions(
                     width: MediaQuery.sizeOf(context).width * 0.9,
                     height: MediaQuery.sizeOf(context).height * 0.055,
-                    padding:
-                        const EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
-                    iconPadding:
-                        const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                    padding: const EdgeInsetsDirectional.fromSTEB(
+                        24.0, 0.0, 24.0, 0.0),
+                    iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                        0.0, 0.0, 0.0, 0.0),
                     color: FlutterFlowTheme.of(context).primary,
                     textStyle: FlutterFlowTheme.of(context).titleSmall.override(
                           fontFamily: 'Readex Pro',

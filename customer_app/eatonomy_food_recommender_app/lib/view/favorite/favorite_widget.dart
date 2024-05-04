@@ -1,10 +1,11 @@
+import '../../utils/routes/routes_name.dart';
+import '../cart/persistent_shopping_cart.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 import 'favorite_model.dart';
+import 'favorite_restaurant.dart';
+import 'favourite_dishes.dart';
 export 'favorite_model.dart';
 
 class FavoriteWidget extends StatefulWidget {
@@ -34,35 +35,45 @@ class _FavoriteWidgetState extends State<FavoriteWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => _model.unfocusNode.canRequestFocus
-          ? FocusScope.of(context).requestFocus(_model.unfocusNode)
-          : FocusScope.of(context).unfocus(),
+    return DefaultTabController(
+      length: 2,
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
         appBar: AppBar(
-          backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
+          backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
           automaticallyImplyLeading: false,
           title: Text(
-            'Page Title',
+            'Favorite',
             style: FlutterFlowTheme.of(context).headlineMedium.override(
                   fontFamily: 'Outfit',
-                  color: Colors.white,
+                  color: Colors.black,
                   fontSize: 22.0,
                 ),
           ),
-          actions: [],
-          centerTitle: false,
-          elevation: 2.0,
-        ),
-        body: SafeArea(
-          top: true,
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            children: [],
+          leading: const Icon(Icons.menu),
+          actions: [
+            PersistentShoppingCart().showCartItemCountWidget(
+                cartItemCountWidgetBuilder: (itemCount) => IconButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, RoutesName.cartScreen);
+                    },
+                    icon: Badge(
+                      label: Text(itemCount.toString()),
+                      child: const Icon(Icons.shopping_bag_outlined),
+                    )))
+          ],
+          centerTitle: true,
+          bottom: const TabBar(
+            tabs: [
+              Tab(text: 'Restaurants'),
+              Tab(
+                text: 'Dishes',
+              )
+            ],
           ),
         ),
+        body: const TabBarView(children: [FavRestaurants(), FavDishes()]),
       ),
     );
   }

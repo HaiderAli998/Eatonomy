@@ -5,26 +5,31 @@ import '../../../flutter_flow/flutter_flow_theme.dart';
 import '../../../res/components/HomePage_Components/dish_card.dart';
 import '../../../res/components/Colors/colors_app.dart';
 
-class BurgerScreen extends StatefulWidget {
-  const BurgerScreen({super.key});
+class CategoryScreen extends StatefulWidget {
+  final Stream<QuerySnapshot> dataStream;
+  final String appBarTitle;
+
+  const CategoryScreen({
+    super.key,
+    required this.dataStream,
+    required this.appBarTitle,
+  });
 
   @override
-  State<BurgerScreen> createState() => _BurgerScreenState();
+  State<CategoryScreen> createState() => _CategoryScreenState();
 }
 
-class _BurgerScreenState extends State<BurgerScreen> {
+class _CategoryScreenState extends State<CategoryScreen> {
   @override
   Widget build(BuildContext context) {
-    final burgerData =
-        FirebaseFirestore.instance.collection('Burgers').snapshots();
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
-          title: const Center(
+          title: Center(
             child: Text(
-              'Burgers',
-              style: TextStyle(
+              widget.appBarTitle,
+              style: const TextStyle(
                   color: ColorsApp.grey,
                   fontWeight: FontWeight.bold,
                   fontSize: 24),
@@ -33,7 +38,7 @@ class _BurgerScreenState extends State<BurgerScreen> {
           backgroundColor: ColorsApp.backgroundColorApp,
         ),
         body: StreamBuilder<QuerySnapshot>(
-          stream: burgerData,
+          stream: widget.dataStream,
           builder:
               (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
