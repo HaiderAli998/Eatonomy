@@ -25,7 +25,6 @@ class FlutterFlowCountController extends StatefulWidget {
   final EdgeInsetsGeometry contentPadding;
 
   @override
-  // ignore: library_private_types_in_public_api
   _FlutterFlowCountControllerState createState() =>
       _FlutterFlowCountControllerState();
 }
@@ -33,15 +32,11 @@ class FlutterFlowCountController extends StatefulWidget {
 class _FlutterFlowCountControllerState
     extends State<FlutterFlowCountController> {
   int get count => widget.count;
-
   int? get minimum => widget.minimum;
-
   int? get maximum => widget.maximum;
-
   int get stepSize => widget.stepSize;
 
   bool get canDecrement => minimum == null || count - stepSize >= minimum!;
-
   bool get canIncrement => maximum == null || count + stepSize <= maximum!;
 
   void _decrementCounter() {
