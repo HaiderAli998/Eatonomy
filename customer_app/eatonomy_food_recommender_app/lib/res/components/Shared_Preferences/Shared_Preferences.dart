@@ -3,7 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class SharedPreferencesClass {
   static Future<String?> getProfilePicture() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getString('ProfileUrl');
+    return prefs.getString('ProfilePic');
   }
 
 
@@ -16,4 +16,10 @@ class SharedPreferencesClass {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getString('GoogleName');
   }
+  static Future<String?> getProfileEmail() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString('Email');
+  }
+
+
 }

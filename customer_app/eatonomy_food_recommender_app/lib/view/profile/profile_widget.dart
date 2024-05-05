@@ -8,7 +8,10 @@ import 'package:eatonomy_food_recommender_app/view/edit_profile/edit_profile_wid
 export 'profile_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:eatonomy_food_recommender_app/utils/routes/routes_name.dart';
-
+import 'package:eatonomy_food_recommender_app/res/components/Shared_Preferences/Shared_Preferences.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../cart/persistent_shopping_cart.dart';
 class ProfileWidget extends StatefulWidget {
   const ProfileWidget({super.key});
 
@@ -63,21 +66,15 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                 ),
           ),
           actions: [
-            FlutterFlowIconButton(
-              borderColor: FlutterFlowTheme.of(context).primaryBackground,
-              borderRadius: 20.0,
-              borderWidth: 1.0,
-              buttonSize: 40.0,
-              fillColor: FlutterFlowTheme.of(context).primaryBackground,
-              icon: Icon(
-                Icons.shopping_bag_outlined,
-                color: FlutterFlowTheme.of(context).secondaryText,
-                size: 24.0,
-              ),
-              onPressed: () {
-                print('IconButton pressed ...');
-              },
-            ),
+            PersistentShoppingCart().showCartItemCountWidget(
+                cartItemCountWidgetBuilder: (itemCount) => IconButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, RoutesName.cartScreen);
+                    },
+                    icon: Badge(
+                      label: Text(itemCount.toString()),
+                      child: const Icon(Icons.shopping_bag_outlined),
+                    )))
           ],
           centerTitle: true,
           elevation: 0.0,
@@ -88,108 +85,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(16.0, 1.0, 16.0, 0.0),
-                child: Container(
-                  width: MediaQuery.sizeOf(context).width,
-                  constraints: BoxConstraints(
-                    maxWidth: MediaQuery.sizeOf(context).width * 0.95,
-                    maxHeight: MediaQuery.sizeOf(context).height * 0.15,
-                  ),
-                  decoration: BoxDecoration(
-                    color: FlutterFlowTheme.of(context).secondaryBackground,
-                    boxShadow: const [
-                      BoxShadow(
-                        blurRadius: 3.0,
-                        color: Color(0xFFE1E2E3),
-                        offset: Offset(
-                          0.0,
-                          1.0,
-                        ),
-                      )
-                    ],
-                    borderRadius: const BorderRadius.only(
-                      bottomLeft: Radius.circular(12.0),
-                      bottomRight: Radius.circular(12.0),
-                      topLeft: Radius.circular(12.0),
-                      topRight: Radius.circular(12.0),
-                    ),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Container(
-                          width: 90.0,
-                          height: 90.0,
-                          decoration: BoxDecoration(
-                            color: FlutterFlowTheme.of(context)
-                                .secondaryBackground,
-                            shape: BoxShape.circle,
-                            border: Border.all(
-                              color: FlutterFlowTheme.of(context)
-                                  .secondaryBackground,
-                              width: 2.0,
-                            ),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(2.0),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(50.0),
-                              child: CachedNetworkImage(
-                                fadeInDuration: const Duration(milliseconds: 500),
-                                fadeOutDuration: const Duration(milliseconds: 500),
-                                imageUrl:
-                                    'https://images.unsplash.com/photo-1531123414780-f74242c2b052?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NDV8fHByb2ZpbGV8ZW58MHx8MHx8&auto=format&fit=crop&w=900&q=60',
-                                width: 60.0,
-                                height: 60.0,
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              16.0, 0.0, 0.0, 0.0),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Joy Augustin',
-                                style: FlutterFlowTheme.of(context)
-                                    .headlineSmall
-                                    .override(
-                                      fontFamily: 'Outfit',
-                                      color: const Color(0xFF5C5F65),
-                                      fontSize: 16.0,
-                                      letterSpacing: 0.0,
-                                    ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 4.0, 0.0, 0.0),
-                                child: Text(
-                                  'joy@augustin.com',
-                                  style: FlutterFlowTheme.of(context)
-                                      .labelMedium
-                                      .override(
-                                        fontFamily: 'Readex Pro',
-                                        color: const Color(0xFF76777D),
-                                        letterSpacing: 0.0,
-                                      ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
+              ProfileTile(),
               Padding(
                 padding: const EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 0.0, 0.0),
                 child: Text(
@@ -286,6 +182,130 @@ class _ProfileWidgetState extends State<ProfileWidget> {
     );
   }
 }
+
+
+
+
+class ProfileTile extends StatefulWidget {
+  final String? profileName;
+  final String? profileEmail;
+  final String? imageUrl;
+
+  const ProfileTile({
+    Key? key,
+    this.profileName,
+    this.profileEmail,
+    this.imageUrl,
+  }) : super(key: key);
+
+  @override
+  _ProfileTileState createState() => _ProfileTileState();
+}
+
+class _ProfileTileState extends State<ProfileTile> {
+  String? _profileName;
+  String? _profileEmail;
+  String? _imageUrl;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadProfileData();
+  }
+
+  Future<void> _loadProfileData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _profileName = widget.profileName ?? prefs.getString('Name');
+      _profileEmail = widget.profileEmail ?? prefs.getString('Email');
+      _imageUrl = widget.imageUrl ?? prefs.getString('ProfilePic');
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsetsDirectional.fromSTEB(16.0, 1.0, 16.0, 0.0),
+      child: Container(
+        width: MediaQuery.of(context).size.width,
+        constraints: BoxConstraints(
+          maxWidth: MediaQuery.of(context).size.width * 0.95,
+          maxHeight: MediaQuery.of(context).size.height * 0.15,
+        ),
+        decoration: BoxDecoration(
+          color: Colors.white, // Adjust as needed for your theme
+          boxShadow: const [
+            BoxShadow(
+              blurRadius: 3.0,
+              color: Color(0xFFE1E2E3),
+              offset: Offset(0.0, 1.0),
+            )
+          ],
+          borderRadius: const BorderRadius.all(Radius.circular(12.0)),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Row(
+            children: [
+              Container(
+                width: 90.0,
+                height: 90.0,
+                decoration: BoxDecoration(
+                  color: Colors.white, // Adjust as needed for your theme
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                    color: Colors.white, // Adjust as needed for your theme
+                    width: 2.0,
+                  ),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(2.0),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(50.0),
+                    child: CachedNetworkImage(
+                      imageUrl: _imageUrl ?? 'https://i.imgur.com/VTGxlk8.jpeg', // This should ideally be a valid URL
+                      width: 60.0,
+                      height: 60.0,
+                      fit: BoxFit.cover,
+                      placeholder: (context, url) => Image.asset('assets/default_profile.jpg', fit: BoxFit.cover),
+                      errorWidget: (context, url, error) => Image.asset('assets/default_profile.jpg', fit: BoxFit.cover),
+                    ),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 0.0, 0.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      _profileName ?? 'Your Name',
+                      style: TextStyle(
+                        color: Color(0xFF5C5F65),
+                        fontSize: 16.0,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 0.0),
+                      child: Text(
+                        _profileEmail ?? 'email@example.com',
+                        style: TextStyle(
+                          color: Color(0xFF76777D),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 
 class ProfileListItem extends StatelessWidget {
   final IconData iconData;

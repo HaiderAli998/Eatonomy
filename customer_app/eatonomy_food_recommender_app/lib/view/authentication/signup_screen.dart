@@ -11,6 +11,7 @@ import '../../res/components/Colors/colors_app.dart';
 import '../../res/components/Custom_Containers/Custom_button.dart';
 import '../../res/components/Authentication_Components/social_media_container.dart';
 import '../../utils/routes/routes_name.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
@@ -181,31 +182,47 @@ class _SignupState extends State<SignupScreen> {
                 ),
                 CustomButton(
                   'Sign up',
-                  () {
+                  () async {
                     if (_formKey.currentState!.validate()) {
+                      if (_passwordController.text !=
+                          _confirmPasswordController.text) {
+                        Utils.toastMessage('Passwords do not match.');
+                        rePasswordFocusNode.requestFocus();
+                        return;
+                      }
+
                       setState(() {
                         loading = true;
                       });
-                      if (_passwordController.text !=
-                          _confirmPasswordController.text) {
-                        Utils.toastMessage('Please enter correct password');
-                        rePasswordFocusNode.requestFocus();
-                      } else {
-                        _auth
-                            .createUserWithEmailAndPassword(
-                                email: _emailController.text.toString(),
-                                password: _passwordController.text.toString())
-                            .then((value) {
-                          setState(() {
-                            loading = false;
-                          });
-                          Navigator.pushNamedAndRemoveUntil(
-                              context, RoutesName.login, (route) => false);
-                        }).onError((error, stackTrace) {
-                          setState(() {
-                            loading = false;
-                          });
-                          Utils.toastMessage(error.toString());
+
+                      try {
+                        // Create the user with email and password
+                        UserCredential userCredential =
+                            await _auth.createUserWithEmailAndPassword(
+                          email: _emailController.text.trim(),
+                          password: _passwordController.text.trim(),
+                        );
+
+                        // Check if user is not null and update their display name
+                        User? user = userCredential.user;
+                        if (user != null) {
+                          await user
+                              .updateDisplayName(_nameController.text.trim());
+                          await user
+                              .reload(); // Reload the user data from Firebase
+
+                          // Optionally, save the name and email to SharedPreferences
+                          await addNameToSP();
+
+                          // Navigate or perform other actions
+                          Navigator.pushNamedAndRemoveUntil(context,
+                              RoutesName.foodPreferences, (route) => false);
+                          Utils.toastMessage('Account created successfully!');
+                        }
+                      } catch (e) {
+                        Utils.toastMessage('Failed to create account: $e');
+                        setState(() {
+                          loading = false;
                         });
                       }
                     }
@@ -266,11 +283,48 @@ class _SignupState extends State<SignupScreen> {
                     SocialMediaBox(
                         text: 'Google',
                         onPress: () async {
-                          userCredential.value = await signInWithGoogle();
-                          if (userCredential.value != null) {
-                            print(userCredential.value.user!.email);
-                            Navigator.pushNamedAndRemoveUntil(context,
-                                RoutesName.foodPreferences, (route) => false);
+                          GoogleSignIn googleSignIn = GoogleSignIn();
+                          SharedPreferences prefs =
+                              await SharedPreferences.getInstance();
+                          try {
+                            GoogleSignInAccount? googleUser =
+                                await googleSignIn.signIn();
+                            if (googleUser != null) {
+                              GoogleSignInAuthentication googleAuth =
+                                  await googleUser.authentication;
+
+                              final OAuthCredential credential =
+                                  GoogleAuthProvider.credential(
+                                accessToken: googleAuth.accessToken,
+                                idToken: googleAuth.idToken,
+                              );
+
+                              UserCredential userCredential = await FirebaseAuth
+                                  .instance
+                                  .signInWithCredential(credential);
+                              User? user = userCredential.user;
+
+                              if (user != null) {
+                                // Store user details in SharedPreferences
+                                await prefs.setString(
+                                    'Name', user.displayName ?? 'No Name');
+                                await prefs.setString(
+                                    'Email', user.email ?? 'No Email');
+                                await prefs.setString(
+                                    'ProfilePic', user.photoURL ?? 'https://i.imgur.com/VTGxlk8.jpeg');
+
+                                // Navigate or perform other actions
+                                Navigator.pushNamedAndRemoveUntil(
+                                    context,
+                                    RoutesName.foodPreferences,
+                                    (route) => false);
+                                Utils.toastMessage(
+                                    'Signed in with Google successfully!');
+                              }
+                            }
+                          } catch (e) {
+                            Utils.toastMessage(
+                                'Failed to sign in with Google: $e');
                           }
                         },
                         svgPath: 'assets/google_logo.svg'),
@@ -292,8 +346,9 @@ class _SignupState extends State<SignupScreen> {
     );
   }
 
-  addNameToSP() async {
+  Future<void> addNameToSP() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString('Name', _nameController.text);
+    await prefs.setString('Name', _nameController.text);
+    await prefs.setString('Email', _emailController.text);
   }
 }

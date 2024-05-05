@@ -5,11 +5,39 @@ import 'package:eatonomy_food_recommender_app/utils/routes/routes_name.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../res/components/Authentication_Components/Google_SignIn.dart';
 import '../../res/components/Authentication_Components/Login_with_phone_number.dart';
 import '../../res/components/Custom_Containers/password_text_form_field.dart';
 import '../../res/components/Custom_Containers/simple_text_form_field.dart';
 import '../../utils/Utils.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+
+Future<User?> signInWithGoogle() async {
+  final GoogleSignIn googleSignIn = GoogleSignIn();
+  final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
+  if (googleUser != null) {
+    final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+    final OAuthCredential credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth.accessToken,
+      idToken: googleAuth.idToken,
+    );
+
+    final UserCredential userCredential = await FirebaseAuth.instance.signInWithCredential(credential);
+    final User? user = userCredential.user;
+    if (user != null) {
+      // Save user details in SharedPreferences
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setString('Name', user.displayName ?? 'No Name');
+      await prefs.setString('Email', user.email ?? 'No Email');
+      await prefs.setString('ProfilePic', user.photoURL ?? 'https://i.imgur.com/VTGxlk8.jpeg');
+
+      Utils.toastMessage("Signed in as ${user.email}");
+      return user; // Returning User object for further use
+    }
+  }
+  return null;  // Return null if sign-in failed or was aborted
+}
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -42,27 +70,62 @@ class _LoginScreenState extends State<LoginScreen> {
     super.dispose();
   }
 
-  void login() {
+  void login() async {
     setState(() {
       loading = true;
     });
-    _auth
-        .signInWithEmailAndPassword(
-            email: _emailController.text,
-            password: _passwordController.text.toString())
-        .then((value) {
-      Utils.toastMessage(value.user!.email.toString());
-      Navigator.pushNamed(context, RoutesName.foodPreferences);
+    try {
+      UserCredential userCredential = await _auth.signInWithEmailAndPassword(
+        email: _emailController.text.trim(),
+        password: _passwordController.text.trim(),
+      );
+      Utils.toastMessage("Logged in as ${userCredential.user!.email}");
+      if (userCredential.user != null) {
+        await _saveUserDetails(userCredential.user!);
+        Navigator.pushNamed(context, RoutesName.foodPreferences);
+      }
+    } catch (error) {
+      Utils.toastMessage("Login failed: ${error.toString()}");
+    } finally {
       setState(() {
         loading = false;
       });
-    }).onError((error, stackTrace) {
-      Utils.toastMessage(error.toString());
-      setState(() {
-        loading = false;
-      });
-    });
+    }
   }
+
+  // void login() async {
+  //   setState(() {
+  //     loading = true;
+  //   });
+  //   try {
+  //     UserCredential userCredential = await _auth.signInWithEmailAndPassword(
+  //       email: _emailController.text,
+  //       password: _passwordController.text,
+  //     );
+  //     Utils.toastMessage(userCredential.user!.email.toString());
+  //     await _saveUserDetails(userCredential.user!);
+  //     Navigator.pushNamed(context, RoutesName.foodPreferences);
+  //   } catch (error) {
+  //     Utils.toastMessage(error.toString());
+  //   } finally {
+  //     setState(() {
+  //       loading = false;
+  //     });
+  //   }
+  // }
+
+  Future<void> _saveUserDetails(User user) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('Email', user.email ?? 'No Email');
+    await prefs.setString('Name', user.displayName ?? 'No Name');
+
+    // Set a default profile picture if none is set in Firebase
+    String defaultProfilePic = 'https://i.imgur.com/VTGxlk8.jpeg'; // Local asset as default
+    await prefs.setString('ProfilePic', user.photoURL ?? defaultProfilePic);
+  }
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -198,7 +261,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const Text(
-                      "haven't any account? ",
+                      "Don't have any account? ",
                       style: TextStyle(color: ColorsApp.neutralN40),
                     ),
                     InkWell(
@@ -243,14 +306,20 @@ class _LoginScreenState extends State<LoginScreen> {
                     SocialMediaBox(
                         text: 'Google',
                         onPress: () async {
-                          userCredential.value = await signInWithGoogle();
-                          if (userCredential.value != null) {
-                            print(userCredential.value.user!.email);
-                            Navigator.pushNamedAndRemoveUntil(context,
-                                RoutesName.foodPreferences, (route) => false);
+                          try {
+                            User? user = await signInWithGoogle();
+                            if (user != null) {
+                              print(user.email);  // Debugging line
+                              Navigator.pushNamedAndRemoveUntil(context, RoutesName.foodPreferences, (route) => false);
+                            } else {
+                              Utils.toastMessage("No user returned from Google sign-in");
+                            }
+                          } catch (e) {
+                            Utils.toastMessage("Failed to sign in with Google: $e");
                           }
                         },
-                        svgPath: 'assets/google_logo.svg'),
+                        svgPath: 'assets/google_logo.svg'
+                    ),
                     SocialMediaBox(
                         text: 'Phone',
                         onPress: () {
