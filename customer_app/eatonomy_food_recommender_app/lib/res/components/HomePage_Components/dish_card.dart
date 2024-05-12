@@ -1,35 +1,60 @@
-import 'package:flutter/foundation.dart';
+import 'package:eatonomy_food_recommender_app/view/provider/fav_Dish_Provider.dart'; // Assuming DishProvider is the correct import
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 
 import '../../../flutter_flow/flutter_flow_theme.dart';
 import '../../../flutter_flow/flutter_flow_widgets.dart';
+import '../../../view/data_model/dish_data_model.dart';
 import '../Colors/colors_app.dart';
 
-class DishCard extends StatelessWidget {
+class DishCard extends StatefulWidget {
   final String imageUrl;
   final String productName;
   final int price;
+  final int restaurantID;
+  final int dishID;
   final bool isDeliveryFree;
   final double rating;
   final int numberOfReviews;
+  final String description;
+  final String deliveryTime;
   final VoidCallback onTap;
 
-  const DishCard({
-    super.key,
-    required this.imageUrl,
-    required this.productName,
-    required this.price,
-    required this.isDeliveryFree,
-    required this.rating,
-    required this.numberOfReviews,
-    required this.onTap,
-  });
+  const DishCard(
+      {super.key,
+      required this.imageUrl,
+      required this.productName,
+      required this.price,
+      required this.isDeliveryFree,
+      required this.rating,
+      required this.numberOfReviews,
+      required this.onTap,
+      required this.restaurantID,
+      required this.deliveryTime,
+      required this.description,
+      required this.dishID});
+
+  @override
+  State<DishCard> createState() => _DishCardState();
+}
+
+class _DishCardState extends State<DishCard> {
+  late bool isLiked;
+
+  @override
+  void initState() {
+    super.initState();
+    // Initialize isLiked from the provider at start
+    isLiked = Provider.of<DishProvider>(context, listen: false)
+        .isLiked(widget.dishID);
+  }
 
   @override
   Widget build(BuildContext context) {
+    final dishProvider = Provider.of<DishProvider>(context);
     return GestureDetector(
-      onTap: onTap,
+      onTap: widget.onTap,
       child: Container(
         width: MediaQuery.of(context).size.width * 0.94,
         height: MediaQuery.of(context).size.height * 0.255,
@@ -46,10 +71,6 @@ class DishCard extends StatelessWidget {
           child: Container(
             width: MediaQuery.of(context).size.width * 0.94,
             height: MediaQuery.of(context).size.height * 0.269,
-            constraints: const BoxConstraints(
-              maxWidth: 80.0,
-              maxHeight: 80.0,
-            ),
             decoration: BoxDecoration(
               color: FlutterFlowTheme.of(context).secondaryBackground,
               borderRadius: const BorderRadius.only(
@@ -66,225 +87,146 @@ class DishCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.93,
-                    child: Stack(
-                      children: [
-                        ClipRRect(
-                          borderRadius: const BorderRadius.only(
-                            bottomLeft: Radius.circular(0.0),
-                            bottomRight: Radius.circular(0.0),
-                            topLeft: Radius.circular(8.0),
-                            topRight: Radius.circular(8.0),
-                          ),
-                          child: Image.network(
-                            imageUrl,
-                            width: MediaQuery.of(context).size.width * 0.94,
-                            height: MediaQuery.of(context).size.height * 0.18,
-                            fit: BoxFit.fill,
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              0.0, 5.0, 0.0, 0.0),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 10, vertical: 10),
-                                child: FFButtonWidget(
-                                  onPressed: () {
-                                    if (kDebugMode) {
-                                      print('Button pressed ...');
-                                    }
-                                  },
-                                  text: '',
-                                  icon: const FaIcon(
-                                    FontAwesomeIcons.solidHeart,
-                                    size: 12,
-                                  ),
-                                  options: FFButtonOptions(
-                                    padding:
-                                        const EdgeInsetsDirectional.fromSTEB(
-                                            0, 0, 0, 0),
-                                    iconPadding:
-                                        const EdgeInsetsDirectional.fromSTEB(
-                                            8, 0, 0, 0),
-                                    color: ColorsApp.splashBackgroundColorApp,
-                                    width: 28,
-                                    height: 28,
-                                    textStyle: FlutterFlowTheme.of(context)
-                                        .titleSmall
-                                        .override(
-                                          fontFamily: 'Readex Pro',
-                                          color: Colors.white,
-                                          fontSize: 2,
-                                        ),
-                                    elevation: 0,
-                                    borderSide: const BorderSide(
-                                      color: Colors.transparent,
-                                    ),
-                                    borderRadius: BorderRadius.circular(30),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(
-                        0.0, 10.0, 0.0, 5.0),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              10.0, 0.0, 0.0, 0.0),
-                          child: Text(
-                            productName,
-                            style: FlutterFlowTheme.of(context)
-                                .bodyMedium
-                                .override(
-                                  fontFamily: 'Readex Pro',
-                                  color: FlutterFlowTheme.of(context)
-                                      .secondaryText,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              0.0, 0.0, 10.0, 0.0),
-                          child: Row(
-                            children: [
-                              const Text(
-                                "\$ ",
-                                style: TextStyle(
-                                    color: ColorsApp.splashBackgroundColorApp),
-                              ),
-                              Text(
-                                price.toString(),
-                                style: FlutterFlowTheme.of(context)
-                                    .labelMedium
-                                    .override(
-                                      fontFamily: 'Readex Pro',
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          children: [
-                            Icon(
-                              Icons.delivery_dining,
-                              color: FlutterFlowTheme.of(context).primary,
-                              size: 10.0,
-                            ),
-                            Text(
-                              isDeliveryFree
-                                  ? 'Free delivery'
-                                  : 'Paid delivery',
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                    fontFamily: 'Readex Pro',
-                                    color: FlutterFlowTheme.of(context)
-                                        .secondaryText,
-                                    fontSize: 10.0,
-                                    fontWeight: FontWeight.normal,
-                                  ),
-                            ),
-                          ],
-                        ),
-                        FaIcon(
-                          FontAwesomeIcons.gripLinesVertical,
-                          color: FlutterFlowTheme.of(context).primary,
-                          size: 10.0,
-                        ),
-                        Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              10.0, 0.0, 0.0, 0.0),
-                          child: Container(
-                            width: MediaQuery.of(context).size.width * 0.2,
-                            height: MediaQuery.of(context).size.height * 0.03,
-                            decoration: BoxDecoration(
-                              color: FlutterFlowTheme.of(context)
-                                  .secondaryBackground,
-                              borderRadius: const BorderRadius.only(
-                                bottomLeft: Radius.circular(30.0),
-                                bottomRight: Radius.circular(30.0),
-                                topLeft: Radius.circular(30.0),
-                                topRight: Radius.circular(30.0),
-                              ),
-                              shape: BoxShape.rectangle,
-                              border: Border.all(
-                                color: FlutterFlowTheme.of(context)
-                                    .secondaryBackground,
-                                width: 0.0,
-                              ),
-                            ),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Text(
-                                  rating.toString(),
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .override(
-                                        fontFamily: 'Readex Pro',
-                                        color: FlutterFlowTheme.of(context)
-                                            .secondaryText,
-                                        fontSize: 10.0,
-                                        fontWeight: FontWeight.w300,
-                                      ),
-                                ),
-                                const Icon(
-                                  Icons.star,
-                                  color: Color(0xFFE7B734),
-                                  size: 15.0,
-                                ),
-                                Text(
-                                  '($numberOfReviews+)',
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .override(
-                                        fontFamily: 'Readex Pro',
-                                        color: FlutterFlowTheme.of(context)
-                                            .secondaryText,
-                                        fontSize: 10.0,
-                                        fontWeight: FontWeight.w200,
-                                      ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+                  buildTopImage(context, dishProvider),
+                  buildProductInfo(context),
+                  buildDeliveryAndRatingInfo(context),
                 ],
               ),
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  Widget buildTopImage(BuildContext context, DishProvider dishProvider) {
+    return SizedBox(
+      width: MediaQuery.of(context).size.width * 0.93,
+      child: Stack(
+        children: [
+          ClipRRect(
+            borderRadius: const BorderRadius.only(
+              bottomLeft: Radius.circular(0.0),
+              bottomRight: Radius.circular(0.0),
+              topLeft: Radius.circular(8.0),
+              topRight: Radius.circular(8.0),
+            ),
+            child: Image.network(
+              widget.imageUrl,
+              width: MediaQuery.of(context).size.width * 0.94,
+              height: MediaQuery.of(context).size.height * 0.18,
+              fit: BoxFit.fill,
+            ),
+          ),
+          Positioned(
+            top: 10,
+            right: 20,
+            child: FFButtonWidget(
+              icon: FaIcon(
+                isLiked ? FontAwesomeIcons.solidHeart : FontAwesomeIcons.heart,
+                color: Colors.white,
+                size: 15,
+              ),
+              onPressed: () {
+                setState(() {
+                  isLiked = !isLiked;
+                });
+                if (isLiked) {
+                  dishProvider.addDish(DishModel(
+                    imageUrl: widget.imageUrl,
+                    productName: widget.productName,
+                    price: widget.price,
+                    dishID: widget.dishID,
+                    restaurantID: widget.restaurantID,
+                    isDeliveryFree: widget.isDeliveryFree,
+                    rating: widget.rating,
+                    numberOfReviews: widget.numberOfReviews,
+                    onTap: widget.onTap,
+                    isLiked: isLiked,
+                    description: '',
+                    deliveryTime: '',
+                  ));
+                } else {
+                  dishProvider.removeDish(widget.restaurantID);
+                }
+              },
+              text: '',
+              options: FFButtonOptions(
+                padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                iconPadding: const EdgeInsetsDirectional.fromSTEB(8, 0, 0, 0),
+                color: ColorsApp.splashBackgroundColorApp,
+                width: 35,
+                height: 35,
+                textStyle: FlutterFlowTheme.of(context).titleSmall.override(
+                      fontFamily: 'Readex Pro',
+                      color: Colors.white,
+                      fontSize: 2,
+                    ),
+                elevation: 0,
+                borderSide: const BorderSide(
+                  color: Colors.transparent,
+                ),
+                borderRadius: BorderRadius.circular(30),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget buildProductInfo(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsetsDirectional.fromSTEB(10.0, 10.0, 10.0, 5.0),
+      child: Row(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            widget.productName,
+            style: FlutterFlowTheme.of(context).bodyMedium.override(
+                  fontFamily: 'Readex Pro',
+                  color: FlutterFlowTheme.of(context).secondaryText,
+                  fontWeight: FontWeight.w600,
+                ),
+          ),
+          Text(
+            "\$${widget.price}",
+            style: const TextStyle(
+                color: ColorsApp.splashBackgroundColorApp,
+                fontWeight: FontWeight.bold),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget buildDeliveryAndRatingInfo(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10),
+      child: Row(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            widget.isDeliveryFree ? 'Free delivery' : 'Paid delivery',
+            style: FlutterFlowTheme.of(context).bodyMedium.override(
+                  fontFamily: 'Readex Pro',
+                  color: FlutterFlowTheme.of(context).secondaryText,
+                  fontSize: 10.0,
+                  fontWeight: FontWeight.normal,
+                ),
+          ),
+          Text(
+            '${widget.rating} (${widget.numberOfReviews}+)',
+            style: FlutterFlowTheme.of(context).bodyMedium.override(
+                  fontFamily: 'Readex Pro',
+                  color: FlutterFlowTheme.of(context).secondaryText,
+                  fontSize: 10.0,
+                  fontWeight: FontWeight.w200,
+                ),
+          ),
+        ],
       ),
     );
   }

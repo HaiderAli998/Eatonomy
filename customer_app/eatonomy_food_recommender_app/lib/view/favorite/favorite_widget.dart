@@ -1,3 +1,5 @@
+import 'package:eatonomy_food_recommender_app/view/drawer/Drawer.dart';
+
 import '../../utils/routes/routes_name.dart';
 import '../cart/persistent_shopping_cart.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -38,6 +40,7 @@ class _FavoriteWidgetState extends State<FavoriteWidget> {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
+        drawer: const MyDrawer(),
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
         appBar: AppBar(
@@ -51,7 +54,13 @@ class _FavoriteWidgetState extends State<FavoriteWidget> {
                   fontSize: 22.0,
                 ),
           ),
-          leading: const Icon(Icons.menu),
+          leading: IconButton(
+            // Add an IconButton as the leading widget to open the drawer
+            icon: const Icon(Icons.menu), // Use Icons.menu for the drawer icon
+            onPressed: () {
+              scaffoldKey.currentState?.openDrawer(); // Open the drawer
+            },
+          ),
           actions: [
             PersistentShoppingCart().showCartItemCountWidget(
                 cartItemCountWidgetBuilder: (itemCount) => IconButton(

@@ -19,10 +19,10 @@ Future<UserCredential> signInWithFacebook() async {
   } on FirebaseAuthException catch (e) {
     // Handle Firebase authentication exceptions
     print('Firebase Auth Exception: ${e.message}');
-    throw e; // rethrow the exception
+    rethrow; // rethrow the exception
   } catch (e) {
     // Handle other exceptions
     print('Other Exception: $e');
-    throw e; // rethrow the exception
+    rethrow; // rethrow the exception
   }
 }

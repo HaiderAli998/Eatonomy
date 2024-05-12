@@ -2,8 +2,6 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 import 'no_internet_model.dart';
 export 'no_internet_model.dart';
 
@@ -44,7 +42,7 @@ class _NoInternetWidgetState extends State<NoInternetWidget> {
         body: SafeArea(
           top: true,
           child: Align(
-            alignment: AlignmentDirectional(0.0, 0.0),
+            alignment: const AlignmentDirectional(0.0, 0.0),
             child: Column(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.center,
@@ -56,7 +54,7 @@ class _NoInternetWidgetState extends State<NoInternetWidget> {
                   size: 128.0,
                 ),
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 0.0, 0.0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 0.0, 0.0),
                   child: Text(
                     'Oops! No internet connection.',
                     style: FlutterFlowTheme.of(context).headlineMedium.override(
@@ -67,7 +65,7 @@ class _NoInternetWidgetState extends State<NoInternetWidget> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(8.0, 0.0, 24.0, 0.0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(8.0, 0.0, 24.0, 0.0),
                   child: Text(
                     'Please check your connection and try again.',
                     style: FlutterFlowTheme.of(context).bodyMedium.override(
@@ -77,7 +75,7 @@ class _NoInternetWidgetState extends State<NoInternetWidget> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 50.0, 0.0, 50.0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(0.0, 50.0, 0.0, 50.0),
                   child: FFButtonWidget(
                     onPressed: () {
                       print('Button pressed ...');
@@ -87,9 +85,9 @@ class _NoInternetWidgetState extends State<NoInternetWidget> {
                       width: 150.0,
                       height: 50.0,
                       padding:
-                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                          const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                       iconPadding:
-                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                          const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                       color: FlutterFlowTheme.of(context).primary,
                       textStyle:
                           FlutterFlowTheme.of(context).titleSmall.override(

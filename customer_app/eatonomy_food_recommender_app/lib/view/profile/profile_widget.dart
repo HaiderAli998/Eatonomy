@@ -102,7 +102,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => EditProfileWidget()),
+                    MaterialPageRoute(builder: (context) => const EditProfileWidget()),
                   );
                 },
               ),
@@ -112,7 +112,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => ProfileWidget()),
+                    MaterialPageRoute(builder: (context) => const ProfileWidget()),
                   );
                 },
               ),
@@ -122,7 +122,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => ProfileWidget()),
+                    MaterialPageRoute(builder: (context) => const ProfileWidget()),
                   );
                 },
               ),
@@ -144,7 +144,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => ProfileWidget()), // Replace SupportScreen with your actual support screen class
+                    MaterialPageRoute(builder: (context) => const ProfileWidget()), // Replace SupportScreen with your actual support screen class
                   );
                 },
               ),
@@ -156,7 +156,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => ProfileWidget()), // Replace TermsServiceScreen with your actual terms of service screen class
+                    MaterialPageRoute(builder: (context) => const ProfileWidget()), // Replace TermsServiceScreen with your actual terms of service screen class
                   );
                 },
               ),
@@ -168,12 +168,12 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => ProfileWidget()), // Replace InviteFriendsScreen with your actual invite friends screen class
+                    MaterialPageRoute(builder: (context) => const ProfileWidget()), // Replace InviteFriendsScreen with your actual invite friends screen class
                   );
                 },
               ),
 
-              LogoutButton(),
+              const LogoutButton(),
 
             ],
           ),
@@ -316,14 +316,14 @@ class ProfileListItem extends StatelessWidget {
   final VoidCallback onTap;  // Callback for tap action
 
   const ProfileListItem({
-    Key? key,
+    super.key,
     required this.iconData,
     required this.title,
     this.iconColor = const Color(0xFF5C5F65),
     this.textColor = const Color(0xFF5C5F65),
     this.padding = const EdgeInsetsDirectional.fromSTEB(16.0, 12.0, 16.0, 0.0),
     required this.onTap,  // Ensure onTap is provided
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -390,13 +390,13 @@ class LogoutButton extends StatelessWidget {
   final EdgeInsetsGeometry padding;
 
   const LogoutButton({
-    Key? key,
+    super.key,
     this.title = 'Logout',
     this.icon = Icons.exit_to_app_rounded,
     this.iconColor = const Color(0xFFEC3434),
     this.textColor = const Color(0xFFEC3434),
     this.padding = const EdgeInsetsDirectional.fromSTEB(16.0, 12.0, 16.0, 0.0),
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

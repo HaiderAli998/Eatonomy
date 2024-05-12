@@ -3,6 +3,7 @@ import 'package:eatonomy_food_recommender_app/res/components/Colors/colors_app.d
 import 'package:eatonomy_food_recommender_app/utils/routes/routes_name.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import '../../res/components/Drawer_Components/Drawer_List_Item.dart';
 
 class MyDrawer extends StatelessWidget {
@@ -120,8 +121,9 @@ class MyDrawer extends StatelessWidget {
             child: ListTile(
               leading: const Icon(Icons.exit_to_app),
               title: const Text("Logout"),
-              onTap: () {
-                FirebaseAuth.instance.signOut();
+              onTap: () async {
+                await FirebaseAuth.instance.signOut();
+                await GoogleSignIn().signOut();
                 Navigator.of(context).pushNamedAndRemoveUntil(
                     RoutesName.login, (route) => false);
               },

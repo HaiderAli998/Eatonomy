@@ -1,10 +1,6 @@
 import 'package:eatonomy_food_recommender_app/view/cart/persistent_shopping_cart.dart';
-import 'package:flutter/foundation.dart';
-import 'package:persistent_shopping_cart/model/cart_model.dart';
 
-import '../../res/components/Colors/colors_app.dart';
 import '../../utils/routes/routes_name.dart';
-import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +10,7 @@ export 'product_details_model.dart';
 
 class ProductDetailsWidget extends StatefulWidget {
   final String productName;
+  final int restaurantID;
   final int productID;
   final int price;
   final bool isDeliveryFree;
@@ -35,7 +32,7 @@ class ProductDetailsWidget extends StatefulWidget {
       required this.description,
       required this.imageurl,
       required this.productID,
-      required this.shoppingCartWidget});
+      required this.shoppingCartWidget, required this.restaurantID});
 
   @override
   State<ProductDetailsWidget> createState() => _ProductDetailsWidgetState();
@@ -81,26 +78,6 @@ class _ProductDetailsWidgetState extends State<ProductDetailsWidget> {
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: FlutterFlowIconButton(
-                      borderColor: Colors.transparent,
-                      borderRadius: 0.0,
-                      borderWidth: 0.0,
-                      buttonSize: 40.0,
-                      fillColor: Colors.transparent,
-                      icon: Icon(
-                        Icons.favorite_border,
-                        color: FlutterFlowTheme.of(context).secondaryBackground,
-                        size: 24.0,
-                      ),
-                      onPressed: () {
-                        if (kDebugMode) {
-                          print('IconButton pressed ...');
-                        }
-                      },
-                    ),
-                  ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: PersistentShoppingCart().showCartItemCountWidget(

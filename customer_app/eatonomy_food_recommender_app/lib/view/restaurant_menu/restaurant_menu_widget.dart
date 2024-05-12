@@ -1,7 +1,5 @@
-import 'package:eatonomy_food_recommender_app/view/provider/fav_restaurant_provider.dart';
 import 'package:eatonomy_food_recommender_app/view/restaurant_menu/restaurant_menu_tab_item_list.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import '../../res/components/Colors/colors_app.dart';
 import '../../utils/routes/routes_name.dart';
 import '../cart/persistent_shopping_cart.dart';
@@ -69,23 +67,23 @@ class _RestaurantMenuWidgetState extends State<RestaurantMenuWidget>
               Row(
                 mainAxisSize: MainAxisSize.max,
                 children: [
-                  Consumer<FavRestaurantProvider>(
-                    builder: (BuildContext context, value, Widget? child){
-                      return IconButton(
-                        icon: Icon(
-                          value.selectedItems.contains('')
-                              ? Icons.favorite
-                              : Icons.favorite_border_outlined,
-                          color: Colors.white,
-                          size: 24.0,
-                        ),
-                        onPressed: () {
-
-
-                        },
-                      );
-                    },
-                  ),
+                  // Consumer<FavRestaurantProvider>(
+                  //   builder: (BuildContext context, value, Widget? child){
+                  //     return IconButton(
+                  //       icon: Icon(
+                  //         value.selectedItems.contains('')
+                  //             ? Icons.favorite
+                  //             : Icons.favorite_border_outlined,
+                  //         color: Colors.white,
+                  //         size: 24.0,
+                  //       ),
+                  //       onPressed: () {
+                  //
+                  //
+                  //       },
+                  //     );
+                  //   },
+                  // ),
                   PersistentShoppingCart().showCartItemCountWidget(
                       cartItemCountWidgetBuilder: (itemCount) => IconButton(
                           onPressed: () {

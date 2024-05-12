@@ -4,8 +4,8 @@ import 'package:eatonomy_food_recommender_app/res/components/HomePage_Components
 import 'package:eatonomy_food_recommender_app/res/components/Colors/colors_app.dart';
 import 'package:eatonomy_food_recommender_app/utils/routes/routes_name.dart';
 import 'package:eatonomy_food_recommender_app/view/drawer/Drawer.dart';
-import 'package:eatonomy_food_recommender_app/view/food_categories/Burgers/burger_screen_list.dart';
-import 'package:flutter/foundation.dart';
+import 'package:eatonomy_food_recommender_app/view/food_categories/food_categories_widget.dart';
+
 import 'package:flutter/material.dart';
 import '../../res/components/HomePage_Components/Home_appbar.dart';
 import '../../res/components/HomePage_Components/appbar_textfield.dart';
@@ -13,7 +13,6 @@ import '../restaurant_menu/restaurant_menu_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart'
     as smooth_page_indicator;
 import 'package:eatonomy_food_recommender_app/view/home_page/home_page_model.dart';
@@ -139,7 +138,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       Row(
                         mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Align(
                             alignment: const AlignmentDirectional(-1.0, 0.0),
@@ -157,45 +156,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                       fontSize: 24.0,
                                       fontWeight: FontWeight.bold,
                                     ),
-                              ),
-                            ),
-                          ),
-                          Align(
-                            alignment: const AlignmentDirectional(1.0, 0.0),
-                            child: FFButtonWidget(
-                              onPressed: () {
-                                if (kDebugMode) {
-                                  print('Button pressed ...');
-                                }
-                              },
-                              text: 'View all',
-                              icon: const Icon(
-                                Icons.arrow_forward_ios,
-                                size: 15.0,
-                              ),
-                              options: FFButtonOptions(
-                                height: 40.0,
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    24.0, 0.0, 24.0, 0.0),
-                                iconPadding:
-                                    const EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 0.0, 0.0, 0.0),
-                                color: FlutterFlowTheme.of(context)
-                                    .primaryBackground,
-                                textStyle: FlutterFlowTheme.of(context)
-                                    .titleSmall
-                                    .override(
-                                      fontFamily: 'Poppins',
-                                      color:
-                                          FlutterFlowTheme.of(context).primary,
-                                      fontWeight: FontWeight.w300,
-                                    ),
-                                elevation: 0.0,
-                                borderSide: const BorderSide(
-                                  color: Colors.transparent,
-                                  width: 1.0,
-                                ),
-                                borderRadius: BorderRadius.circular(2.0),
                               ),
                             ),
                           ),
@@ -542,38 +502,28 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             ),
                           ),
-                          Align(
-                            alignment: const AlignmentDirectional(1.0, 0.0),
-                            child: FFButtonWidget(
-                              onPressed: () {
-                                if (kDebugMode) {
-                                  print('Button pressed ...');
-                                }
-                              },
-                              text: 'View all',
-                              options: FFButtonOptions(
-                                height: 40.0,
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 24.0, 0.0),
-                                iconPadding:
-                                    const EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 0.0, 0.0, 0.0),
-                                color: FlutterFlowTheme.of(context)
-                                    .primaryBackground,
-                                textStyle: FlutterFlowTheme.of(context)
-                                    .titleSmall
-                                    .override(
-                                      fontFamily: 'Poppins',
-                                      color:
-                                          FlutterFlowTheme.of(context).primary,
-                                      fontWeight: FontWeight.w300,
-                                    ),
-                                elevation: 0.0,
-                                borderSide: const BorderSide(
-                                  color: Colors.transparent,
-                                  width: 1.0,
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.pushNamed(
+                                  context, RoutesName.allRestaurants);
+                            },
+                            child: Align(
+                              alignment: const AlignmentDirectional(-1.0, 0.0),
+                              child: Padding(
+                                padding: const EdgeInsetsDirectional.symmetric(
+                                    horizontal: 15, vertical: 0),
+                                child: Text(
+                                  'View all',
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .override(
+                                        fontFamily: 'Readex Pro',
+                                        color:
+                                            ColorsApp.splashBackgroundColorApp,
+                                        fontSize: 15.0,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                 ),
-                                borderRadius: BorderRadius.circular(2.0),
                               ),
                             ),
                           ),
@@ -645,7 +595,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                     },
                                     foodCategories:
                                         List.from(restaurantData['Categories']),
-                                    deliveryTime: '20',
+                                    deliveryTime:
+                                        restaurantData['delivery time'],
+                                    id: restaurantData['id'],
+                                    openingHours: const [
+                                      '2:00-12:00',
+                                      '2:00-2:00'
+                                    ],
                                   );
                                 },
                               ),

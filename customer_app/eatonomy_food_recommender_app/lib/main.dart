@@ -2,6 +2,7 @@ import 'package:eatonomy_food_recommender_app/res/components/Colors/colors_app.d
 import 'package:eatonomy_food_recommender_app/utils/routes/routes.dart';
 import 'package:eatonomy_food_recommender_app/utils/routes/routes_name.dart';
 import 'package:eatonomy_food_recommender_app/view/cart/persistent_shopping_cart.dart';
+import 'package:eatonomy_food_recommender_app/view/provider/fav_Dish_Provider.dart';
 import 'package:eatonomy_food_recommender_app/view/provider/fav_restaurant_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -29,7 +30,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => FavRestaurantProvider())
+        ChangeNotifierProvider(create: (_) => FavRestaurantProvider()),
+        ChangeNotifierProvider(create: (_) => DishProvider())
       ],
       child: MaterialApp(
         title: 'Flutter Demo',
@@ -37,8 +39,8 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
             useMaterial3: true,
             colorScheme:
-                ColorScheme.fromSeed(seedColor: ColorsApp.backgroundColorApp)
-                    .copyWith(background: ColorsApp.backgroundColorApp)),
+            ColorScheme.fromSeed(seedColor: ColorsApp.backgroundColorApp)
+                .copyWith(background: ColorsApp.backgroundColorApp)),
         initialRoute: RoutesName.splash,
         onGenerateRoute: Routes.generateRoute,
       ),

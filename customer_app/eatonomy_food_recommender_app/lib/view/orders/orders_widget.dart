@@ -1,9 +1,6 @@
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 import 'orders_model.dart';
 export 'orders_model.dart';
 
@@ -51,7 +48,7 @@ class _OrdersWidgetState extends State<OrdersWidget> {
               iconTheme: IconThemeData(
                   color: FlutterFlowTheme.of(context).secondaryText),
               automaticallyImplyLeading: true,
-              actions: [],
+              actions: const [],
               centerTitle: true,
               elevation: 0.0,
             )

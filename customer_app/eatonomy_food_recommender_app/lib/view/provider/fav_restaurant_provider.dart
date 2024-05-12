@@ -1,18 +1,27 @@
+import 'package:eatonomy_food_recommender_app/view/data_model/restaurant_data_model.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
+import '../../utils/Utils.dart';
+
 class FavRestaurantProvider with ChangeNotifier {
-  final List<int> _selectedItems = [];
+  final List<RestaurantModel> _restaurant = [];
 
-  void setItem(int index) {
-    _selectedItems.add(index);
+  List<RestaurantModel> get restaurants => _restaurant;
+
+  void addRestaurant(RestaurantModel model) {
+    _restaurant.add(model);
+    Utils.toastMessage('ADD Data');
     notifyListeners();
   }
 
-  void removeItem(int index) {
-    _selectedItems.removeAt(index);
+  void removeRestaurant(int id) {
+    _restaurant.removeWhere((restaurant) => restaurant.restaurantID == id);
+    Utils.toastMessage('Dish removed');
     notifyListeners();
   }
 
-  List get selectedItems => _selectedItems;
+  bool isLiked(int id) {
+    return _restaurant.any((restaurant) => restaurant.restaurantID == id && restaurant.isLiked);
+  }
 }

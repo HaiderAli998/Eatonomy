@@ -1,8 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 import '../../view/cart/cart_widget.dart';
 import '../../view/favorite/favorite_widget.dart';
@@ -11,7 +9,6 @@ import 'package:eatonomy_food_recommender_app/view/BottomNavBar.dart';
 import '../../view/orders/orders_widget.dart';
 import '../../view/profile/profile_widget.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import 'serialization_util.dart';
 
 export 'package:go_router/go_router.dart';
 export 'serialization_util.dart';
@@ -56,7 +53,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: 'cart',
           path: '/cart',
-          builder: (context, params) => CartWidget(),
+          builder: (context, params) => const CartWidget(),
         ),
         FFRoute(
           name: 'orders',
@@ -244,7 +241,7 @@ class TransitionInfo {
   final Duration duration;
   final Alignment? alignment;
 
-  static TransitionInfo appDefault() => TransitionInfo(hasTransition: false);
+  static TransitionInfo appDefault() => const TransitionInfo(hasTransition: false);
 }
 
 class RootPageContext {

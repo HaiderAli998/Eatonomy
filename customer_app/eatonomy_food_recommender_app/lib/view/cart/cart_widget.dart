@@ -1,7 +1,6 @@
 import 'package:eatonomy_food_recommender_app/res/components/Custom_Containers/Custom_button.dart';
 import 'package:eatonomy_food_recommender_app/res/components/Colors/colors_app.dart';
 import 'package:eatonomy_food_recommender_app/view/cart/persistent_shopping_cart.dart';
-import 'package:flutter/cupertino.dart';
 import '../../res/components/Cart_Component/cart_component.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';

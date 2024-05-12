@@ -63,7 +63,8 @@ class _TabItemListState extends State<TabItemList> {
                               context,
                               MaterialPageRoute(
                                   builder: (context) => ProductDetailsWidget(
-                                        productID: category['id'],
+                                        restaurantID: category['id'],
+                                        productID: category['did'],
                                         imageurl: category['imageurl'],
                                         productName: category['title'],
                                         price: category['price'],
@@ -138,9 +139,13 @@ class _TabItemListState extends State<TabItemList> {
                         imageUrl: category['imageurl'],
                         productName: category['title'],
                         price: category['price'],
+                        restaurantID: category['id'],
+                        dishID: category['did'],
                         isDeliveryFree: category['delivery free'],
                         rating: category['rating'],
                         numberOfReviews: category['reviews'],
+                        deliveryTime: category['delivery time'],
+                        description: category['description'],
                       ),
                     );
                   },
