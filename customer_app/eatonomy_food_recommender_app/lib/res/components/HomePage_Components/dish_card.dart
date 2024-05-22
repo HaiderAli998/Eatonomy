@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 
 import '../../../flutter_flow/flutter_flow_theme.dart';
 import '../../../flutter_flow/flutter_flow_widgets.dart';
-import '../../../view/data_model/dish_data_model.dart';
+import '../../../view/model/dish_data_model.dart';
 import '../Colors/colors_app.dart';
 
 class DishCard extends StatefulWidget {
@@ -147,7 +147,7 @@ class _DishCardState extends State<DishCard> {
                     deliveryTime: '',
                   ));
                 } else {
-                  dishProvider.removeDish(widget.restaurantID);
+                  dishProvider.removeDish(widget.dishID);
                 }
               },
               text: '',

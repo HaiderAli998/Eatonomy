@@ -39,8 +39,8 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
             useMaterial3: true,
             colorScheme:
-            ColorScheme.fromSeed(seedColor: ColorsApp.backgroundColorApp)
-                .copyWith(background: ColorsApp.backgroundColorApp)),
+                ColorScheme.fromSeed(seedColor: ColorsApp.backgroundColorApp)
+                    .copyWith(background: ColorsApp.backgroundColorApp)),
         initialRoute: RoutesName.splash,
         onGenerateRoute: Routes.generateRoute,
       ),

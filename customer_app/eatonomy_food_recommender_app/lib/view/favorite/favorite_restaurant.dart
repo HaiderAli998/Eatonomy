@@ -14,12 +14,14 @@ class FavRestaurants extends StatefulWidget {
 class _FavRestaurantsState extends State<FavRestaurants> {
   @override
   Widget build(BuildContext context) {
-    final restaurantProvider = Provider.of<FavRestaurantProvider>(context);
+    final restaurantProvider =
+        Provider.of<FavRestaurantProvider>(context, listen: false);
     return SafeArea(
       child: Scaffold(
         body: ListView.builder(
             itemCount: restaurantProvider.restaurants.length,
             itemBuilder: (context, index) {
+              setState(() {});
               var restaurant = restaurantProvider.restaurants[index];
               return Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 0),

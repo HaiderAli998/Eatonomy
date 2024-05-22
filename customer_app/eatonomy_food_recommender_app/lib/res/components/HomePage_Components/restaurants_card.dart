@@ -1,4 +1,4 @@
-import 'package:eatonomy_food_recommender_app/view/data_model/restaurant_data_model.dart';
+import 'package:eatonomy_food_recommender_app/view/model/restaurant_data_model.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
@@ -21,17 +21,18 @@ class CustomRestaurantCard extends StatefulWidget {
   final List<String> foodCategories;
   final VoidCallback onTap;
 
-  const CustomRestaurantCard({super.key,
-    required this.imageUrl,
-    required this.id,
-    required this.restaurantName,
-    required this.rating,
-    required this.openingHours,
-    required this.numberOfReviews,
-    required this.isDeliveryFree,
-    required this.deliveryTime,
-    required this.foodCategories,
-    required this.onTap});
+  const CustomRestaurantCard(
+      {super.key,
+      required this.imageUrl,
+      required this.id,
+      required this.restaurantName,
+      required this.rating,
+      required this.openingHours,
+      required this.numberOfReviews,
+      required this.isDeliveryFree,
+      required this.deliveryTime,
+      required this.foodCategories,
+      required this.onTap});
 
   @override
   State<CustomRestaurantCard> createState() => _CustomRestaurantCard();
@@ -50,18 +51,13 @@ class _CustomRestaurantCard extends State<CustomRestaurantCard> {
 
   @override
   Widget build(BuildContext context) {
-    final restaurantProvider = Provider.of<FavRestaurantProvider>(context);
+    final restaurantProvider =
+        Provider.of<FavRestaurantProvider>(context, listen: false);
     return GestureDetector(
       onTap: widget.onTap,
       child: Container(
-        width: MediaQuery
-            .of(context)
-            .size
-            .width * 0.8,
-        height: MediaQuery
-            .of(context)
-            .size
-            .height * 0.3,
+        width: MediaQuery.of(context).size.width * 0.8,
+        height: MediaQuery.of(context).size.height * 0.3,
         decoration: const BoxDecoration(
           borderRadius: BorderRadius.only(
             bottomLeft: Radius.circular(0.0),
@@ -73,22 +69,14 @@ class _CustomRestaurantCard extends State<CustomRestaurantCard> {
         child: Padding(
           padding: const EdgeInsetsDirectional.fromSTEB(15.0, 0.0, 15.0, 0.0),
           child: Container(
-            width: MediaQuery
-                .of(context)
-                .size
-                .width * 0.8,
-            height: MediaQuery
-                .of(context)
-                .size
-                .height * 0.3,
+            width: MediaQuery.of(context).size.width * 0.8,
+            height: MediaQuery.of(context).size.height * 0.3,
             constraints: const BoxConstraints(
               maxWidth: 80.0,
               maxHeight: 80.0,
             ),
             decoration: BoxDecoration(
-              color: FlutterFlowTheme
-                  .of(context)
-                  .secondaryBackground,
+              color: FlutterFlowTheme.of(context).secondaryBackground,
               borderRadius: const BorderRadius.only(
                 bottomLeft: Radius.circular(15.0),
                 bottomRight: Radius.circular(15.0),
@@ -104,10 +92,7 @@ class _CustomRestaurantCard extends State<CustomRestaurantCard> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(
-                    width: MediaQuery
-                        .of(context)
-                        .size
-                        .width * 34,
+                    width: MediaQuery.of(context).size.width * 34,
                     child: Stack(
                       children: [
                         ClipRRect(
@@ -119,14 +104,8 @@ class _CustomRestaurantCard extends State<CustomRestaurantCard> {
                           ),
                           child: Image.network(
                             widget.imageUrl,
-                            width: MediaQuery
-                                .of(context)
-                                .size
-                                .width * 34,
-                            height: MediaQuery
-                                .of(context)
-                                .size
-                                .height * 0.18,
+                            width: MediaQuery.of(context).size.width * 34,
+                            height: MediaQuery.of(context).size.height * 0.18,
                             fit: BoxFit.fill,
                           ),
                         ),
@@ -139,18 +118,11 @@ class _CustomRestaurantCard extends State<CustomRestaurantCard> {
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   10.0, 5.0, 0.0, 0.0),
                               child: Container(
-                                width: MediaQuery
-                                    .of(context)
-                                    .size
-                                    .width * 0.2,
+                                width: MediaQuery.of(context).size.width * 0.2,
                                 height:
-                                MediaQuery
-                                    .of(context)
-                                    .size
-                                    .height * 0.03,
+                                    MediaQuery.of(context).size.height * 0.03,
                                 decoration: BoxDecoration(
-                                  color: FlutterFlowTheme
-                                      .of(context)
+                                  color: FlutterFlowTheme.of(context)
                                       .secondaryBackground,
                                   borderRadius: const BorderRadius.only(
                                     bottomLeft: Radius.circular(30.0),
@@ -160,8 +132,7 @@ class _CustomRestaurantCard extends State<CustomRestaurantCard> {
                                   ),
                                   shape: BoxShape.rectangle,
                                   border: Border.all(
-                                    color: FlutterFlowTheme
-                                        .of(context)
+                                    color: FlutterFlowTheme.of(context)
                                         .secondaryBackground,
                                     width: 0.0,
                                   ),
@@ -169,22 +140,20 @@ class _CustomRestaurantCard extends State<CustomRestaurantCard> {
                                 child: Row(
                                   mainAxisSize: MainAxisSize.min,
                                   mainAxisAlignment:
-                                  MainAxisAlignment.spaceEvenly,
+                                      MainAxisAlignment.spaceEvenly,
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     Text(
                                       widget.rating.toString(),
-                                      style: FlutterFlowTheme
-                                          .of(context)
+                                      style: FlutterFlowTheme.of(context)
                                           .bodyMedium
                                           .override(
-                                        fontFamily: 'Readex Pro',
-                                        color: FlutterFlowTheme
-                                            .of(context)
-                                            .secondaryText,
-                                        fontSize: 12.0,
-                                        fontWeight: FontWeight.w300,
-                                      ),
+                                            fontFamily: 'Readex Pro',
+                                            color: FlutterFlowTheme.of(context)
+                                                .secondaryText,
+                                            fontSize: 12.0,
+                                            fontWeight: FontWeight.w300,
+                                          ),
                                     ),
                                     const Icon(
                                       Icons.star,
@@ -193,17 +162,15 @@ class _CustomRestaurantCard extends State<CustomRestaurantCard> {
                                     ),
                                     Text(
                                       '(${widget.numberOfReviews}+)',
-                                      style: FlutterFlowTheme
-                                          .of(context)
+                                      style: FlutterFlowTheme.of(context)
                                           .bodyMedium
                                           .override(
-                                        fontFamily: 'Readex Pro',
-                                        color: FlutterFlowTheme
-                                            .of(context)
-                                            .secondaryText,
-                                        fontSize: 10.0,
-                                        fontWeight: FontWeight.w200,
-                                      ),
+                                            fontFamily: 'Readex Pro',
+                                            color: FlutterFlowTheme.of(context)
+                                                .secondaryText,
+                                            fontSize: 10.0,
+                                            fontWeight: FontWeight.w200,
+                                          ),
                                     ),
                                   ],
                                 ),
@@ -229,20 +196,20 @@ class _CustomRestaurantCard extends State<CustomRestaurantCard> {
                                         RestaurantModel(
                                             imageUrl: widget.imageUrl,
                                             restaurantName:
-                                            widget.restaurantName,
+                                                widget.restaurantName,
                                             isDeliveryFree:
-                                            widget.isDeliveryFree,
+                                                widget.isDeliveryFree,
                                             isLiked: isLiked,
                                             price: 0,
                                             rating: widget.rating,
                                             numberOfReviews:
-                                            widget.numberOfReviews,
+                                                widget.numberOfReviews,
                                             onTap: widget.onTap,
                                             restaurantID: widget.id,
                                             description: '',
                                             deliveryTime: widget.deliveryTime,
                                             foodCategories:
-                                            widget.foodCategories,
+                                                widget.foodCategories,
                                             openingHours: widget.openingHours));
                                   } else {
                                     restaurantProvider
@@ -254,19 +221,18 @@ class _CustomRestaurantCard extends State<CustomRestaurantCard> {
                                   padding: const EdgeInsetsDirectional.fromSTEB(
                                       0, 0, 0, 0),
                                   iconPadding:
-                                  const EdgeInsetsDirectional.fromSTEB(
-                                      8, 0, 0, 0),
+                                      const EdgeInsetsDirectional.fromSTEB(
+                                          8, 0, 0, 0),
                                   color: ColorsApp.splashBackgroundColorApp,
                                   width: 35,
                                   height: 35,
-                                  textStyle: FlutterFlowTheme
-                                      .of(context)
+                                  textStyle: FlutterFlowTheme.of(context)
                                       .titleSmall
                                       .override(
-                                    fontFamily: 'Readex Pro',
-                                    color: Colors.white,
-                                    fontSize: 2,
-                                  ),
+                                        fontFamily: 'Readex Pro',
+                                        color: Colors.white,
+                                        fontSize: 2,
+                                      ),
                                   elevation: 0,
                                   borderSide: const BorderSide(
                                     color: Colors.transparent,
@@ -291,16 +257,14 @@ class _CustomRestaurantCard extends State<CustomRestaurantCard> {
                               10.0, 0.0, 0.0, 0.0),
                           child: Text(
                             widget.restaurantName,
-                            style: FlutterFlowTheme
-                                .of(context)
+                            style: FlutterFlowTheme.of(context)
                                 .bodyMedium
                                 .override(
-                              fontFamily: 'Readex Pro',
-                              color: FlutterFlowTheme
-                                  .of(context)
-                                  .secondaryText,
-                              fontWeight: FontWeight.w600,
-                            ),
+                                  fontFamily: 'Readex Pro',
+                                  color: FlutterFlowTheme.of(context)
+                                      .secondaryText,
+                                  fontWeight: FontWeight.w600,
+                                ),
                           ),
                         ),
                         Padding(
@@ -308,9 +272,7 @@ class _CustomRestaurantCard extends State<CustomRestaurantCard> {
                               10.0, 0.0, 0.0, 0.0),
                           child: FaIcon(
                             FontAwesomeIcons.solidCircleCheck,
-                            color: FlutterFlowTheme
-                                .of(context)
-                                .primary,
+                            color: FlutterFlowTheme.of(context).primary,
                             size: 10.0,
                           ),
                         ),
@@ -325,9 +287,7 @@ class _CustomRestaurantCard extends State<CustomRestaurantCard> {
                             10.0, 0.0, 0.0, 0.0),
                         child: Icon(
                           Icons.delivery_dining,
-                          color: FlutterFlowTheme
-                              .of(context)
-                              .primary,
+                          color: FlutterFlowTheme.of(context).primary,
                           size: 10.0,
                         ),
                       ),
@@ -338,18 +298,15 @@ class _CustomRestaurantCard extends State<CustomRestaurantCard> {
                           widget.isDeliveryFree
                               ? 'Free delivery'
                               : 'Delivery charges apply',
-                          style: FlutterFlowTheme
-                              .of(context)
+                          style: FlutterFlowTheme.of(context)
                               .bodyMedium
                               .override(
-                            fontFamily: 'Readex Pro',
-                            color:
-                            FlutterFlowTheme
-                                .of(context)
-                                .secondaryText,
-                            fontSize: 10.0,
-                            fontWeight: FontWeight.normal,
-                          ),
+                                fontFamily: 'Readex Pro',
+                                color:
+                                    FlutterFlowTheme.of(context).secondaryText,
+                                fontSize: 10.0,
+                                fontWeight: FontWeight.normal,
+                              ),
                         ),
                       ),
                       Padding(
@@ -357,9 +314,7 @@ class _CustomRestaurantCard extends State<CustomRestaurantCard> {
                             35.0, 0.0, 0.0, 0.0),
                         child: FaIcon(
                           FontAwesomeIcons.stopwatch,
-                          color: FlutterFlowTheme
-                              .of(context)
-                              .primary,
+                          color: FlutterFlowTheme.of(context).primary,
                           size: 10.0,
                         ),
                       ),
@@ -369,14 +324,11 @@ class _CustomRestaurantCard extends State<CustomRestaurantCard> {
                         child: Text(
                           '${widget.deliveryTime}mins',
                           style:
-                          FlutterFlowTheme
-                              .of(context)
-                              .labelSmall
-                              .override(
-                            fontFamily: 'Readex Pro',
-                            fontSize: 9.0,
-                            fontWeight: FontWeight.normal,
-                          ),
+                              FlutterFlowTheme.of(context).labelSmall.override(
+                                    fontFamily: 'Readex Pro',
+                                    fontSize: 9.0,
+                                    fontWeight: FontWeight.normal,
+                                  ),
                         ),
                       ),
                     ],
@@ -394,41 +346,37 @@ class _CustomRestaurantCard extends State<CustomRestaurantCard> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: List.generate(
                             widget.foodCategories.length,
-                                (index) =>
-                                Padding(
+                            (index) => Padding(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  5.0, 0.0, 0.0, 0.0),
+                              child: Container(
+                                decoration: const BoxDecoration(
+                                  color: Color(0x51FFFFFF),
+                                  borderRadius: BorderRadius.only(
+                                    bottomLeft: Radius.circular(15.0),
+                                    bottomRight: Radius.circular(15.0),
+                                    topLeft: Radius.circular(15.0),
+                                    topRight: Radius.circular(15.0),
+                                  ),
+                                ),
+                                child: Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(
-                                      5.0, 0.0, 0.0, 0.0),
-                                  child: Container(
-                                    decoration: const BoxDecoration(
-                                      color: Color(0x51FFFFFF),
-                                      borderRadius: BorderRadius.only(
-                                        bottomLeft: Radius.circular(15.0),
-                                        bottomRight: Radius.circular(15.0),
-                                        topLeft: Radius.circular(15.0),
-                                        topRight: Radius.circular(15.0),
-                                      ),
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsetsDirectional
-                                          .fromSTEB(
-                                          5.0, 0.0, 5.0, 0.0),
-                                      child: Text(
-                                        widget.foodCategories[index],
-                                        style: FlutterFlowTheme
-                                            .of(context)
-                                            .bodyMedium
-                                            .override(
+                                      5.0, 0.0, 5.0, 0.0),
+                                  child: Text(
+                                    widget.foodCategories[index],
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
                                           fontFamily: 'Readex Pro',
-                                          color: FlutterFlowTheme
-                                              .of(context)
+                                          color: FlutterFlowTheme.of(context)
                                               .secondaryText,
                                           fontSize: 9.0,
                                           fontWeight: FontWeight.w500,
                                         ),
-                                      ),
-                                    ),
                                   ),
                                 ),
+                              ),
+                            ),
                           ),
                         ),
                       ),
