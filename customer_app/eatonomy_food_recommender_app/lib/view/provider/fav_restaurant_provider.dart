@@ -1,7 +1,7 @@
 import 'dart:convert';
-import 'package:eatonomy_food_recommender_app/utils/Utils.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../../utils/Utils.dart';
 import '../model/restaurant_data_model.dart';
 
 class FavRestaurantProvider with ChangeNotifier {
@@ -15,21 +15,25 @@ class FavRestaurantProvider with ChangeNotifier {
 
   void addRestaurant(RestaurantModel model) {
     _restaurant.add(model);
-    Utils.toastMessage('ADD Restaurant');
+    Utils.toastMessage('Restaurant Added');
     _saveRestaurant();
     notifyListeners();
   }
 
   void removeRestaurant(int id) {
     _restaurant.removeWhere((restaurant) => restaurant.restaurantID == id);
-    Utils.toastMessage('Restaurant removed');
+    Utils.toastMessage('Restaurant Removed');
     _saveRestaurant();
     notifyListeners();
   }
 
   bool isLiked(int id) {
-    return _restaurant.any(
-        (restaurant) => restaurant.restaurantID == id && restaurant.isLiked);
+    return _restaurant.any((restaurant) => restaurant.restaurantID == id);
+  }
+  void clearData() {
+    _restaurant.clear();
+    _saveRestaurant();
+    notifyListeners();
   }
 
   Future<void> _loadRestaurant() async {

@@ -4,6 +4,9 @@ import 'package:eatonomy_food_recommender_app/res/components/Custom_Containers/C
 import 'package:eatonomy_food_recommender_app/utils/routes/routes_name.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
+
+import '../provider/recommended_category_provider.dart';
 
 class FoodPreferences extends StatefulWidget {
   const FoodPreferences({super.key});
@@ -17,6 +20,8 @@ class _FoodPreferencesState extends State<FoodPreferences> {
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height * 1;
     final width = MediaQuery.of(context).size.width * 1;
+    var provider =
+        Provider.of<RecommendedCategoryProvider>(context, listen: false);
     return Scaffold(
         body: SafeArea(
             child: Padding(
@@ -28,7 +33,9 @@ class _FoodPreferencesState extends State<FoodPreferences> {
             children: [
               InkWell(
                 onTap: () {
-                  Navigator.pushNamed(context, RoutesName.navBarScreen);
+                  provider.changeTrigger(false);
+                  Navigator.pushReplacementNamed(
+                      context, RoutesName.navBarScreen);
                 },
                 child: const Text(
                   'Skip',
@@ -80,59 +87,62 @@ class _FoodPreferencesState extends State<FoodPreferences> {
             alignment: WrapAlignment.start,
             children: [
               FoodPreferencesContainer(
-                text: 'Desi',
-                onContainerPressed: () {
-                  print('Desi');
-                },
+                text: 'Pizza',
+                onContainerPressed: () {},
               ),
               FoodPreferencesContainer(
-                text: 'Italian',
-                onContainerPressed: () {
-                  print('Italian');
-                },
+                text: 'Burgers',
+                onContainerPressed: () {},
               ),
               FoodPreferencesContainer(
-                text: 'Japanese',
-                onContainerPressed: () {
-                  print('Japanese');
-                },
+                text: 'Broast',
+                onContainerPressed: () {},
               ),
               FoodPreferencesContainer(
                 text: 'Chinese',
-                onContainerPressed: () {
-                  print('Chinese');
-                },
+                onContainerPressed: () {},
               ),
               FoodPreferencesContainer(
-                text: 'Mexican',
-                onContainerPressed: () {
-                  print('Mexican');
-                },
+                text: 'BBQ',
+                onContainerPressed: () {},
               ),
               FoodPreferencesContainer(
-                text: 'Italian',
-                onContainerPressed: () {
-                  print('Italian');
-                },
+                text: 'Broast',
+                onContainerPressed: () {},
               ),
               FoodPreferencesContainer(
-                text: 'Continental',
-                onContainerPressed: () {
-                  print('Continental');
-                },
+                text: 'Desi',
+                onContainerPressed: () {},
               ),
               FoodPreferencesContainer(
-                text: 'Thai',
-                onContainerPressed: () {
-                  print('Thai');
-                },
+                text: 'Ice-Cream',
+                onContainerPressed: () {},
+              ),
+              FoodPreferencesContainer(
+                text: 'Sandwich',
+                onContainerPressed: () {},
+              ),
+              FoodPreferencesContainer(
+                text: 'Shawarma',
+                onContainerPressed: () {},
+              ),
+              FoodPreferencesContainer(
+                text: 'Tea',
+                onContainerPressed: () {},
+              ),
+              FoodPreferencesContainer(
+                text: 'Pasta',
+                onContainerPressed: () {},
               ),
             ],
           ),
           SizedBox(
             height: height * .080,
           ),
-          CustomButton('Continue', () {}, ColorsApp.splashBackgroundColorApp)
+          CustomButton('Continue', () {
+            provider.changeTrigger(true);
+            Navigator.pushReplacementNamed(context, RoutesName.navBarScreen);
+          }, ColorsApp.splashBackgroundColorApp)
         ],
       ),
     )));

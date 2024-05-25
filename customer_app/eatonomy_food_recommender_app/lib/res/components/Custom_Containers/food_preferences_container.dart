@@ -1,4 +1,7 @@
+import 'package:eatonomy_food_recommender_app/utils/Utils.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../../../view/provider/recommended_category_provider.dart';
 import '../Colors/colors_app.dart';
 
 class FoodPreferencesContainer extends StatefulWidget {
@@ -19,17 +22,31 @@ class FoodPreferencesContainer extends StatefulWidget {
 class _FoodPreferencesContainerState extends State<FoodPreferencesContainer> {
   bool flag = false;
 
+  void _handleTap() {
+    setState(() {
+      flag = !flag;
+    });
+
+    var provider =
+        Provider.of<RecommendedCategoryProvider>(context, listen: false);
+
+    if (flag) {
+      provider.addCategory(widget.text);
+      Utils.toastMessage('Data Added');
+    } else {
+      provider.removeCategory(widget.text);
+      Utils.toastMessage('Data Removed');
+    }
+
+    if (widget.onContainerPressed != null) {
+      widget.onContainerPressed!();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
-        if (widget.onContainerPressed != null) {
-          widget.onContainerPressed!();
-          setState(() {
-            flag = !flag;
-          });
-        }
-      },
+      onTap: _handleTap,
       child: Container(
         height: 30,
         width: 96,

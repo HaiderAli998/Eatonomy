@@ -30,7 +30,13 @@ class DishProvider extends ChangeNotifier {
   }
 
   bool isLiked(int id) {
-    return _dishes.any((dish) => dish.dishID == id && dish.isLiked);
+    return _dishes.any((dish) => dish.dishID == id);
+  }
+
+  void clearData() {
+    _dishes.clear();
+    _saveDishes();
+    notifyListeners();
   }
 
   Future<void> _loadDishes() async {

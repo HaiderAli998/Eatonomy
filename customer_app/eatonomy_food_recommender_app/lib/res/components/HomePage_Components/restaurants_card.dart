@@ -1,12 +1,11 @@
-import 'package:eatonomy_food_recommender_app/view/model/restaurant_data_model.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
-
 import '../../../flutter_flow/flutter_flow_theme.dart';
 import '../../../flutter_flow/flutter_flow_widgets.dart';
-import '../../../view/provider/fav_restaurant_provider.dart';
+import '../../../view/model/restaurant_data_model.dart';
 import '../Colors/colors_app.dart';
+import '../../../view/provider/fav_restaurant_provider.dart';
 
 class CustomRestaurantCard extends StatefulWidget {
   final String imageUrl;
@@ -17,42 +16,33 @@ class CustomRestaurantCard extends StatefulWidget {
   final bool isDeliveryFree;
   final String deliveryTime;
   final List<String> openingHours;
-
   final List<String> foodCategories;
   final VoidCallback onTap;
 
-  const CustomRestaurantCard(
-      {super.key,
-      required this.imageUrl,
-      required this.id,
-      required this.restaurantName,
-      required this.rating,
-      required this.openingHours,
-      required this.numberOfReviews,
-      required this.isDeliveryFree,
-      required this.deliveryTime,
-      required this.foodCategories,
-      required this.onTap});
+  const CustomRestaurantCard({
+    super.key,
+    required this.imageUrl,
+    required this.id,
+    required this.restaurantName,
+    required this.rating,
+    required this.openingHours,
+    required this.numberOfReviews,
+    required this.isDeliveryFree,
+    required this.deliveryTime,
+    required this.foodCategories,
+    required this.onTap,
+  });
 
   @override
-  State<CustomRestaurantCard> createState() => _CustomRestaurantCard();
+  State<CustomRestaurantCard> createState() => _CustomRestaurantCardState();
 }
 
-class _CustomRestaurantCard extends State<CustomRestaurantCard> {
-  late bool isLiked;
-
-  @override
-  void initState() {
-    super.initState();
-    // Initialize isLiked from the provider at start
-    isLiked = Provider.of<FavRestaurantProvider>(context, listen: false)
-        .isLiked(widget.id);
-  }
-
+class _CustomRestaurantCardState extends State<CustomRestaurantCard> {
   @override
   Widget build(BuildContext context) {
-    final restaurantProvider =
-        Provider.of<FavRestaurantProvider>(context, listen: false);
+    final restaurantProvider = Provider.of<FavRestaurantProvider>(context);
+    final isLiked = restaurantProvider.isLiked(widget.id);
+
     return GestureDetector(
       onTap: widget.onTap,
       child: Container(
@@ -188,32 +178,27 @@ class _CustomRestaurantCard extends State<CustomRestaurantCard> {
                                   size: 15,
                                 ),
                                 onPressed: () {
-                                  setState(() {
-                                    isLiked = !isLiked;
-                                  });
                                   if (isLiked) {
-                                    restaurantProvider.addRestaurant(
-                                        RestaurantModel(
-                                            imageUrl: widget.imageUrl,
-                                            restaurantName:
-                                                widget.restaurantName,
-                                            isDeliveryFree:
-                                                widget.isDeliveryFree,
-                                            isLiked: isLiked,
-                                            price: 0,
-                                            rating: widget.rating,
-                                            numberOfReviews:
-                                                widget.numberOfReviews,
-                                            onTap: widget.onTap,
-                                            restaurantID: widget.id,
-                                            description: '',
-                                            deliveryTime: widget.deliveryTime,
-                                            foodCategories:
-                                                widget.foodCategories,
-                                            openingHours: widget.openingHours));
-                                  } else {
                                     restaurantProvider
                                         .removeRestaurant(widget.id);
+                                  } else {
+                                    restaurantProvider.addRestaurant(
+                                      RestaurantModel(
+                                        imageUrl: widget.imageUrl,
+                                        restaurantName: widget.restaurantName,
+                                        isDeliveryFree: widget.isDeliveryFree,
+                                        isLiked: true,
+                                        price: 0,
+                                        rating: widget.rating,
+                                        numberOfReviews: widget.numberOfReviews,
+                                        onTap: widget.onTap,
+                                        restaurantID: widget.id,
+                                        description: '',
+                                        deliveryTime: widget.deliveryTime,
+                                        foodCategories: widget.foodCategories,
+                                        openingHours: widget.openingHours,
+                                      ),
+                                    );
                                   }
                                 },
                                 text: '',

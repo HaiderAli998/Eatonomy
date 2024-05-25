@@ -1,21 +1,25 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:eatonomy_food_recommender_app/res/components/HomePage_Components/categories_container.dart';
-import 'package:eatonomy_food_recommender_app/res/components/HomePage_Components/restaurants_card.dart';
 import 'package:eatonomy_food_recommender_app/res/components/Colors/colors_app.dart';
 import 'package:eatonomy_food_recommender_app/utils/routes/routes_name.dart';
 import 'package:eatonomy_food_recommender_app/view/drawer/Drawer.dart';
-import 'package:eatonomy_food_recommender_app/view/food_categories/food_categories_widget.dart';
+import 'package:eatonomy_food_recommender_app/view/home_page/home_categories_grid.dart';
+import 'package:eatonomy_food_recommender_app/view/home_page/home_horizontal_restaurants_list.dart';
+import 'package:eatonomy_food_recommender_app/view/home_page/recommended_restaurant_list.dart';
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../../res/components/HomePage_Components/Home_appbar.dart';
 import '../../res/components/HomePage_Components/appbar_textfield.dart';
-import '../restaurant_menu/restaurant_menu_widget.dart';
+import '../provider/recommended_category_provider.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart'
     as smooth_page_indicator;
 import 'package:eatonomy_food_recommender_app/view/home_page/home_page_model.dart';
+
+import 'home_popular_items_list.dart';
+import 'home_restaurant_list_vertical.dart';
 export 'package:eatonomy_food_recommender_app/view/home_page/home_page_model.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -35,6 +39,8 @@ class _HomeScreenState extends State<HomeScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final restaurantData =
       FirebaseFirestore.instance.collection('Restaurants').snapshots();
+  final popularItemData =
+      FirebaseFirestore.instance.collection('Popular Items').snapshots();
 
   @override
   void initState() {
@@ -54,6 +60,8 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height * 1;
     final width = MediaQuery.of(context).size.width * 1;
+    var provider =
+        Provider.of<RecommendedCategoryProvider>(context, listen: false);
     return GestureDetector(
       child: Scaffold(
         key: _scaffoldKey,
@@ -86,6 +94,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: ListView(
                     padding: EdgeInsets.zero,
                     scrollDirection: Axis.vertical,
+                    physics: const NeverScrollableScrollPhysics(),
                     children: [
                       Row(
                         mainAxisSize: MainAxisSize.max,
@@ -165,204 +174,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         thickness: 1.0,
                         color: FlutterFlowTheme.of(context).accent4,
                       ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
-                        child: Container(
-                          decoration: const BoxDecoration(),
-                          child: GridView(
-                            padding: EdgeInsets.zero,
-                            gridDelegate:
-                                const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 4,
-                              crossAxisSpacing: 10.0,
-                              mainAxisSpacing: 10.0,
-                              childAspectRatio: 1.0,
-                            ),
-                            shrinkWrap: true,
-                            scrollDirection: Axis.vertical,
-                            children: [
-                              CustomCategoryContainer(
-                                  svgPath: 'assets/icons/hamburger.svg',
-                                  text: 'Burgers',
-                                  onTap: () {
-                                    Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                CategoryScreen(
-                                                  appBarTitle: 'Burgers',
-                                                  dataStream: FirebaseFirestore
-                                                      .instance
-                                                      .collection('Burgers')
-                                                      .snapshots(),
-                                                )));
-                                  }),
-                              CustomCategoryContainer(
-                                  svgPath: 'assets/icons/pizza-pie.svg',
-                                  text: 'Pizza',
-                                  onTap: () {
-                                    Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                CategoryScreen(
-                                                  appBarTitle: 'Pizza',
-                                                  dataStream: FirebaseFirestore
-                                                      .instance
-                                                      .collection('Pizza')
-                                                      .snapshots(),
-                                                )));
-                                  }),
-                              CustomCategoryContainer(
-                                  svgPath: 'assets/icons/bbq-2.svg',
-                                  text: 'BBQ',
-                                  onTap: () {
-                                    Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                CategoryScreen(
-                                                  appBarTitle: 'BBQ',
-                                                  dataStream: FirebaseFirestore
-                                                      .instance
-                                                      .collection('BBQ')
-                                                      .snapshots(),
-                                                )));
-                                  }),
-                              CustomCategoryContainer(
-                                  svgPath: 'assets/icons/chicken.svg',
-                                  text: 'Broast',
-                                  onTap: () {
-                                    Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                CategoryScreen(
-                                                  appBarTitle: 'Broast',
-                                                  dataStream: FirebaseFirestore
-                                                      .instance
-                                                      .collection('Broast')
-                                                      .snapshots(),
-                                                )));
-                                  }),
-                              CustomCategoryContainer(
-                                  svgPath: 'assets/icons/chinese-2.svg',
-                                  text: 'Chinese',
-                                  onTap: () {
-                                    Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                CategoryScreen(
-                                                  appBarTitle: 'Chinese',
-                                                  dataStream: FirebaseFirestore
-                                                      .instance
-                                                      .collection('Chinese')
-                                                      .snapshots(),
-                                                )));
-                                  }),
-                              CustomCategoryContainer(
-                                  svgPath: 'assets/icons/biryani.svg',
-                                  text: 'Biryani',
-                                  onTap: () {
-                                    Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                CategoryScreen(
-                                                  appBarTitle: 'Biryani',
-                                                  dataStream: FirebaseFirestore
-                                                      .instance
-                                                      .collection('Biryani')
-                                                      .snapshots(),
-                                                )));
-                                  }),
-                              CustomCategoryContainer(
-                                  svgPath: 'assets/icons/desi.svg',
-                                  text: 'Desi',
-                                  onTap: () {
-                                    Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                CategoryScreen(
-                                                  appBarTitle: 'Desi',
-                                                  dataStream: FirebaseFirestore
-                                                      .instance
-                                                      .collection('Desi')
-                                                      .snapshots(),
-                                                )));
-                                  }),
-                              CustomCategoryContainer(
-                                  svgPath: 'assets/icons/sandwich-01.svg',
-                                  text: 'Sandwich',
-                                  onTap: () {
-                                    Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                CategoryScreen(
-                                                  appBarTitle: 'Sandwich',
-                                                  dataStream: FirebaseFirestore
-                                                      .instance
-                                                      .collection('Sandwich')
-                                                      .snapshots(),
-                                                )));
-                                  }),
-                              CustomCategoryContainer(
-                                  svgPath: 'assets/icons/pasta.svg',
-                                  text: 'Pasta',
-                                  onTap: () {
-                                    Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                CategoryScreen(
-                                                  appBarTitle: 'Pasta',
-                                                  dataStream: FirebaseFirestore
-                                                      .instance
-                                                      .collection('Pasta')
-                                                      .snapshots(),
-                                                )));
-                                  }),
-                              CustomCategoryContainer(
-                                  svgPath: 'assets/icons/shawarma.svg',
-                                  text: 'Shawarma',
-                                  onTap: () {
-                                    Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                CategoryScreen(
-                                                  appBarTitle: 'Shawarma',
-                                                  dataStream: FirebaseFirestore
-                                                      .instance
-                                                      .collection('Shawarma')
-                                                      .snapshots(),
-                                                )));
-                                  }),
-                              CustomCategoryContainer(
-                                svgPath: 'assets/icons/ice-cream.svg',
-                                text: 'Ice-Cream',
-                                onTap: () {
-                                  Navigator.of(context).push(MaterialPageRoute(
-                                      builder: (context) => CategoryScreen(
-                                            appBarTitle: 'Ice-Cream',
-                                            dataStream: FirebaseFirestore
-                                                .instance
-                                                .collection('Ice-Cream')
-                                                .snapshots(),
-                                          )));
-                                },
-                              ),
-                              CustomCategoryContainer(
-                                svgPath: 'assets/icons/tea.svg',
-                                text: 'Tea',
-                                onTap: () {
-                                  Navigator.of(context).push(MaterialPageRoute(
-                                      builder: (context) => CategoryScreen(
-                                            appBarTitle: 'Tea',
-                                            dataStream: FirebaseFirestore
-                                                .instance
-                                                .collection('Tea')
-                                                .snapshots(),
-                                          )));
-                                },
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
+                      const HomeCategories(),
                       Divider(
                         thickness: 1.0,
                         color: FlutterFlowTheme.of(context).accent4,
@@ -489,7 +301,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   15.0, 0.0, 0.0, 0.0),
                               child: Text(
-                                'Restaurants near you',
+                                'Preferred Restaurants',
                                 style: FlutterFlowTheme.of(context)
                                     .bodyMedium
                                     .override(
@@ -507,24 +319,39 @@ class _HomeScreenState extends State<HomeScreen> {
                               Navigator.pushNamed(
                                   context, RoutesName.allRestaurants);
                             },
-                            child: Align(
-                              alignment: const AlignmentDirectional(-1.0, 0.0),
-                              child: Padding(
-                                padding: const EdgeInsetsDirectional.symmetric(
-                                    horizontal: 15, vertical: 0),
-                                child: Text(
-                                  'View all',
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .override(
-                                        fontFamily: 'Readex Pro',
-                                        color:
-                                            ColorsApp.splashBackgroundColorApp,
-                                        fontSize: 15.0,
-                                        fontWeight: FontWeight.bold,
-                                      ),
+                            child: GestureDetector(
+                              child: Align(
+                                alignment:
+                                    const AlignmentDirectional(-1.0, 0.0),
+                                child: Padding(
+                                  padding:
+                                      const EdgeInsetsDirectional.symmetric(
+                                          horizontal: 15, vertical: 0),
+                                  child: Text(
+                                    'View all',
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          fontFamily: 'Readex Pro',
+                                          color: ColorsApp
+                                              .splashBackgroundColorApp,
+                                          fontSize: 15.0,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                  ),
                                 ),
                               ),
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            RestaurantListViewVertical(
+                                              restaurantDataStream:
+                                                  restaurantData,
+                                              appBarTitle: 'Restaurants',
+                                            )));
+                              },
                             ),
                           ),
                         ],
@@ -533,82 +360,12 @@ class _HomeScreenState extends State<HomeScreen> {
                         thickness: 1.0,
                         color: FlutterFlowTheme.of(context).accent4,
                       ),
-                      StreamBuilder<QuerySnapshot>(
-                        stream: restaurantData,
-                        builder: (BuildContext context,
-                            AsyncSnapshot<QuerySnapshot> snapshot) {
-                          if (snapshot.connectionState ==
-                              ConnectionState.waiting) {
-                            return const CircularProgressIndicator();
-                          } else if (snapshot.hasError) {
-                            return Text('Error: ${snapshot.error}');
-                          } else if (!snapshot.hasData) {
-                            return const Text('No Data Available');
-                          } else {
-                            return Container(
-                              width: 100.0,
-                              height:
-                                  MediaQuery.of(context).size.height * 0.275,
-                              decoration: BoxDecoration(
-                                color: FlutterFlowTheme.of(context)
-                                    .primaryBackground,
-                              ),
-                              child: ListView.builder(
-                                padding: EdgeInsets.zero,
-                                scrollDirection: Axis.horizontal,
-                                itemCount: snapshot.data!.docs.length,
-                                itemBuilder: (BuildContext context, int index) {
-                                  var restaurantData =
-                                      snapshot.data!.docs[index];
-
-                                  return CustomRestaurantCard(
-                                    imageUrl: restaurantData['imageurl'],
-                                    restaurantName: restaurantData['title'],
-                                    rating: restaurantData['rating'],
-                                    numberOfReviews:
-                                        restaurantData['numberOfReviews'],
-                                    isDeliveryFree: false,
-                                    onTap: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  RestaurantMenuWidget(
-                                                    imageUrl: restaurantData[
-                                                        'imageurl'],
-                                                    id: restaurantData['id'],
-                                                    restaurantName:
-                                                        restaurantData['title'],
-                                                    openingHours: const [
-                                                      '2:00-12:00',
-                                                      '2:00-2:00'
-                                                    ],
-                                                    categories: List.from(
-                                                        restaurantData[
-                                                            'Categories']),
-                                                    rating: restaurantData[
-                                                        'rating'],
-                                                    deliveryTime:
-                                                        restaurantData[
-                                                            'delivery time'],
-                                                  )));
-                                    },
-                                    foodCategories:
-                                        List.from(restaurantData['Categories']),
-                                    deliveryTime:
-                                        restaurantData['delivery time'],
-                                    id: restaurantData['id'],
-                                    openingHours: const [
-                                      '2:00-12:00',
-                                      '2:00-2:00'
-                                    ],
-                                  );
-                                },
-                              ),
-                            );
-                          }
-                        },
-                      ),
+                      if (provider.trigger == false)
+                        RestaurantListView(restaurantDataStream: restaurantData)
+                      else
+                        RecommendedListView(
+                          restaurantDataStream: restaurantData,
+                        ),
                       Divider(
                         thickness: 1.0,
                         color: FlutterFlowTheme.of(context).accent4,
@@ -642,118 +399,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         thickness: 1.0,
                         color: FlutterFlowTheme.of(context).accent4,
                       ),
-                      // Expanded(
-                      //   child: Container(
-                      //     decoration: const BoxDecoration(),
-                      //     child: ListView(
-                      //       padding: EdgeInsets.zero,
-                      //       shrinkWrap: true,
-                      //       physics: const NeverScrollableScrollPhysics(),
-                      //       children: [
-                      //         DishCard(
-                      //           onTap: () {
-                      //             Navigator.push(
-                      //                 context,
-                      //                 MaterialPageRoute(
-                      //                     builder: (context) =>
-                      //                         const ProductDetailsWidget(
-                      //                           imageurl: '',
-                      //                           productName: '',
-                      //                           price: 0,
-                      //                           isDeliveryFree: true,
-                      //                           rating: 0.0,
-                      //                           numberOfReviews: 0,
-                      //                           deliveryTime: '',
-                      //                           description: '',
-                      //                           productID: 0,
-                      //                         )));
-                      //           },
-                      //           imageUrl: 'https://picsum.photos/seed/435/600',
-                      //           productName: 'Crispy Burger',
-                      //           price: 1000,
-                      //           isDeliveryFree: true,
-                      //           rating: 4.5,
-                      //           numberOfReviews: 25,
-                      //         ),
-                      //         DishCard(
-                      //           onTap: () {
-                      //             Navigator.push(
-                      //                 context,
-                      //                 MaterialPageRoute(
-                      //                     builder: (context) =>
-                      //                         const ProductDetailsWidget(
-                      //                           imageurl: '',
-                      //                           productName: '',
-                      //                           price: 0,
-                      //                           isDeliveryFree: true,
-                      //                           rating: 0.0,
-                      //                           numberOfReviews: 0,
-                      //                           deliveryTime: '',
-                      //                           description: '',
-                      //                           productID: 0,
-                      //                         )));
-                      //           },
-                      //           imageUrl: 'https://picsum.photos/seed/435/600',
-                      //           productName: 'Crispy Burger',
-                      //           price: 1000,
-                      //           isDeliveryFree: true,
-                      //           rating: 4.5,
-                      //           numberOfReviews: 25,
-                      //         ),
-                      //         DishCard(
-                      //           onTap: () {
-                      //             Navigator.push(
-                      //                 context,
-                      //                 MaterialPageRoute(
-                      //                     builder: (context) =>
-                      //                         const ProductDetailsWidget(
-                      //                           imageurl: '',
-                      //                           productName: '',
-                      //                           price: 0,
-                      //                           isDeliveryFree: true,
-                      //                           rating: 0.0,
-                      //                           numberOfReviews: 0,
-                      //                           deliveryTime: '',
-                      //                           description: '',
-                      //                           productID: 0,
-                      //                         )));
-                      //           },
-                      //           imageUrl: 'https://picsum.photos/seed/435/600',
-                      //           productName: 'Mighty Burger',
-                      //           price: 1000,
-                      //           isDeliveryFree: true,
-                      //           rating: 4.5,
-                      //           numberOfReviews: 25,
-                      //         ),
-                      //         DishCard(
-                      //           onTap: () {
-                      //             Navigator.push(
-                      //                 context,
-                      //                 MaterialPageRoute(
-                      //                     builder: (context) =>
-                      //                         const ProductDetailsWidget(
-                      //                           imageurl: '',
-                      //                           productName: '',
-                      //                           price: 0,
-                      //                           isDeliveryFree: true,
-                      //                           rating: 0.0,
-                      //                           numberOfReviews: 0,
-                      //                           deliveryTime: '',
-                      //                           description: '',
-                      //                           productID: 0,
-                      //                         )));
-                      //           },
-                      //           imageUrl: 'https://picsum.photos/seed/435/600',
-                      //           productName: 'Mighty Burger',
-                      //           price: 1000,
-                      //           isDeliveryFree: true,
-                      //           rating: 4.5,
-                      //           numberOfReviews: 25,
-                      //         ),
-                      //       ].divide(const SizedBox(height: 10.0)),
-                      //     ),
-                      //   ),
-                      // ),
+                      HomePopularItems(popularItemsStream: popularItemData)
                     ],
                   ),
                 ),

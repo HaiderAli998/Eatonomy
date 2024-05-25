@@ -1,59 +1,61 @@
-import 'package:eatonomy_food_recommender_app/res/components/HomePage_Components/dish_card.dart';
-import 'package:eatonomy_food_recommender_app/view/provider/fav_Dish_Provider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_shopping_cart/model/cart_model.dart';
-import 'package:provider/provider.dart';
 
+import '../../flutter_flow/flutter_flow_theme.dart';
 import '../../res/components/Colors/colors_app.dart';
+import '../../res/components/HomePage_Components/dish_card.dart';
 import '../cart/persistent_shopping_cart.dart';
 import '../product_details/product_details_widget.dart';
 
-class FavDishes extends StatefulWidget {
-  const FavDishes({super.key});
+class HomePopularItems extends StatelessWidget {
+  final Stream<QuerySnapshot> popularItemsStream;
 
-  @override
-  State<FavDishes> createState() => _FavDishesState();
-}
+  const HomePopularItems({super.key, required this.popularItemsStream});
 
-class _FavDishesState extends State<FavDishes> {
   @override
   Widget build(BuildContext context) {
-    final dishProvider = Provider.of<DishProvider>(context,listen: true);
-    return SafeArea(
-      child: Scaffold(
-        body: ListView.builder(
-            itemCount: dishProvider.dishes.length,
-            itemBuilder: (context, index) {
-              var dish = dishProvider.dishes[index];
-              return Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 8.0, horizontal: 0),
-                child: DishCard(
-                    imageUrl: dish.imageUrl,
-                    productName: dish.productName,
-                    price: dish.price,
-                    restaurantID: dish.restaurantID,
-                    dishID: dish.dishID,
-                    isDeliveryFree: dish.isLiked,
-                    rating: dish.rating,
-                    numberOfReviews: dish.numberOfReviews,
-                    description: dish.description,
-                    deliveryTime: dish.deliveryTime,
+    return StreamBuilder<QuerySnapshot>(
+      stream: popularItemsStream,
+      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const CircularProgressIndicator();
+        } else if (snapshot.hasError) {
+          return Text('Error: ${snapshot.error}');
+        } else if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+          return const Text('No Data Available');
+        } else {
+          return Container(
+            decoration: BoxDecoration(
+              color: FlutterFlowTheme.of(context).primaryBackground,
+            ),
+            height: MediaQuery.of(context).size.height * 0.275,
+            child: ListView.builder(
+              padding: EdgeInsets.zero,
+              scrollDirection: Axis.vertical,
+              itemCount: snapshot.data!.docs.length,
+              itemBuilder: (BuildContext context, int index) {
+                var categoryData = snapshot.data!.docs[index];
+
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: DishCard(
                     onTap: () {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (context) => ProductDetailsWidget(
-                                    productID: dish.dishID,
-                                    restaurantID: dish.restaurantID,
-                                    imageurl: dish.imageUrl,
-                                    productName: dish.productName,
-                                    price: dish.price,
-                                    isDeliveryFree: dish.isDeliveryFree,
-                                    rating: dish.rating,
-                                    numberOfReviews: dish.numberOfReviews,
-                                    deliveryTime: dish.deliveryTime,
-                                    description: dish.description,
+                                    productID: categoryData['did'],
+                                    restaurantID: categoryData['id'],
+                                    imageurl: categoryData['imageurl'],
+                                    productName: categoryData['title'],
+                                    price: categoryData['price'],
+                                    isDeliveryFree:
+                                        categoryData['delivery free'],
+                                    rating: categoryData['rating'],
+                                    numberOfReviews: categoryData['reviews'],
+                                    deliveryTime: categoryData['delivery time'],
+                                    description: categoryData['description'],
                                     shoppingCartWidget: Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: PersistentShoppingCart()
@@ -98,21 +100,38 @@ class _FavDishesState extends State<FavDishes> {
                                               ),
                                               product:
                                                   PersistentShoppingCartItem(
-                                                      productId: dish.dishID.toString(),
+                                                      productId:
+                                                          categoryData['id']
+                                                              .toString(),
                                                       productName:
-                                                          dish.productName,
+                                                          categoryData['title'],
                                                       productThumbnail:
-                                                          dish.imageUrl,
+                                                          categoryData[
+                                                              'imageurl'],
                                                       unitPrice: double.parse(
-                                                          dish.price
+                                                          categoryData['price']
                                                               .toString()),
                                                       quantity: 1)),
                                     ),
                                   )));
-                    }),
-              );
-            }),
-      ),
+                    },
+                    imageUrl: categoryData['imageurl'],
+                    restaurantID: categoryData['id'],
+                    dishID: categoryData['did'],
+                    productName: categoryData['title'],
+                    price: categoryData['price'],
+                    isDeliveryFree: categoryData['delivery free'],
+                    rating: categoryData['rating'],
+                    numberOfReviews: categoryData['reviews'],
+                    deliveryTime: categoryData['delivery time'],
+                    description: categoryData['description'],
+                  ),
+                );
+              },
+            ),
+          );
+        }
+      },
     );
   }
 }

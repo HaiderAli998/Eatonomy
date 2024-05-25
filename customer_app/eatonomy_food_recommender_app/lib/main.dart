@@ -4,6 +4,7 @@ import 'package:eatonomy_food_recommender_app/utils/routes/routes_name.dart';
 import 'package:eatonomy_food_recommender_app/view/cart/persistent_shopping_cart.dart';
 import 'package:eatonomy_food_recommender_app/view/provider/fav_Dish_Provider.dart';
 import 'package:eatonomy_food_recommender_app/view/provider/fav_restaurant_provider.dart';
+import 'package:eatonomy_food_recommender_app/view/provider/recommended_category_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
@@ -31,7 +32,8 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => FavRestaurantProvider()),
-        ChangeNotifierProvider(create: (_) => DishProvider())
+        ChangeNotifierProvider(create: (_) => DishProvider()),
+        ChangeNotifierProvider(create: (_) => RecommendedCategoryProvider())
       ],
       child: MaterialApp(
         title: 'Flutter Demo',

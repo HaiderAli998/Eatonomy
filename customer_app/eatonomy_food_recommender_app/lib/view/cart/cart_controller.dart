@@ -7,7 +7,7 @@ import 'package:persistent_shopping_cart/model/cart_model.dart';
 class CartController {
   /// The Hive box used to store cart items.
   final Box<PersistentShoppingCartItem> _cartBox =
-  Hive.box<PersistentShoppingCartItem>('cartBox');
+      Hive.box<PersistentShoppingCartItem>('cartBox');
 
   /// A [ValueListenable] for the cart box, allowing widgets to listen for changes in the cart.
   ValueListenable<Box<PersistentShoppingCartItem>> get cartListenable =>

@@ -121,7 +121,7 @@ class _TabItemListState extends State<TabItemList> {
                                                   product:
                                                       PersistentShoppingCartItem(
                                                           productId:
-                                                              category['id']
+                                                              category['did']
                                                                   .toString(),
                                                           productName:
                                                               category['title'],

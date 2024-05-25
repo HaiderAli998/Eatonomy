@@ -1,9 +1,13 @@
 import 'package:eatonomy_food_recommender_app/res/components/Shared_Preferences/Shared_Preferences.dart';
 import 'package:eatonomy_food_recommender_app/res/components/Colors/colors_app.dart';
 import 'package:eatonomy_food_recommender_app/utils/routes/routes_name.dart';
+import 'package:eatonomy_food_recommender_app/view/provider/fav_Dish_Provider.dart';
+import 'package:eatonomy_food_recommender_app/view/provider/fav_restaurant_provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:provider/provider.dart';
 import '../../res/components/Drawer_Components/Drawer_List_Item.dart';
 
 class MyDrawer extends StatelessWidget {
@@ -89,13 +93,22 @@ class MyDrawer extends StatelessWidget {
               }
             },
           ),
-          const DrawerListItem(
-            icon: Icons.category,
-            title: "Category",
-          ),
-          const DrawerListItem(
-            icon: Icons.shopping_cart_rounded,
-            title: "My Cart",
+          GestureDetector(
+              child: const DrawerListItem(
+                icon: Icons.category,
+                title: "Preferences",
+              ),
+              onTap: () {
+                Navigator.pushNamed(context, RoutesName.foodPreferences);
+              }),
+          GestureDetector(
+            child: const DrawerListItem(
+              icon: Icons.shopping_cart_rounded,
+              title: "My Cart",
+            ),
+            onTap: () {
+              Navigator.pushNamed(context, RoutesName.cartScreen);
+            },
           ),
           const DrawerListItem(
             icon: Icons.add_location,
@@ -124,6 +137,9 @@ class MyDrawer extends StatelessWidget {
               onTap: () async {
                 await FirebaseAuth.instance.signOut();
                 await GoogleSignIn().signOut();
+                Provider.of<FavRestaurantProvider>(context, listen: false)
+                    .clearData();
+                Provider.of<DishProvider>(context, listen: false).clearData();
                 Navigator.of(context).pushNamedAndRemoveUntil(
                     RoutesName.login, (route) => false);
               },

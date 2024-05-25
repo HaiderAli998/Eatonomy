@@ -1,4 +1,9 @@
-import '/flutter_flow/flutter_flow_icon_button.dart';
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:provider/provider.dart';
+
+import '../provider/fav_Dish_Provider.dart';
+import '../provider/fav_restaurant_provider.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -8,10 +13,9 @@ import 'package:eatonomy_food_recommender_app/view/edit_profile/edit_profile_wid
 export 'profile_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:eatonomy_food_recommender_app/utils/routes/routes_name.dart';
-import 'package:eatonomy_food_recommender_app/res/components/Shared_Preferences/Shared_Preferences.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../cart/persistent_shopping_cart.dart';
+
 class ProfileWidget extends StatefulWidget {
   const ProfileWidget({super.key});
 
@@ -81,101 +85,109 @@ class _ProfileWidgetState extends State<ProfileWidget> {
         ),
         body: SafeArea(
           top: true,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              ProfileTile(),
-              Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 0.0, 0.0),
-                child: Text(
-                  'Account',
-                  style: FlutterFlowTheme.of(context).labelLarge.override(
-                        fontFamily: 'Readex Pro',
-                        letterSpacing: 0.0,
-                      ),
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const ProfileTile(),
+                Padding(
+                  padding: const EdgeInsetsDirectional.fromSTEB(
+                      16.0, 16.0, 0.0, 0.0),
+                  child: Text(
+                    'Account',
+                    style: FlutterFlowTheme.of(context).labelLarge.override(
+                          fontFamily: 'Readex Pro',
+                          letterSpacing: 0.0,
+                        ),
+                  ),
                 ),
-              ),
-              ProfileListItem(
-                iconData: Icons.person,
-                title: 'Edit Profile',
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const EditProfileWidget()),
-                  );
-                },
-              ),
-              ProfileListItem(
-                iconData: Icons.location_on,
-                title: 'Address',
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const ProfileWidget()),
-                  );
-                },
-              ),
-              ProfileListItem(
-                iconData: Icons.notifications_none,
-                title: 'Notification Settings',
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const ProfileWidget()),
-                  );
-                },
-              ),
-
-              Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 0.0, 0.0),
-                child: Text(
-                  'General',
-                  style: FlutterFlowTheme.of(context).labelLarge.override(
-                        fontFamily: 'Readex Pro',
-                        letterSpacing: 0.0,
-                      ),
+                ProfileListItem(
+                  iconData: Icons.person,
+                  title: 'Edit Profile',
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const EditProfileWidget()),
+                    );
+                  },
                 ),
-              ),
-              ProfileListItem(
-                iconData: Icons.help_outline_rounded,
-                title: 'Support',
-                iconColor: FlutterFlowTheme.of(context).secondaryText,
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const ProfileWidget()), // Replace SupportScreen with your actual support screen class
-                  );
-                },
-              ),
-
-              ProfileListItem(
-                iconData: Icons.privacy_tip_rounded,
-                title: 'Terms of Service',
-                iconColor: FlutterFlowTheme.of(context).secondaryText,
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const ProfileWidget()), // Replace TermsServiceScreen with your actual terms of service screen class
-                  );
-                },
-              ),
-
-              ProfileListItem(
-                iconData: Icons.ios_share,
-                title: 'Invite Friends',
-                iconColor: FlutterFlowTheme.of(context).secondaryText,
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const ProfileWidget()), // Replace InviteFriendsScreen with your actual invite friends screen class
-                  );
-                },
-              ),
-
-              const LogoutButton(),
-
-            ],
+                ProfileListItem(
+                  iconData: Icons.location_on,
+                  title: 'Address',
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const ProfileWidget()),
+                    );
+                  },
+                ),
+                ProfileListItem(
+                  iconData: Icons.notifications_none,
+                  title: 'Notification Settings',
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const ProfileWidget()),
+                    );
+                  },
+                ),
+                Padding(
+                  padding: const EdgeInsetsDirectional.fromSTEB(
+                      16.0, 16.0, 0.0, 0.0),
+                  child: Text(
+                    'General',
+                    style: FlutterFlowTheme.of(context).labelLarge.override(
+                          fontFamily: 'Readex Pro',
+                          letterSpacing: 0.0,
+                        ),
+                  ),
+                ),
+                ProfileListItem(
+                  iconData: Icons.help_outline_rounded,
+                  title: 'Support',
+                  iconColor: FlutterFlowTheme.of(context).secondaryText,
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              const ProfileWidget()), // Replace SupportScreen with your actual support screen class
+                    );
+                  },
+                ),
+                ProfileListItem(
+                  iconData: Icons.privacy_tip_rounded,
+                  title: 'Terms of Service',
+                  iconColor: FlutterFlowTheme.of(context).secondaryText,
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              const ProfileWidget()), // Replace TermsServiceScreen with your actual terms of service screen class
+                    );
+                  },
+                ),
+                ProfileListItem(
+                  iconData: Icons.ios_share,
+                  title: 'Invite Friends',
+                  iconColor: FlutterFlowTheme.of(context).secondaryText,
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              const ProfileWidget()), // Replace InviteFriendsScreen with your actual invite friends screen class
+                    );
+                  },
+                ),
+                const LogoutButton(),
+              ],
+            ),
           ),
         ),
       ),
@@ -183,20 +195,17 @@ class _ProfileWidgetState extends State<ProfileWidget> {
   }
 }
 
-
-
-
 class ProfileTile extends StatefulWidget {
   final String? profileName;
   final String? profileEmail;
   final String? imageUrl;
 
   const ProfileTile({
-    Key? key,
+    super.key,
     this.profileName,
     this.profileEmail,
     this.imageUrl,
-  }) : super(key: key);
+  });
 
   @override
   _ProfileTileState createState() => _ProfileTileState();
@@ -232,16 +241,16 @@ class _ProfileTileState extends State<ProfileTile> {
           maxWidth: MediaQuery.of(context).size.width * 0.95,
           maxHeight: MediaQuery.of(context).size.height * 0.15,
         ),
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           color: Colors.white, // Adjust as needed for your theme
-          boxShadow: const [
+          boxShadow: [
             BoxShadow(
               blurRadius: 3.0,
               color: Color(0xFFE1E2E3),
               offset: Offset(0.0, 1.0),
             )
           ],
-          borderRadius: const BorderRadius.all(Radius.circular(12.0)),
+          borderRadius: BorderRadius.all(Radius.circular(12.0)),
         ),
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -263,36 +272,48 @@ class _ProfileTileState extends State<ProfileTile> {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(50.0),
                     child: CachedNetworkImage(
-                      imageUrl: _imageUrl ?? 'https://i.imgur.com/VTGxlk8.jpeg', // This should ideally be a valid URL
+                      imageUrl: _imageUrl ?? 'https://i.imgur.com/VTGxlk8.jpeg',
+                      // This should ideally be a valid URL
                       width: 60.0,
                       height: 60.0,
                       fit: BoxFit.cover,
-                      placeholder: (context, url) => Image.asset('assets/default_profile.jpg', fit: BoxFit.cover),
-                      errorWidget: (context, url, error) => Image.asset('assets/default_profile.jpg', fit: BoxFit.cover),
+                      placeholder: (context, url) => Image.asset(
+                          'assets/default_profile.jpg',
+                          fit: BoxFit.cover),
+                      errorWidget: (context, url, error) => Image.asset(
+                          'assets/default_profile.jpg',
+                          fit: BoxFit.cover),
                     ),
                   ),
                 ),
               ),
               Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 0.0, 0.0),
+                padding:
+                    const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 0.0, 0.0),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    AutoSizeText(
                       _profileName ?? 'Your Name',
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Color(0xFF5C5F65),
                         fontSize: 16.0,
                       ),
+                      maxLines: 1,
+                      minFontSize: 10.0,
+                      overflow: TextOverflow.ellipsis,
                     ),
                     Padding(
-                      padding: const EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 0.0),
-                      child: Text(
+                      padding: const EdgeInsetsDirectional.fromSTEB(
+                          0.0, 4.0, 0.0, 0.0),
+                      child: AutoSizeText(
                         _profileEmail ?? 'email@example.com',
-                        style: TextStyle(
-                          color: Color(0xFF76777D),
-                        ),
+                        style: const TextStyle(
+                            color: Color(0xFF76777D), fontSize: 9),
+                        maxLines: 1,
+                        minFontSize: 5,
+                        overflow: TextOverflow.ellipsis,
                       ),
                     ),
                   ],
@@ -306,14 +327,13 @@ class _ProfileTileState extends State<ProfileTile> {
   }
 }
 
-
 class ProfileListItem extends StatelessWidget {
   final IconData iconData;
   final String title;
   final Color iconColor;
   final Color textColor;
   final EdgeInsetsGeometry padding;
-  final VoidCallback onTap;  // Callback for tap action
+  final VoidCallback onTap; // Callback for tap action
 
   const ProfileListItem({
     super.key,
@@ -322,7 +342,7 @@ class ProfileListItem extends StatelessWidget {
     this.iconColor = const Color(0xFF5C5F65),
     this.textColor = const Color(0xFF5C5F65),
     this.padding = const EdgeInsetsDirectional.fromSTEB(16.0, 12.0, 16.0, 0.0),
-    required this.onTap,  // Ensure onTap is provided
+    required this.onTap, // Ensure onTap is provided
   });
 
   @override
@@ -357,14 +377,15 @@ class ProfileListItem extends StatelessWidget {
                 ),
                 Expanded(
                   child: Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(12.0, 0.0, 0.0, 0.0),
+                    padding: const EdgeInsetsDirectional.fromSTEB(
+                        12.0, 0.0, 0.0, 0.0),
                     child: Text(
                       title,
                       style: FlutterFlowTheme.of(context).bodyLarge.override(
-                        fontFamily: 'Readex Pro',
-                        color: textColor,
-                        letterSpacing: 0.0,
-                      ),
+                            fontFamily: 'Readex Pro',
+                            color: textColor,
+                            letterSpacing: 0.0,
+                          ),
                     ),
                   ),
                 ),
@@ -401,12 +422,17 @@ class LogoutButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: padding,
+      padding: const EdgeInsets.all(8.0),
       child: GestureDetector(
-        onTap: () {
+        onTap: () async {
           FirebaseAuth.instance.signOut();
-          Navigator.of(context).pushNamedAndRemoveUntil(
-              RoutesName.login, (route) => false);
+          await FirebaseAuth.instance.signOut();
+          await GoogleSignIn().signOut();
+          Provider.of<FavRestaurantProvider>(context, listen: false)
+              .clearData();
+          Provider.of<DishProvider>(context, listen: false).clearData();
+          Navigator.of(context)
+              .pushNamedAndRemoveUntil(RoutesName.login, (route) => false);
         },
         child: Container(
           width: double.infinity,
@@ -431,7 +457,8 @@ class LogoutButton extends StatelessWidget {
               children: [
                 Flexible(
                   child: Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 10.0, 0.0),
+                    padding: const EdgeInsetsDirectional.fromSTEB(
+                        0.0, 0.0, 10.0, 0.0),
                     child: Icon(
                       icon,
                       color: iconColor,
@@ -441,11 +468,11 @@ class LogoutButton extends StatelessWidget {
                 ),
                 Text(
                   title,
-                  style:    FlutterFlowTheme.of(context).bodyLarge.override(
-                    fontFamily: 'Readex Pro',
-                    color: textColor,
-                    letterSpacing: 0.0,
-                  ),
+                  style: FlutterFlowTheme.of(context).bodyLarge.override(
+                        fontFamily: 'Readex Pro',
+                        color: textColor,
+                        letterSpacing: 0.0,
+                      ),
                 ),
               ],
             ),

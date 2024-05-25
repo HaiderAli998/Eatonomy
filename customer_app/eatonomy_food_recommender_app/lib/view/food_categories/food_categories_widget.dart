@@ -135,7 +135,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                                     ),
                                                     product: PersistentShoppingCartItem(
                                                         productId:
-                                                            categoryData['id']
+                                                            categoryData['did']
                                                                 .toString(),
                                                         productName:
                                                             categoryData[

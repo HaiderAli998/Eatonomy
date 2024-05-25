@@ -40,19 +40,15 @@ class DishCard extends StatefulWidget {
 }
 
 class _DishCardState extends State<DishCard> {
-  late bool isLiked;
-
   @override
   void initState() {
     super.initState();
-    // Initialize isLiked from the provider at start
-    isLiked = Provider.of<DishProvider>(context, listen: false)
-        .isLiked(widget.dishID);
   }
 
   @override
   Widget build(BuildContext context) {
     final dishProvider = Provider.of<DishProvider>(context);
+    final isLiked = dishProvider.isLiked(widget.dishID);
     return GestureDetector(
       onTap: widget.onTap,
       child: Container(
@@ -87,7 +83,7 @@ class _DishCardState extends State<DishCard> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  buildTopImage(context, dishProvider),
+                  buildTopImage(context, dishProvider, isLiked),
                   buildProductInfo(context),
                   buildDeliveryAndRatingInfo(context),
                 ],
@@ -99,7 +95,8 @@ class _DishCardState extends State<DishCard> {
     );
   }
 
-  Widget buildTopImage(BuildContext context, DishProvider dishProvider) {
+  Widget buildTopImage(
+      BuildContext context, DishProvider dishProvider, bool isLiked) {
     return SizedBox(
       width: MediaQuery.of(context).size.width * 0.93,
       child: Stack(
@@ -128,10 +125,9 @@ class _DishCardState extends State<DishCard> {
                 size: 15,
               ),
               onPressed: () {
-                setState(() {
-                  isLiked = !isLiked;
-                });
                 if (isLiked) {
+                  dishProvider.removeDish(widget.dishID);
+                } else {
                   dishProvider.addDish(DishModel(
                     imageUrl: widget.imageUrl,
                     productName: widget.productName,
@@ -146,8 +142,6 @@ class _DishCardState extends State<DishCard> {
                     description: '',
                     deliveryTime: '',
                   ));
-                } else {
-                  dishProvider.removeDish(widget.dishID);
                 }
               },
               text: '',
