@@ -1,5 +1,5 @@
 import 'package:eatonomy_food_recommender_app/res/components/HomePage_Components/dish_card.dart';
-import 'package:eatonomy_food_recommender_app/view/provider/fav_Dish_Provider.dart';
+import 'package:eatonomy_food_recommender_app/view/provider/fav_dish_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_shopping_cart/model/cart_model.dart';
 import 'package:provider/provider.dart';

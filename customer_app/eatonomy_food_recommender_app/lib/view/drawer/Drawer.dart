@@ -1,7 +1,7 @@
 import 'package:eatonomy_food_recommender_app/res/components/Shared_Preferences/Shared_Preferences.dart';
 import 'package:eatonomy_food_recommender_app/res/components/Colors/colors_app.dart';
 import 'package:eatonomy_food_recommender_app/utils/routes/routes_name.dart';
-import 'package:eatonomy_food_recommender_app/view/provider/fav_Dish_Provider.dart';
+import 'package:eatonomy_food_recommender_app/view/provider/fav_dish_provider.dart';
 import 'package:eatonomy_food_recommender_app/view/provider/fav_restaurant_provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';

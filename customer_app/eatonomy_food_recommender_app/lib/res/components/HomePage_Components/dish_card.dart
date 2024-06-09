@@ -1,4 +1,4 @@
-import 'package:eatonomy_food_recommender_app/view/provider/fav_Dish_Provider.dart'; // Assuming DishProvider is the correct import
+import 'package:eatonomy_food_recommender_app/view/provider/fav_dish_provider.dart'; // Assuming DishProvider is the correct import
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
