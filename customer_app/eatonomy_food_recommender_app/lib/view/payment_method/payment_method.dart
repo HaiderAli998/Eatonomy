@@ -1,7 +1,9 @@
 import 'package:eatonomy_food_recommender_app/res/components/Colors/colors_app.dart';
 import 'package:eatonomy_food_recommender_app/res/components/Custom_Containers/Custom_button.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart'; // Add this import for toast messages
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'alert_dialog.dart';
 
 class PaymentMethod extends StatefulWidget {
   final String address;
@@ -14,16 +16,19 @@ class PaymentMethod extends StatefulWidget {
 
 class _PaymentMethodState extends State<PaymentMethod> {
   bool isPayOnArrivalSelected = false; // Add this variable to track selection
+  late double totalPrice;
 
-  void _showToast(String message) {
-    Fluttertoast.showToast(
-      msg: message,
-      toastLength: Toast.LENGTH_SHORT,
-      gravity: ToastGravity.BOTTOM,
-      backgroundColor: Colors.black,
-      textColor: Colors.white,
-      fontSize: 16.0,
-    );
+  @override
+  void initState() {
+    super.initState();
+    _loadPreferences();
+  }
+
+  void _loadPreferences() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      totalPrice = prefs.getDouble('Price') ?? 0.0;
+    });
   }
 
   @override
@@ -61,10 +66,10 @@ class _PaymentMethodState extends State<PaymentMethod> {
                       decoration: BoxDecoration(
                           color: ColorsApp.neutralN10,
                           border: Border.all(color: ColorsApp.paleGrey)),
-                      child: const Row(
+                      child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Padding(
+                          const Padding(
                             padding: EdgeInsets.only(left: 5),
                             child: Text(
                               "Total",
@@ -75,10 +80,10 @@ class _PaymentMethodState extends State<PaymentMethod> {
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsets.only(right: 5),
+                            padding: const EdgeInsets.only(right: 5),
                             child: Text(
-                              "100",
-                              style: TextStyle(
+                              totalPrice.toString(),
+                              style: const TextStyle(
                                   color: ColorsApp.darkGrey,
                                   fontSize: 15,
                                   fontWeight: FontWeight.bold),
@@ -199,15 +204,22 @@ class _PaymentMethodState extends State<PaymentMethod> {
               bottom: 16,
               left: 0,
               right: 0,
-              child: CustomButton(
-                "Proceed to Payment",
-                () {
-                  if (isPayOnArrivalSelected) {
-                    _showToast("Proceed to Payment button clicked");
-                  }
-                },
-                ColorsApp.splashBackgroundColorApp,
-                isEnabled: true,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: CustomButton(
+                  "Proceed to Payment",
+                  () {
+                    if (isPayOnArrivalSelected) {
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return SvgAlertDialog();
+                          });
+                    }
+                  },
+                  ColorsApp.splashBackgroundColorApp,
+                  isEnabled: true,
+                ),
               ),
             ),
           ],

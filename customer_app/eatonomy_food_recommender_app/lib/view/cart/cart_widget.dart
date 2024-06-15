@@ -2,6 +2,7 @@ import 'package:eatonomy_food_recommender_app/res/components/Custom_Containers/C
 import 'package:eatonomy_food_recommender_app/res/components/Colors/colors_app.dart';
 import 'package:eatonomy_food_recommender_app/utils/routes/routes_name.dart';
 import 'package:eatonomy_food_recommender_app/view/cart/persistent_shopping_cart.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../res/components/Cart_Component/cart_component.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -42,12 +43,12 @@ class _CartWidgetState extends State<CartWidget> {
   @override
   void dispose() {
     _model.dispose();
-
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    SharedPreferences prefs;
     return GestureDetector(
       onTap: () => _model.unfocusNode.canRequestFocus
           ? FocusScope.of(context).requestFocus(_model.unfocusNode)
@@ -58,9 +59,9 @@ class _CartWidgetState extends State<CartWidget> {
           key: scaffoldKey,
           backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
           appBar: AppBar(
-            backgroundColor: const Color(0xFFFFF9E1),
-            iconTheme:
-                IconThemeData(color: FlutterFlowTheme.of(context).secondaryText),
+            backgroundColor: ColorsApp.backgroundColorApp,
+            iconTheme: IconThemeData(
+                color: FlutterFlowTheme.of(context).secondaryText),
             automaticallyImplyLeading: false,
             title: Align(
               alignment: const AlignmentDirectional(0.0, -1.0),
@@ -107,9 +108,12 @@ class _CartWidgetState extends State<CartWidget> {
                             15.0, 0.0, 0.0, 0.0),
                         child: Text(
                           'Added Items',
-                          style: FlutterFlowTheme.of(context).bodyMedium.override(
+                          style: FlutterFlowTheme.of(context)
+                              .bodyMedium
+                              .override(
                                 fontFamily: 'Readex Pro',
-                                color: FlutterFlowTheme.of(context).secondaryText,
+                                color:
+                                    FlutterFlowTheme.of(context).secondaryText,
                                 letterSpacing: 0.0,
                               ),
                         ),
@@ -335,8 +339,13 @@ class _CartWidgetState extends State<CartWidget> {
                   padding: const EdgeInsets.all(8.0),
                   child: CustomButton(
                     'Place Order',
-                    () {
+                    () async {
                       Navigator.pushNamed(context, RoutesName.addressScreen);
+                      prefs = await SharedPreferences.getInstance();
+                      prefs.setDouble(
+                          'Price',
+                          PersistentShoppingCart().calculateTotalPrice() +
+                              deliveryFee);
                     },
                     ColorsApp.splashBackgroundColorApp,
                     isEnabled: isEmpty,

@@ -24,7 +24,7 @@ class _FoodPreferencesState extends State<FoodPreferences> {
         Provider.of<RecommendedCategoryProvider>(context, listen: false);
     return Scaffold(
         body: SafeArea(
-            child: Padding(
+            child: SingleChildScrollView(
       padding: const EdgeInsets.only(left: 30, right: 30, top: 17),
       child: Column(
         children: [

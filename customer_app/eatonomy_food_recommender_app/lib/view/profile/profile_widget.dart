@@ -116,13 +116,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                 ProfileListItem(
                   iconData: Icons.location_on,
                   title: 'Address',
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const ProfileWidget()),
-                    );
-                  },
+                  onTap: () {},
                 ),
                 ProfileListItem(
                   iconData: Icons.notifications_none,
@@ -150,40 +144,19 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                   iconData: Icons.help_outline_rounded,
                   title: 'Support',
                   iconColor: FlutterFlowTheme.of(context).secondaryText,
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                              const ProfileWidget()), // Replace SupportScreen with your actual support screen class
-                    );
-                  },
+                  onTap: () {},
                 ),
                 ProfileListItem(
                   iconData: Icons.privacy_tip_rounded,
                   title: 'Terms of Service',
                   iconColor: FlutterFlowTheme.of(context).secondaryText,
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                              const ProfileWidget()), // Replace TermsServiceScreen with your actual terms of service screen class
-                    );
-                  },
+                  onTap: () {},
                 ),
                 ProfileListItem(
                   iconData: Icons.ios_share,
                   title: 'Invite Friends',
                   iconColor: FlutterFlowTheme.of(context).secondaryText,
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                              const ProfileWidget()), // Replace InviteFriendsScreen with your actual invite friends screen class
-                    );
-                  },
+                  onTap: () {},
                 ),
                 const LogoutButton(),
               ],
@@ -272,16 +245,17 @@ class _ProfileTileState extends State<ProfileTile> {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(50.0),
                     child: CachedNetworkImage(
-                      imageUrl: _imageUrl ?? 'https://i.imgur.com/VTGxlk8.jpeg',
+                      imageUrl:
+                          _imageUrl ?? 'assets/images/default_profile.jpg',
                       // This should ideally be a valid URL
                       width: 60.0,
                       height: 60.0,
                       fit: BoxFit.cover,
                       placeholder: (context, url) => Image.asset(
-                          'assets/default_profile.jpg',
+                          'assets/images/default_profile.jpg',
                           fit: BoxFit.cover),
                       errorWidget: (context, url, error) => Image.asset(
-                          'assets/default_profile.jpg',
+                          'assets/images/default_profile.jpg',
                           fit: BoxFit.cover),
                     ),
                   ),
@@ -431,6 +405,7 @@ class LogoutButton extends StatelessWidget {
           Provider.of<FavRestaurantProvider>(context, listen: false)
               .clearData();
           Provider.of<DishProvider>(context, listen: false).clearData();
+          PersistentShoppingCart().clearCart();
           Navigator.of(context)
               .pushNamedAndRemoveUntil(RoutesName.login, (route) => false);
         },

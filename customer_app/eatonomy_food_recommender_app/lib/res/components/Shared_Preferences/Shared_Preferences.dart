@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedPreferencesClass {
@@ -9,6 +11,11 @@ class SharedPreferencesClass {
   static Future<String?> getSavedAddress() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getString('Address');
+  }
+
+  static Future<double?> getTotalPrice() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getDouble('Price');
   }
 
   static Future<String?> getProfileName() async {
