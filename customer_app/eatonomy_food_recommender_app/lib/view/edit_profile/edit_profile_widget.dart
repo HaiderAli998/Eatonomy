@@ -1,3 +1,6 @@
+import 'package:shared_preferences/shared_preferences.dart';
+import '../../res/route_observer.dart';
+import '../../utils/routes/routes_name.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -13,7 +16,10 @@ class EditProfileWidget extends StatefulWidget {
   State<EditProfileWidget> createState() => _EditProfileWidgetState();
 }
 
-class _EditProfileWidgetState extends State<EditProfileWidget> {
+class _EditProfileWidgetState extends State<EditProfileWidget> with RouteAware {
+  late String _username;
+  late String _profilePicture;
+  late String _phoneNumber;
   late EditProfileModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
@@ -25,22 +31,35 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
 
     _model.textController1 ??= TextEditingController();
     _model.textFieldFocusNode1 ??= FocusNode();
+    _loadPreferences();
+  }
 
-    _model.textController2 ??= TextEditingController();
-    _model.textFieldFocusNode2 ??= FocusNode();
-
-    _model.textController3 ??= TextEditingController();
-    _model.textFieldFocusNode3 ??= FocusNode();
-
-    _model.textController4 ??= TextEditingController();
-    _model.textFieldFocusNode4 ??= FocusNode();
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    routeObserver.subscribe(this, ModalRoute.of(context) as PageRoute);
   }
 
   @override
   void dispose() {
+    routeObserver.unsubscribe(this);
     _model.dispose();
-
     super.dispose();
+  }
+
+  @override
+  void didPopNext() {
+    // Called when the current route has been popped off, and the current route shows up again.
+    _loadPreferences();
+  }
+
+  void _loadPreferences() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _username = prefs.getString('Name') ?? 'xyz';
+      _profilePicture = prefs.getString('ProfilePic') ?? '';
+      _phoneNumber = prefs.getString('Phone') ?? '';
+    });
   }
 
   @override
@@ -66,7 +85,7 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
               size: 30.0,
             ),
             onPressed: () {
-              print('IconButton pressed ...');
+              Navigator.pop(context);
             },
           ),
           title: Text(
@@ -107,7 +126,7 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(60.0),
                               child: Image.network(
-                                'https://images.unsplash.com/photo-1579783483458-83d02161294e?w=512&h=512',
+                                _profilePicture,
                                 width: 120.0,
                                 height: 120.0,
                                 fit: BoxFit.cover,
@@ -139,16 +158,16 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                     ),
                   ),
                   Padding(
-                    padding:
-                        const EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 0.0),
+                    padding: const EdgeInsetsDirectional.fromSTEB(
+                        0.0, 24.0, 0.0, 0.0),
                     child: TextFormField(
                       controller: _model.textController1,
                       focusNode: _model.textFieldFocusNode1,
                       autofocus: false,
                       obscureText: false,
                       decoration: InputDecoration(
-                        labelText: 'First Name',
-                        hintText: 'Enter your first name',
+                        labelText: 'Name',
+                        hintText: _username,
                         hintStyle:
                             FlutterFlowTheme.of(context).bodyLarge.override(
                                   fontFamily: 'Readex Pro',
@@ -187,6 +206,11 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                         fillColor:
                             FlutterFlowTheme.of(context).secondaryBackground,
                       ),
+                      onChanged: (value) {
+                        setState(() {
+                          _username = value;
+                        });
+                      },
                       style: FlutterFlowTheme.of(context).bodyMedium.override(
                             fontFamily: 'Readex Pro',
                             color: const Color(0xFF5C5F65),
@@ -197,124 +221,8 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                     ),
                   ),
                   Padding(
-                    padding:
-                        const EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 0.0),
-                    child: TextFormField(
-                      controller: _model.textController2,
-                      focusNode: _model.textFieldFocusNode2,
-                      autofocus: false,
-                      obscureText: false,
-                      decoration: InputDecoration(
-                        labelText: 'Last Name',
-                        hintText: 'Enter your last name',
-                        hintStyle:
-                            FlutterFlowTheme.of(context).bodyLarge.override(
-                                  fontFamily: 'Readex Pro',
-                                  color: const Color(0xFF5C5F65),
-                                  letterSpacing: 0.0,
-                                ),
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                            color: Color(0xFFE1E2E3),
-                            width: 2.0,
-                          ),
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                            color: Color(0x00000000),
-                            width: 2.0,
-                          ),
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                        errorBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                            color: Color(0x00000000),
-                            width: 2.0,
-                          ),
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                        focusedErrorBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                            color: Color(0x00000000),
-                            width: 2.0,
-                          ),
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                        filled: true,
-                        fillColor:
-                            FlutterFlowTheme.of(context).secondaryBackground,
-                      ),
-                      style: FlutterFlowTheme.of(context).bodyMedium.override(
-                            fontFamily: 'Readex Pro',
-                            color: const Color(0xFF5C5F65),
-                            letterSpacing: 0.0,
-                          ),
-                      validator:
-                          _model.textController2Validator.asValidator(context),
-                    ),
-                  ),
-                  Padding(
-                    padding:
-                        const EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 0.0),
-                    child: TextFormField(
-                      controller: _model.textController3,
-                      focusNode: _model.textFieldFocusNode3,
-                      autofocus: false,
-                      obscureText: false,
-                      decoration: InputDecoration(
-                        labelText: 'Email',
-                        hintText: 'Enter your email',
-                        hintStyle:
-                            FlutterFlowTheme.of(context).bodyLarge.override(
-                                  fontFamily: 'Readex Pro',
-                                  color: const Color(0xFF5C5F65),
-                                  letterSpacing: 0.0,
-                                ),
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                            color: Color(0xFFE1E2E3),
-                            width: 2.0,
-                          ),
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                            color: Color(0x00000000),
-                            width: 2.0,
-                          ),
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                        errorBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                            color: Color(0x00000000),
-                            width: 2.0,
-                          ),
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                        focusedErrorBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                            color: Color(0x00000000),
-                            width: 2.0,
-                          ),
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                        filled: true,
-                        fillColor:
-                            FlutterFlowTheme.of(context).secondaryBackground,
-                      ),
-                      style: FlutterFlowTheme.of(context).bodyMedium.override(
-                            fontFamily: 'Readex Pro',
-                            color: const Color(0xFF5C5F65),
-                            letterSpacing: 0.0,
-                          ),
-                      validator:
-                          _model.textController3Validator.asValidator(context),
-                    ),
-                  ),
-                  Padding(
-                    padding:
-                        const EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 0.0),
+                    padding: const EdgeInsetsDirectional.fromSTEB(
+                        0.0, 24.0, 0.0, 0.0),
                     child: TextFormField(
                       controller: _model.textController4,
                       focusNode: _model.textFieldFocusNode4,
@@ -322,7 +230,7 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                       obscureText: false,
                       decoration: InputDecoration(
                         labelText: 'Phone Number',
-                        hintText: 'Enter your phone number',
+                        hintText: _phoneNumber,
                         hintStyle:
                             FlutterFlowTheme.of(context).bodyLarge.override(
                                   fontFamily: 'Readex Pro',
@@ -361,6 +269,9 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                         fillColor:
                             FlutterFlowTheme.of(context).secondaryBackground,
                       ),
+                      onChanged: (value) {
+                        _phoneNumber = value;
+                      },
                       style: FlutterFlowTheme.of(context).bodyMedium.override(
                             fontFamily: 'Readex Pro',
                             color: const Color(0xFF5C5F65),
@@ -371,11 +282,16 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                     ),
                   ),
                   Padding(
-                    padding:
-                        const EdgeInsetsDirectional.fromSTEB(0.0, 30.0, 0.0, 0.0),
+                    padding: const EdgeInsetsDirectional.fromSTEB(
+                        0.0, 30.0, 0.0, 0.0),
                     child: FFButtonWidget(
-                      onPressed: () {
-                        print('Button pressed ...');
+                      onPressed: () async {
+                        final prefs = await SharedPreferences.getInstance();
+                        prefs.setString('Name', _username);
+                        prefs.setString('Phone', _phoneNumber);
+                        Navigator.pushNamedAndRemoveUntil(context,
+                            RoutesName.navBarScreen, (Route route) => false);
+                        // Pass the updated name as result
                       },
                       text: 'Update',
                       options: FFButtonOptions(
@@ -383,8 +299,8 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                         height: MediaQuery.sizeOf(context).height * 0.055,
                         padding: const EdgeInsetsDirectional.fromSTEB(
                             24.0, 0.0, 24.0, 0.0),
-                        iconPadding:
-                            const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                        iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                            0.0, 0.0, 0.0, 0.0),
                         color: FlutterFlowTheme.of(context).primary,
                         textStyle:
                             FlutterFlowTheme.of(context).titleSmall.override(

@@ -1,11 +1,10 @@
-import 'package:eatonomy_food_recommender_app/res/components/Authentication_Components/Login_with_phone_number.dart';
+import 'package:eatonomy_food_recommender_app/res/components/Authentication_Components/login_with_phone_number.dart';
 import 'package:eatonomy_food_recommender_app/res/components/Custom_Containers/simple_text_form_field.dart';
 import 'package:eatonomy_food_recommender_app/utils/Utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../../res/components/Authentication_Components/Google_SignIn.dart';
 import '../../res/components/Custom_Containers/password_text_form_field.dart';
 import '../../res/components/Colors/colors_app.dart';
 import '../../res/components/Custom_Containers/Custom_button.dart';
@@ -59,7 +58,6 @@ class _SignupState extends State<SignupScreen> {
 
   @override
   Widget build(BuildContext context) {
-    ValueNotifier userCredential = ValueNotifier('');
     final height = MediaQuery.of(context).size.height * 1;
     return Scaffold(
       body: SafeArea(
@@ -229,6 +227,7 @@ class _SignupState extends State<SignupScreen> {
                   },
                   ColorsApp.splashBackgroundColorApp,
                   loading: loading,
+                  isEnabled: true,
                 ),
                 SizedBox(
                   height: height * .012,
@@ -311,7 +310,9 @@ class _SignupState extends State<SignupScreen> {
                                 await prefs.setString(
                                     'Email', user.email ?? 'No Email');
                                 await prefs.setString(
-                                    'ProfilePic', user.photoURL ?? 'https://i.imgur.com/VTGxlk8.jpeg');
+                                    'ProfilePic',
+                                    user.photoURL ??
+                                        'https://i.imgur.com/VTGxlk8.jpeg');
 
                                 // Navigate or perform other actions
                                 Navigator.pushNamedAndRemoveUntil(
@@ -327,7 +328,7 @@ class _SignupState extends State<SignupScreen> {
                                 'Failed to sign in with Google: $e');
                           }
                         },
-                        svgPath: 'assets/google_logo.svg'),
+                        svgPath: 'assets/icons/google_logo.svg'),
                     SocialMediaBox(
                         text: 'Phone ',
                         onPress: () {
@@ -335,7 +336,7 @@ class _SignupState extends State<SignupScreen> {
                           Navigator.pushNamedAndRemoveUntil(
                               context, RoutesName.loginPhone, (route) => false);
                         },
-                        svgPath: 'assets/phone_icon.svg'),
+                        svgPath: 'assets/icons/phone_icon.svg'),
                   ],
                 )
               ],

@@ -5,6 +5,7 @@ class CustomButton extends StatelessWidget {
   final String text;
   final Color buttonColor;
   final bool loading;
+  final bool isEnabled;
   final VoidCallback onPress;
 
   const CustomButton(
@@ -13,12 +14,13 @@ class CustomButton extends StatelessWidget {
     this.buttonColor, {
     this.loading = false,
     super.key,
+    required this.isEnabled,
   });
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: onPress,
+      onTap: isEnabled ? onPress : null,
       child: Container(
         height: 48,
         width: 368,
@@ -26,7 +28,10 @@ class CustomButton extends StatelessWidget {
             color: buttonColor, borderRadius: BorderRadius.circular(30)),
         child: Center(
           child: loading
-              ? const CircularProgressIndicator(strokeWidth: 3,color: ColorsApp.backgroundColorApp,)
+              ? const CircularProgressIndicator(
+                  strokeWidth: 3,
+                  color: ColorsApp.backgroundColorApp,
+                )
               : Text(
                   text,
                   textAlign: TextAlign.center,

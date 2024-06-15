@@ -67,7 +67,7 @@ class _FoodPreferencesState extends State<FoodPreferences> {
             height: height * .032,
           ),
           SvgPicture.asset(
-            'assets/food_preferences_photo.svg',
+            'assets/icons/food_preferences_photo.svg',
             height: 194,
             width: 194,
           ),
@@ -139,10 +139,15 @@ class _FoodPreferencesState extends State<FoodPreferences> {
           SizedBox(
             height: height * .080,
           ),
-          CustomButton('Continue', () {
-            provider.changeTrigger(true);
-            Navigator.pushReplacementNamed(context, RoutesName.navBarScreen);
-          }, ColorsApp.splashBackgroundColorApp)
+          CustomButton(
+            'Continue',
+            () {
+              provider.changeTrigger(true);
+              Navigator.pushReplacementNamed(context, RoutesName.navBarScreen);
+            },
+            ColorsApp.splashBackgroundColorApp,
+            isEnabled: true,
+          )
         ],
       ),
     )));

@@ -3,6 +3,7 @@ import 'package:eatonomy_food_recommender_app/res/components/Colors/colors_app.d
 import 'package:eatonomy_food_recommender_app/utils/routes/routes_name.dart';
 import 'package:eatonomy_food_recommender_app/view/provider/fav_dish_provider.dart';
 import 'package:eatonomy_food_recommender_app/view/provider/fav_restaurant_provider.dart';
+import 'package:eatonomy_food_recommender_app/view/provider/saved_address_provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -140,6 +141,8 @@ class MyDrawer extends StatelessWidget {
                 Provider.of<FavRestaurantProvider>(context, listen: false)
                     .clearData();
                 Provider.of<DishProvider>(context, listen: false).clearData();
+                Provider.of<SavedAddressProvider>(context, listen: false)
+                    .clearData();
                 Navigator.of(context).pushNamedAndRemoveUntil(
                     RoutesName.login, (route) => false);
               },

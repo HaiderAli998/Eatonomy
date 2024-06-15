@@ -60,17 +60,22 @@ class _ForgetScreenState extends State<ForgetScreen> {
               SizedBox(
                 height: height * 0.048,
               ),
-              CustomButton('Submit', () {
-                auth
-                    .sendPasswordResetEmail(
-                        email: _forgetEmailController.text.toString())
-                    .then((value) {
-                  Utils.toastMessage(
-                      'We sent you email to recover password, please check email');
-                }).onError((error, stackTrace) {
-                  Utils.toastMessage(error.toString());
-                });
-              }, ColorsApp.splashBackgroundColorApp)
+              CustomButton(
+                'Submit',
+                () {
+                  auth
+                      .sendPasswordResetEmail(
+                          email: _forgetEmailController.text.toString())
+                      .then((value) {
+                    Utils.toastMessage(
+                        'We sent you email to recover password, please check email');
+                  }).onError((error, stackTrace) {
+                    Utils.toastMessage(error.toString());
+                  });
+                },
+                ColorsApp.splashBackgroundColorApp,
+                isEnabled: true,
+              )
             ],
           ),
         ),

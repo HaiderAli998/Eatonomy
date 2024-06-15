@@ -35,41 +35,47 @@ class _FireStoreAddDataState extends State<FireStoreAddData> {
                   enabledBorder: OutlineInputBorder()),
             ),
             const SizedBox(height: 15),
-            CustomButton("Add", loading: loading, () {
-              setState(() {
-                loading = true;
-              });
-              //Create Operation
-              String id = DateTime.now().millisecondsSinceEpoch.toString();
-              firestore1.doc().set({
-                'title': textEditingController.text,
-                'id': id.toString()
-              }).then((value) {
-                Utils.toastMessage('Post Added');
+            CustomButton(
+              "Add",
+              loading: loading,
+              () {
                 setState(() {
-                  loading = false;
+                  loading = true;
                 });
-              }).onError((error, stackTrace) {
-                Utils.toastMessage(error.toString());
-                setState(() {
-                  loading = false;
+                //Create Operation
+                String id = DateTime.now().millisecondsSinceEpoch.toString();
+                firestore1.doc().set({
+                  'title': textEditingController.text,
+                  'id': id.toString()
+                }).then((value) {
+                  Utils.toastMessage('Post Added');
+                  setState(() {
+                    loading = false;
+                  });
+                }).onError((error, stackTrace) {
+                  Utils.toastMessage(error.toString());
+                  setState(() {
+                    loading = false;
+                  });
                 });
-              });
 
-              firestore2
-                  .doc()
-                  .set({'Owner': 'Ali', 'Timing': '9 to 5'}).then((value) {
-                Utils.toastMessage('Post Added');
-                setState(() {
-                  loading = false;
+                firestore2
+                    .doc()
+                    .set({'Owner': 'Ali', 'Timing': '9 to 5'}).then((value) {
+                  Utils.toastMessage('Post Added');
+                  setState(() {
+                    loading = false;
+                  });
+                }).onError((error, stackTrace) {
+                  Utils.toastMessage(error.toString());
+                  setState(() {
+                    loading = false;
+                  });
                 });
-              }).onError((error, stackTrace) {
-                Utils.toastMessage(error.toString());
-                setState(() {
-                  loading = false;
-                });
-              });
-            }, Colors.blue)
+              },
+              Colors.blue,
+              isEnabled: true,
+            )
           ],
         ),
       ),

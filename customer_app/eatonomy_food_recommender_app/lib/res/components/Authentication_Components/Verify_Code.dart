@@ -61,7 +61,7 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
                 });
                 Utils.toastMessage(e.toString());
               }
-            }, ColorsApp.splashBackgroundColorApp)
+            }, ColorsApp.splashBackgroundColorApp, isEnabled: true,)
           ],
         ),
       ),

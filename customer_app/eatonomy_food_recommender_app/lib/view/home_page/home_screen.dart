@@ -362,7 +362,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       if (provider.trigger == false)
                         RestaurantListView(restaurantDataStream: restaurantData)
-                      else
+                      else if (provider.trigger == true)
                         RecommendedListView(
                           restaurantDataStream: restaurantData,
                         ),

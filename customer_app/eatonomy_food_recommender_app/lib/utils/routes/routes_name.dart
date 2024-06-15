@@ -11,4 +11,5 @@ class RoutesName {
   static const String fireStoreAdd = 'Fire Store Add Data';
   static const String allRestaurants = 'All Restaurants';
   static const String cartScreen = 'Cart Screen';
+  static const String addressScreen = 'Address Screen';
 }

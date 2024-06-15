@@ -1,8 +1,9 @@
 import '/flutter_flow/flutter_flow_util.dart';
-import 'address_widget.dart' show AddressWidget;
 import 'package:flutter/material.dart';
 
-class AddressModel extends FlutterFlowModel<AddressWidget> {
+import 'delivery_address.dart';
+
+class AddressModel extends FlutterFlowModel<DeliveryAddress> {
   ///  State fields for stateful widgets in this page.
 
   final unfocusNode = FocusNode();

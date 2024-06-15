@@ -15,7 +15,7 @@ class RecommendedListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var provider =
-        Provider.of<RecommendedCategoryProvider>(context, listen: false);
+        Provider.of<RecommendedCategoryProvider>(context, listen: true);
     return StreamBuilder<QuerySnapshot>(
       stream: restaurantDataStream,
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {

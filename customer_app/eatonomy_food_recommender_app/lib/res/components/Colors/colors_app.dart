@@ -5,8 +5,10 @@ class ColorsApp {
   static const Color alternate = Color(0xFFE0E3E7);
   static const Color neutralN60 = Color(0xFFB8B9BC);
   static const Color backgroundColorApp = Color(0xFFfff9e1);
+  static const Color neutralN10 = Color(0xFFFAFAFB);
   static const Color splashBackgroundColorApp = Color(0xFFFE724C);
   static const Color darkGrey = Color(0xFF4F5158);
+  static const Color paleGrey = Color(0xFFE1E2E3);
   static const Color grey = Color(0xFF57636c);
   static const Color stormGrey = Color(0xFF76777D);
   static const Color neutralN40 = Color(0xFF83858A);

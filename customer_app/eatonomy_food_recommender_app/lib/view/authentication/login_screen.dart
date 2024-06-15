@@ -6,8 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../../res/components/Authentication_Components/Google_SignIn.dart';
-import '../../res/components/Authentication_Components/Login_with_phone_number.dart';
+import '../../res/components/Authentication_Components/login_with_phone_number.dart';
 import '../../res/components/Custom_Containers/password_text_form_field.dart';
 import '../../res/components/Custom_Containers/simple_text_form_field.dart';
 import '../../utils/Utils.dart';
@@ -17,26 +16,29 @@ Future<User?> signInWithGoogle() async {
   final GoogleSignIn googleSignIn = GoogleSignIn();
   final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
   if (googleUser != null) {
-    final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+    final GoogleSignInAuthentication googleAuth =
+        await googleUser.authentication;
     final OAuthCredential credential = GoogleAuthProvider.credential(
       accessToken: googleAuth.accessToken,
       idToken: googleAuth.idToken,
     );
 
-    final UserCredential userCredential = await FirebaseAuth.instance.signInWithCredential(credential);
+    final UserCredential userCredential =
+        await FirebaseAuth.instance.signInWithCredential(credential);
     final User? user = userCredential.user;
     if (user != null) {
       // Save user details in SharedPreferences
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.setString('Name', user.displayName ?? 'No Name');
       await prefs.setString('Email', user.email ?? 'No Email');
-      await prefs.setString('ProfilePic', user.photoURL ?? 'https://i.imgur.com/VTGxlk8.jpeg');
+      await prefs.setString(
+          'ProfilePic', user.photoURL ?? 'https://i.imgur.com/VTGxlk8.jpeg');
 
       Utils.toastMessage("Signed in as ${user.email}");
       return user; // Returning User object for further use
     }
   }
-  return null;  // Return null if sign-in failed or was aborted
+  return null; // Return null if sign-in failed or was aborted
 }
 
 class LoginScreen extends StatefulWidget {
@@ -120,16 +122,13 @@ class _LoginScreenState extends State<LoginScreen> {
     await prefs.setString('Name', user.displayName ?? 'No Name');
 
     // Set a default profile picture if none is set in Firebase
-    String defaultProfilePic = 'https://i.imgur.com/VTGxlk8.jpeg'; // Local asset as default
+    String defaultProfilePic =
+        'https://i.imgur.com/VTGxlk8.jpeg'; // Local asset as default
     await prefs.setString('ProfilePic', user.photoURL ?? defaultProfilePic);
   }
 
-
-
-
   @override
   Widget build(BuildContext context) {
-    ValueNotifier userCredential = ValueNotifier('');
     final height = MediaQuery.of(context).size.height * 1;
     return Scaffold(
       body: SafeArea(
@@ -249,11 +248,17 @@ class _LoginScreenState extends State<LoginScreen> {
                 SizedBox(
                   height: height * .068,
                 ),
-                CustomButton('Log in', loading: loading, () {
-                  if (_formKey.currentState!.validate()) {
-                    login();
-                  }
-                }, ColorsApp.splashBackgroundColorApp),
+                CustomButton(
+                  'Log in',
+                  loading: loading,
+                  () {
+                    if (_formKey.currentState!.validate()) {
+                      login();
+                    }
+                  },
+                  ColorsApp.splashBackgroundColorApp,
+                  isEnabled: true,
+                ),
                 SizedBox(
                   height: height * .0012,
                 ),
@@ -309,17 +314,18 @@ class _LoginScreenState extends State<LoginScreen> {
                           try {
                             User? user = await signInWithGoogle();
                             if (user != null) {
-                              print(user.email);  // Debugging line
-                              Navigator.pushNamedAndRemoveUntil(context, RoutesName.foodPreferences, (route) => false);
+                              Navigator.pushNamedAndRemoveUntil(context,
+                                  RoutesName.foodPreferences, (route) => false);
                             } else {
-                              Utils.toastMessage("No user returned from Google sign-in");
+                              Utils.toastMessage(
+                                  "No user returned from Google sign-in");
                             }
                           } catch (e) {
-                            Utils.toastMessage("Failed to sign in with Google: $e");
+                            Utils.toastMessage(
+                                "Failed to sign in with Google: $e");
                           }
                         },
-                        svgPath: 'assets/google_logo.svg'
-                    ),
+                        svgPath: 'assets/icons/google_logo.svg'),
                     SocialMediaBox(
                         text: 'Phone',
                         onPress: () {
@@ -327,7 +333,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           Navigator.pushNamedAndRemoveUntil(
                               context, RoutesName.loginPhone, (route) => false);
                         },
-                        svgPath: 'assets/phone_icon.svg'),
+                        svgPath: 'assets/icons/phone_icon.svg'),
                   ],
                 )
               ],

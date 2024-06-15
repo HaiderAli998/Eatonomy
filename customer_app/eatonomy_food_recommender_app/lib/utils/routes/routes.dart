@@ -1,6 +1,7 @@
 import 'package:eatonomy_food_recommender_app/Firestore_screens/firestore_list_screen.dart';
-import 'package:eatonomy_food_recommender_app/res/components/Authentication_Components/Login_with_phone_number.dart';
+import 'package:eatonomy_food_recommender_app/res/components/Authentication_Components/login_with_phone_number.dart';
 import 'package:eatonomy_food_recommender_app/utils/routes/routes_name.dart';
+import 'package:eatonomy_food_recommender_app/view/address/delivery_address.dart';
 import 'package:eatonomy_food_recommender_app/view/cart/cart_widget.dart';
 import 'package:eatonomy_food_recommender_app/view/home_page/home_screen.dart';
 import 'package:eatonomy_food_recommender_app/view/food_preferences/food_preferences_screen.dart';
@@ -52,6 +53,9 @@ class Routes {
       case RoutesName.allRestaurants:
         return MaterialPageRoute(
             builder: (BuildContext context) => const AllRestaurants());
+      case RoutesName.addressScreen:
+        return MaterialPageRoute(
+            builder: (BuildContext context) => const DeliveryAddress());
       default:
         return MaterialPageRoute(builder: (_) {
           return const Scaffold(

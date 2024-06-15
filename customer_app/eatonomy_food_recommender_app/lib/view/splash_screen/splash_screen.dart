@@ -25,7 +25,7 @@ class _SplashScreenState extends State<SplashScreen> {
         backgroundColor: ColorsApp.splashBackgroundColorApp,
         body: Center(
           child: SvgPicture.asset(
-            'assets/app_logo_splash_screen.svg',
+            'assets/icons/app_logo_splash_screen.svg',
             semanticsLabel: 'My SVG Image',
             height: 189,
             width: 189,

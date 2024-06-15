@@ -1,10 +1,12 @@
 import 'package:eatonomy_food_recommender_app/res/components/Colors/colors_app.dart';
+import 'package:eatonomy_food_recommender_app/res/route_observer.dart';
 import 'package:eatonomy_food_recommender_app/utils/routes/routes.dart';
 import 'package:eatonomy_food_recommender_app/utils/routes/routes_name.dart';
 import 'package:eatonomy_food_recommender_app/view/cart/persistent_shopping_cart.dart';
 import 'package:eatonomy_food_recommender_app/view/provider/fav_dish_provider.dart';
 import 'package:eatonomy_food_recommender_app/view/provider/fav_restaurant_provider.dart';
 import 'package:eatonomy_food_recommender_app/view/provider/recommended_category_provider.dart';
+import 'package:eatonomy_food_recommender_app/view/provider/saved_address_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
@@ -33,9 +35,11 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (_) => FavRestaurantProvider()),
         ChangeNotifierProvider(create: (_) => DishProvider()),
-        ChangeNotifierProvider(create: (_) => RecommendedCategoryProvider())
+        ChangeNotifierProvider(create: (_) => RecommendedCategoryProvider()),
+        ChangeNotifierProvider(create: (_) => SavedAddressProvider())
       ],
       child: MaterialApp(
+        navigatorObservers: [routeObserver],
         title: 'Flutter Demo',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
