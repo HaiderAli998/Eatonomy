@@ -32,10 +32,8 @@ class _FoodPreferencesContainerState extends State<FoodPreferencesContainer> {
 
     if (flag) {
       provider.addCategory(widget.text);
-      Utils.toastMessage('Data Added');
     } else {
       provider.removeCategory(widget.text);
-      Utils.toastMessage('Data Removed');
     }
 
     if (widget.onContainerPressed != null) {

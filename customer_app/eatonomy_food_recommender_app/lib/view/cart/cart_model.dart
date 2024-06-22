@@ -7,6 +7,7 @@ class CartModel extends FlutterFlowModel<CartWidget> {
 
   final unfocusNode = FocusNode();
   int? countControllerValue;
+
   @override
   void initState(BuildContext context) {}
 

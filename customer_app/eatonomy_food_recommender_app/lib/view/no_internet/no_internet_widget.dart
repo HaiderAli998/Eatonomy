@@ -1,6 +1,6 @@
+import '../../flutter_flow/flutter_flow_model.dart';
+import '../../flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
-import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 import 'no_internet_model.dart';
 export 'no_internet_model.dart';
@@ -26,7 +26,6 @@ class _NoInternetWidgetState extends State<NoInternetWidget> {
   @override
   void dispose() {
     _model.dispose();
-
     super.dispose();
   }
 
@@ -54,9 +53,10 @@ class _NoInternetWidgetState extends State<NoInternetWidget> {
                   size: 128.0,
                 ),
                 Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 0.0, 0.0),
+                  padding:
+                      const EdgeInsetsDirectional.symmetric(horizontal: 8,vertical: 4),
                   child: Text(
-                    'Oops! No internet connection.',
+                    'Oops! No internet connection',
                     style: FlutterFlowTheme.of(context).headlineMedium.override(
                           fontFamily: 'Outfit',
                           color: FlutterFlowTheme.of(context).secondaryText,
@@ -65,9 +65,10 @@ class _NoInternetWidgetState extends State<NoInternetWidget> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(8.0, 0.0, 24.0, 0.0),
+                  padding:
+                      const EdgeInsetsDirectional.fromSTEB(8.0, 0.0, 24.0, 0.0),
                   child: Text(
-                    'Please check your connection and try again.',
+                    'Please check your connection and try again',
                     style: FlutterFlowTheme.of(context).bodyMedium.override(
                           fontFamily: 'Readex Pro',
                           color: FlutterFlowTheme.of(context).secondaryText,
@@ -75,19 +76,20 @@ class _NoInternetWidgetState extends State<NoInternetWidget> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(0.0, 50.0, 0.0, 50.0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(
+                      0.0, 50.0, 0.0, 50.0),
                   child: FFButtonWidget(
                     onPressed: () {
-                      print('Button pressed ...');
+                      // Add functionality to try reconnecting or checking connectivity status
                     },
                     text: 'Try Again',
                     options: FFButtonOptions(
                       width: 150.0,
                       height: 50.0,
-                      padding:
-                          const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                      iconPadding:
-                          const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                      padding: const EdgeInsetsDirectional.fromSTEB(
+                          0.0, 0.0, 0.0, 0.0),
+                      iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                          0.0, 0.0, 0.0, 0.0),
                       color: FlutterFlowTheme.of(context).primary,
                       textStyle:
                           FlutterFlowTheme.of(context).titleSmall.override(

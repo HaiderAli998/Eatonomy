@@ -67,23 +67,6 @@ class _RestaurantMenuWidgetState extends State<RestaurantMenuWidget>
               Row(
                 mainAxisSize: MainAxisSize.max,
                 children: [
-                  // Consumer<FavRestaurantProvider>(
-                  //   builder: (BuildContext context, value, Widget? child){
-                  //     return IconButton(
-                  //       icon: Icon(
-                  //         value.selectedItems.contains('')
-                  //             ? Icons.favorite
-                  //             : Icons.favorite_border_outlined,
-                  //         color: Colors.white,
-                  //         size: 24.0,
-                  //       ),
-                  //       onPressed: () {
-                  //
-                  //
-                  //       },
-                  //     );
-                  //   },
-                  // ),
                   PersistentShoppingCart().showCartItemCountWidget(
                       cartItemCountWidgetBuilder: (itemCount) => IconButton(
                           onPressed: () {

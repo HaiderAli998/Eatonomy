@@ -140,7 +140,7 @@ class _LoginScreenState extends State<LoginScreen> {
               children: [
                 Center(
                   child: SvgPicture.asset(
-                    'assets/app_logo_org.svg',
+                    'assets/icons/app_logo_org.svg',
                     height: 79,
                     width: 79,
                   ),

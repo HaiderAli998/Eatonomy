@@ -185,7 +185,7 @@ class _DishCardState extends State<DishCard> {
                 ),
           ),
           Text(
-            "\$${widget.price}",
+            "\PKR ${widget.price}",
             style: const TextStyle(
                 color: ColorsApp.splashBackgroundColorApp,
                 fontWeight: FontWeight.bold),

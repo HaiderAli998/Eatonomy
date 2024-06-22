@@ -3,6 +3,8 @@ import 'package:eatonomy_food_recommender_app/res/route_observer.dart';
 import 'package:eatonomy_food_recommender_app/utils/routes/routes.dart';
 import 'package:eatonomy_food_recommender_app/utils/routes/routes_name.dart';
 import 'package:eatonomy_food_recommender_app/view/cart/persistent_shopping_cart.dart';
+import 'package:eatonomy_food_recommender_app/view/no_internet/connectivity_provider.dart';
+import 'package:eatonomy_food_recommender_app/view/no_internet/no_internet_widget.dart';
 import 'package:eatonomy_food_recommender_app/view/provider/fav_dish_provider.dart';
 import 'package:eatonomy_food_recommender_app/view/provider/fav_restaurant_provider.dart';
 import 'package:eatonomy_food_recommender_app/view/provider/recommended_category_provider.dart';
@@ -28,7 +30,6 @@ void main() async {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -36,19 +37,36 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => FavRestaurantProvider()),
         ChangeNotifierProvider(create: (_) => DishProvider()),
         ChangeNotifierProvider(create: (_) => RecommendedCategoryProvider()),
-        ChangeNotifierProvider(create: (_) => SavedAddressProvider())
+        ChangeNotifierProvider(create: (_) => SavedAddressProvider()),
+        ChangeNotifierProvider(create: (_) => ConnectivityProvider()),
       ],
-      child: MaterialApp(
-        navigatorObservers: [routeObserver],
-        title: 'Flutter Demo',
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-            useMaterial3: true,
-            colorScheme:
-                ColorScheme.fromSeed(seedColor: ColorsApp.backgroundColorApp)
-                    .copyWith(background: ColorsApp.backgroundColorApp)),
-        initialRoute: RoutesName.splash,
-        onGenerateRoute: Routes.generateRoute,
+      child: Consumer<ConnectivityProvider>(
+        builder: (context, connectivityProvider, child) {
+          return Directionality(
+            textDirection: TextDirection.ltr, // Specify the text direction
+            child: Stack(
+              children: [
+                MaterialApp(
+                  navigatorObservers: [routeObserver],
+                  title: 'Flutter Demo',
+                  debugShowCheckedModeBanner: false,
+                  theme: ThemeData(
+                    useMaterial3: true,
+                    colorScheme: ColorScheme.fromSeed(
+                      seedColor: ColorsApp.backgroundColorApp,
+                    ).copyWith(background: ColorsApp.backgroundColorApp),
+                  ),
+                  initialRoute: RoutesName.splash,
+                  onGenerateRoute: Routes.generateRoute,
+                ),
+                if (!connectivityProvider!.isConnected)
+                  const Positioned.fill(
+                    child: NoInternetWidget(),
+                  ),
+              ],
+            ),
+          );
+        },
       ),
     );
   }

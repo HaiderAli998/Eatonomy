@@ -95,7 +95,7 @@ class PersistentShoppingCart {
   /// Displays the list of cart items using the provided widgets.
   Widget showCartItems({
     required Widget Function({required PersistentShoppingCartItem data})
-    cartTileWidget,
+        cartTileWidget,
     required Widget showEmptyCartMsgWidget,
   }) {
     return ListCartItems(
@@ -119,7 +119,7 @@ class PersistentShoppingCart {
   /// Displays the total amount in the cart using the provided widget builder.
   Widget showTotalAmountWidget(
       {required Widget Function(double totalAmount)
-      cartTotalAmountWidgetBuilder}) {
+          cartTotalAmountWidgetBuilder}) {
     return ValueListenableBuilder<Box<PersistentShoppingCartItem>>(
       valueListenable: CartController().cartListenable,
       builder: (context, box, child) {
@@ -139,7 +139,7 @@ class PersistentShoppingCart {
       valueListenable: CartController().cartListenable,
       builder: (context, box, child) {
         bool existsInCart =
-        CartController().isItemExistsInCart(product.productId);
+            CartController().isItemExistsInCart(product.productId);
 
         return IconButton(
           onPressed: () async {
