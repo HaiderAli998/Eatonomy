@@ -42,43 +42,37 @@ class _LoginWithPhoneNumberState extends State<LoginWithPhoneNumber> {
             SizedBox(
               height: height * 0.080,
             ),
-            CustomButton(
-              'Login',
-              loading: loading,
-              () {
-                setState(() {
-                  loading = true;
-                });
-                auth.verifyPhoneNumber(
-                    phoneNumber: phoneNumberController.text,
-                    verificationCompleted: (_) {
-                      setState(() {
-                        loading = false;
-                      });
-                    },
-                    verificationFailed: (e) {
-                      Utils.toastMessage(e.toString());
-                    },
-                    codeSent: (String verificationID, int? Token) {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => VerifyCodeScreen(
-                                  verificationID: verificationID)));
-                      setState(() {
-                        loading = false;
-                      });
-                    },
-                    codeAutoRetrievalTimeout: (e) {
-                      Utils.toastMessage(e.toString());
-                      setState(() {
-                        loading = false;
-                      });
+            CustomButton('Login', loading: loading, () {
+              setState(() {
+                loading = true;
+              });
+              auth.verifyPhoneNumber(
+                  phoneNumber: phoneNumberController.text,
+                  verificationCompleted: (_) {
+                    setState(() {
+                      loading = false;
                     });
-              },
-              ColorsApp.splashBackgroundColorApp,
-              isEnabled: true,
-            )
+                  },
+                  verificationFailed: (e) {
+                    Utils.toastMessage(e.toString());
+                  },
+                  codeSent: (String verificationID, int? Token) {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => VerifyCodeScreen(
+                                verificationID: verificationID)));
+                    setState(() {
+                      loading = false;
+                    });
+                  },
+                  codeAutoRetrievalTimeout: (e) {
+                    Utils.toastMessage(e.toString());
+                    setState(() {
+                      loading = false;
+                    });
+                  });
+            }, ColorsApp.splashBackgroundColorApp, isEnabled: true,)
           ],
         ),
       ),
