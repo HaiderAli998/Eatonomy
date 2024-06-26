@@ -3,6 +3,7 @@ import 'package:eatonomy_food_recommender_app/view/orders/order_component.dart';
 import 'package:eatonomy_food_recommender_app/view/orders/recent_order_provider.dart';
 import 'package:provider/provider.dart';
 import '../../utils/routes/routes_name.dart';
+import '../../utils/shared_pref_service.dart';
 import '../cart/persistent_shopping_cart.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -26,6 +27,11 @@ class _OrdersWidgetState extends State<OrdersWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => OrdersModel());
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      final SharedPreferencesService prefsService = SharedPreferencesService();
+      var v = await prefsService.getObjectList("key");
+      Provider.of<CartProvider>(context,listen:false).setCartItems(v);
+    });
   }
 
   @override

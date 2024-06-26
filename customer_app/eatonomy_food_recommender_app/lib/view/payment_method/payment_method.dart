@@ -5,6 +5,7 @@ import 'package:persistent_shopping_cart/controller/cart_controller.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../res/components/Colors/colors_app.dart';
 import '../../res/components/Custom_Containers/Custom_button.dart';
+import '../../utils/shared_pref_service.dart';
 import '../orders/recent_order_provider.dart';
 import 'alert_dialog.dart';
 
@@ -212,10 +213,12 @@ class _PaymentMethodState extends State<PaymentMethod> {
               padding: const EdgeInsets.all(8.0),
               child: CustomButton(
                 "Proceed to Payment",
-                () {
+                () async {
                   if (isPayOnArrivalSelected) {
                     List<PersistentShoppingCartItem> cartItems =
                         CartController().getCartItems();
+                    final SharedPreferencesService prefsService = SharedPreferencesService();
+                    await prefsService.storeObjectList("key", cartItems);
                     cartProvider.setCartItems(cartItems);
                     showDialog(
                         context: context,
