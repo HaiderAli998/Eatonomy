@@ -19,6 +19,7 @@ class ProductDetailsWidget extends StatefulWidget {
   final double rating;
   final int numberOfReviews;
   final String description;
+  final String calories;
   final Widget shoppingCartWidget;
 
   const ProductDetailsWidget(
@@ -31,8 +32,10 @@ class ProductDetailsWidget extends StatefulWidget {
       required this.deliveryTime,
       required this.description,
       required this.imageurl,
+      required this.calories,
       required this.productID,
-      required this.shoppingCartWidget, required this.restaurantID});
+      required this.shoppingCartWidget,
+      required this.restaurantID});
 
   @override
   State<ProductDetailsWidget> createState() => _ProductDetailsWidgetState();
@@ -340,6 +343,26 @@ class _ProductDetailsWidgetState extends State<ProductDetailsWidget> {
                     Column(
                       mainAxisSize: MainAxisSize.max,
                       children: [
+                        Row(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  20.0, 20.0, 0.0, 0.0),
+                              child: Text(
+                                'Calories ${widget.calories}Kcal',
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .override(
+                                  fontFamily: 'Readex Pro',
+                                  color: const Color(0xFF5C5F65),
+                                  fontSize: 16.0,
+                                  letterSpacing: 0.0,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                         Row(
                           mainAxisSize: MainAxisSize.max,
                           children: [

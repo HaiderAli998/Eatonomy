@@ -53,9 +53,6 @@ class Routes {
       case RoutesName.allRestaurants:
         return MaterialPageRoute(
             builder: (BuildContext context) => const AllRestaurants());
-      case RoutesName.addressScreen:
-        return MaterialPageRoute(
-            builder: (BuildContext context) => const DeliveryAddress());
       default:
         return MaterialPageRoute(builder: (_) {
           return const Scaffold(

@@ -8,26 +8,26 @@ class MyDrawerList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView(
-      children: const <Widget>[
+      children:  <Widget>[
         DrawerListItem(
           icon: Icons.category,
-          title: "Category",
+          title: "Category", onTap: () {  },
         ),
         DrawerListItem(
           icon: Icons.shopping_cart_rounded,
-          title: "My Cart",
+          title: "My Cart", onTap: () {  },
         ),
         DrawerListItem(
           icon: Icons.add_location,
-          title: "Delivery Address",
+          title: "Delivery Address", onTap: () {  },
         ),
         DrawerListItem(
           icon: Icons.payment,
-          title: "Payment Methods",
+          title: "Payment Methods", onTap: () {  },
         ),
         DrawerListItem(
           icon: Icons.help_outline_rounded,
-          title: "Help",
+          title: "Help", onTap: () {  },
         ),
       ],
     );

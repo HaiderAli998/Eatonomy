@@ -37,55 +37,53 @@ class _NavBarPageState extends State<NavBarPage> {
     };
     final currentIndex = tabs.keys.toList().indexOf(_currentPageName);
 
-    return SafeArea(
-      child: Scaffold(
-        body: _currentPage ?? tabs[_currentPageName],
-        bottomNavigationBar: BottomNavigationBar(
-          currentIndex: currentIndex,
-          onTap: (i) => setState(() {
-            _currentPage = null;
-            _currentPageName = tabs.keys.toList()[i];
-          }),
-          backgroundColor: Colors.white,
-          selectedItemColor: FlutterFlowTheme.of(context).primary,
-          unselectedItemColor: const Color(0x8A000000),
-          showSelectedLabels: false,
-          showUnselectedLabels: false,
-          type: BottomNavigationBarType.fixed,
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(
-                FFIcons.khome,
-              ),
-              label: 'Home',
-              tooltip: '',
+    return Scaffold(
+      body: _currentPage ?? tabs[_currentPageName],
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: currentIndex,
+        onTap: (i) => setState(() {
+          _currentPage = null;
+          _currentPageName = tabs.keys.toList()[i];
+        }),
+        backgroundColor: Colors.white,
+        selectedItemColor: FlutterFlowTheme.of(context).primary,
+        unselectedItemColor: const Color(0x8A000000),
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
+        type: BottomNavigationBarType.fixed,
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(
+              FFIcons.khome,
             ),
-            BottomNavigationBarItem(
-              icon: Icon(
-                FFIcons.kclipboard,
-                size: 24.0,
-              ),
-              label: 'Orders',
-              tooltip: '',
+            label: 'Home',
+            tooltip: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              FFIcons.kclipboard,
+              size: 24.0,
             ),
-            BottomNavigationBarItem(
-              icon: Icon(
-                FFIcons.kheart,
-                size: 24.0,
-              ),
-              label: 'Favourite',
-              tooltip: '',
+            label: 'Orders',
+            tooltip: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              FFIcons.kheart,
+              size: 24.0,
             ),
-            BottomNavigationBarItem(
-              icon: Icon(
-                Icons.person,
-                size: 24.0,
-              ),
-              label: 'Profile',
-              tooltip: '',
-            )
-          ],
-        ),
+            label: 'Favourite',
+            tooltip: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.person,
+              size: 24.0,
+            ),
+            label: 'Profile',
+            tooltip: '',
+          )
+        ],
       ),
     );
   }

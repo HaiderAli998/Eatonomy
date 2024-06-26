@@ -1,7 +1,9 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:eatonomy_food_recommender_app/view/drawer/Drawer.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
 
+import '../address/delivery_address.dart';
 import '../provider/fav_dish_provider.dart';
 import '../provider/fav_restaurant_provider.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -50,9 +52,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-        drawer: const Drawer(
-          elevation: 16.0,
-        ),
+        drawer: MyDrawer(),
         appBar: AppBar(
           backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
           iconTheme:
@@ -116,7 +116,14 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                 ProfileListItem(
                   iconData: Icons.location_on,
                   title: 'Address',
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => DeliveryAddress(ButtonVisibility: false),
+                      ),
+                    );
+                  },
                 ),
                 ProfileListItem(
                   iconData: Icons.notifications_none,

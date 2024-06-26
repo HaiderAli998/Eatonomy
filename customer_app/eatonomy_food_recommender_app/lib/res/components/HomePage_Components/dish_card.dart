@@ -141,6 +141,7 @@ class _DishCardState extends State<DishCard> {
                     isLiked: isLiked,
                     description: '',
                     deliveryTime: '',
+                    calories: '',
                   ));
                 }
               },
@@ -185,7 +186,7 @@ class _DishCardState extends State<DishCard> {
                 ),
           ),
           Text(
-            "\PKR ${widget.price}",
+            "PKR ${widget.price}",
             style: const TextStyle(
                 color: ColorsApp.splashBackgroundColorApp,
                 fontWeight: FontWeight.bold),

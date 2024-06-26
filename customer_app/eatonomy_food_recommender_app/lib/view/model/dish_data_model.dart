@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart'; // For VoidCallback
 class DishModel {
   final String imageUrl;
   final String productName;
+  final String calories;
   final int price;
   final int restaurantID;
   final int dishID;
@@ -18,6 +19,7 @@ class DishModel {
       {required this.imageUrl,
       required this.productName,
       required this.price,
+      required this.calories,
       required this.isDeliveryFree,
       required this.isLiked,
       required this.rating,
@@ -40,6 +42,7 @@ class DishModel {
         'numberOfReviews': numberOfReviews,
         'description': description,
         'deliveryTime': deliveryTime,
+        'calories': calories
       };
 
   static DishModel fromJson(Map<String, dynamic> json, VoidCallback onTap) =>
@@ -56,5 +59,6 @@ class DishModel {
         description: json['description'],
         deliveryTime: json['deliveryTime'],
         onTap: onTap,
+        calories: json['calories'],
       );
 }

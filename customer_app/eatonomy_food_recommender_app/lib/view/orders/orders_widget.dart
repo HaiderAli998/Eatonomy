@@ -1,3 +1,9 @@
+import 'package:eatonomy_food_recommender_app/view/drawer/Drawer.dart';
+import 'package:eatonomy_food_recommender_app/view/orders/order_component.dart';
+import 'package:eatonomy_food_recommender_app/view/orders/recent_order_provider.dart';
+import 'package:provider/provider.dart';
+import '../../utils/routes/routes_name.dart';
+import '../cart/persistent_shopping_cart.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
@@ -25,12 +31,12 @@ class _OrdersWidgetState extends State<OrdersWidget> {
   @override
   void dispose() {
     _model.dispose();
-
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    final cartProvider = Provider.of<CartProvider>(context);
     return GestureDetector(
       onTap: () => _model.unfocusNode.canRequestFocus
           ? FocusScope.of(context).requestFocus(_model.unfocusNode)
@@ -38,6 +44,7 @@ class _OrdersWidgetState extends State<OrdersWidget> {
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+        drawer: MyDrawer(),
         body: NestedScrollView(
           floatHeaderSlivers: true,
           headerSliverBuilder: (context, _) => [
@@ -48,12 +55,47 @@ class _OrdersWidgetState extends State<OrdersWidget> {
               iconTheme: IconThemeData(
                   color: FlutterFlowTheme.of(context).secondaryText),
               automaticallyImplyLeading: true,
-              actions: const [],
+              actions: [
+                PersistentShoppingCart().showCartItemCountWidget(
+                    cartItemCountWidgetBuilder: (itemCount) => IconButton(
+                          onPressed: () {
+                            Navigator.pushNamed(context, RoutesName.cartScreen);
+                          },
+                          icon: Badge(
+                            label: Text(itemCount.toString()),
+                            child: const Icon(Icons.shopping_bag_outlined),
+                          ),
+                        ))
+              ],
+              leading: IconButton(
+                icon: const Icon(Icons.menu),
+                onPressed: () {
+                  scaffoldKey.currentState?.openDrawer();
+                },
+              ),
               centerTitle: true,
               elevation: 0.0,
+              title: Text(
+                'Orders',
+                style: FlutterFlowTheme.of(context).headlineMedium.override(
+                    fontFamily: 'Outfit',
+                    color: Colors.black,
+                    fontSize: 22.0,
+                    fontWeight: FontWeight.bold),
+              ),
             )
           ],
-          body: Container(),
+          body: ListView.builder(
+            itemCount: cartProvider.cartItems.length,
+            itemBuilder: (context, index) {
+              final item = cartProvider.cartItems[index];
+              return OrderComponent(
+                dishName: item.productName,
+                productID: item.quantity.toString(),
+                price: item.unitPrice,
+              );
+            },
+          ),
         ),
       ),
     );

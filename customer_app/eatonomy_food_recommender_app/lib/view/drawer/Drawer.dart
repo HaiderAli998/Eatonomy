@@ -1,11 +1,11 @@
 import 'package:eatonomy_food_recommender_app/res/components/Shared_Preferences/Shared_Preferences.dart';
 import 'package:eatonomy_food_recommender_app/res/components/Colors/colors_app.dart';
 import 'package:eatonomy_food_recommender_app/utils/routes/routes_name.dart';
+import 'package:eatonomy_food_recommender_app/view/address/delivery_address.dart';
 import 'package:eatonomy_food_recommender_app/view/provider/fav_dish_provider.dart';
 import 'package:eatonomy_food_recommender_app/view/provider/fav_restaurant_provider.dart';
 import 'package:eatonomy_food_recommender_app/view/provider/saved_address_provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
@@ -95,33 +95,42 @@ class MyDrawer extends StatelessWidget {
             },
           ),
           GestureDetector(
-              child: const DrawerListItem(
+              child: DrawerListItem(
                 icon: Icons.category,
                 title: "Preferences",
+                onTap: () {},
               ),
               onTap: () {
                 Navigator.pushNamed(context, RoutesName.foodPreferences);
               }),
           GestureDetector(
-            child: const DrawerListItem(
+            child: DrawerListItem(
               icon: Icons.shopping_cart_rounded,
               title: "My Cart",
+              onTap: () {},
             ),
             onTap: () {
               Navigator.pushNamed(context, RoutesName.cartScreen);
             },
           ),
-          const DrawerListItem(
+          DrawerListItem(
             icon: Icons.add_location,
             title: "Delivery Address",
+            onTap: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) =>
+                      DeliveryAddress(ButtonVisibility: false)));
+            },
           ),
-          const DrawerListItem(
+          DrawerListItem(
             icon: Icons.payment,
             title: "Payment Methods",
+            onTap: () {},
           ),
-          const DrawerListItem(
+          DrawerListItem(
             icon: Icons.help_outline_rounded,
             title: "Help",
+            onTap: () {},
           ),
           SizedBox(
             height: height * 0.25,

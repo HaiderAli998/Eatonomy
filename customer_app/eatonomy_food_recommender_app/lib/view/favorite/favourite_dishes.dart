@@ -18,7 +18,7 @@ class FavDishes extends StatefulWidget {
 class _FavDishesState extends State<FavDishes> {
   @override
   Widget build(BuildContext context) {
-    final dishProvider = Provider.of<DishProvider>(context,listen: true);
+    final dishProvider = Provider.of<DishProvider>(context, listen: true);
     return SafeArea(
       child: Scaffold(
         body: ListView.builder(
@@ -98,7 +98,8 @@ class _FavDishesState extends State<FavDishes> {
                                               ),
                                               product:
                                                   PersistentShoppingCartItem(
-                                                      productId: dish.dishID.toString(),
+                                                      productId: dish.dishID
+                                                          .toString(),
                                                       productName:
                                                           dish.productName,
                                                       productThumbnail:
@@ -108,6 +109,7 @@ class _FavDishesState extends State<FavDishes> {
                                                               .toString()),
                                                       quantity: 1)),
                                     ),
+                                    calories: dish.calories,
                                   )));
                     }),
               );

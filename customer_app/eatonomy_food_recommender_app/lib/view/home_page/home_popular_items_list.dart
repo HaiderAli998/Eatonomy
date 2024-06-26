@@ -112,7 +112,7 @@ class HomePopularItems extends StatelessWidget {
                                                           categoryData['price']
                                                               .toString()),
                                                       quantity: 1)),
-                                    ),
+                                    ), calories: categoryData['calories'],
                                   )));
                     },
                     imageUrl: categoryData['imageurl'],
