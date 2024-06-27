@@ -30,7 +30,14 @@ class _OrdersWidgetState extends State<OrdersWidget> {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       final SharedPreferencesService prefsService = SharedPreferencesService();
       var v = await prefsService.getObjectList("key");
-      Provider.of<CartProvider>(context,listen:false).setCartItems(v);
+
+      // Clear existing items to prevent duplication
+      Provider.of<CartProvider>(context, listen: false).clearCartItems();
+
+      // Ensure the data is not null
+      if (v.isNotEmpty) {
+        Provider.of<CartProvider>(context, listen: false).setCartItems(v);
+      }
     });
   }
 

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:persistent_shopping_cart/model/cart_model.dart';
 
@@ -10,6 +8,11 @@ class CartProvider extends ChangeNotifier {
 
   void setCartItems(List<PersistentShoppingCartItem> items) {
     _cartItems = items;
+    notifyListeners();
+  }
+
+  void clearCartItems() {
+    _cartItems.clear();
     notifyListeners();
   }
 }

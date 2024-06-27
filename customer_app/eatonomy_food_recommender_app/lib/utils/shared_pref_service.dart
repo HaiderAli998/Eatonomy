@@ -17,11 +17,16 @@ class SharedPreferencesService {
     final List<String> jsonList = list.map((item) => jsonEncode(item.toJson())).toList();
     await prefs.setStringList(key, jsonList);
   }
-
+  //
+  // Future<List<PersistentShoppingCartItem>> getObjectList(String key) async {
+  //   final SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   final List<String> jsonList = prefs.getStringList(key) ?? [];
+  //   return jsonList.map((item) => persistentShoppingCartItemFromJson(jsonDecode(item))).toList();
+  // }
   Future<List<PersistentShoppingCartItem>> getObjectList(String key) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final List<String> jsonList = prefs.getStringList(key) ?? [];
-    return jsonList.map((item) => persistentShoppingCartItemFromJson(jsonDecode(item))).toList();
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  final List<String> jsonList = prefs.getStringList(key) ?? [];
+  return jsonList.map((item) => persistentShoppingCartItemFromJson(jsonDecode(item))).toList();
   }
 }
 
