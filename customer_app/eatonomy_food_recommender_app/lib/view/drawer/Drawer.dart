@@ -98,7 +98,9 @@ class MyDrawer extends StatelessWidget {
               child: DrawerListItem(
                 icon: Icons.category,
                 title: "Preferences",
-                onTap: () {},
+                onTap: () {
+                  Navigator.pushNamed(context, RoutesName.foodPreferences);
+                },
               ),
               onTap: () {
                 Navigator.pushNamed(context, RoutesName.foodPreferences);
@@ -107,7 +109,9 @@ class MyDrawer extends StatelessWidget {
             child: DrawerListItem(
               icon: Icons.shopping_cart_rounded,
               title: "My Cart",
-              onTap: () {},
+              onTap: () {
+                Navigator.pushNamed(context, RoutesName.cartScreen);
+              },
             ),
             onTap: () {
               Navigator.pushNamed(context, RoutesName.cartScreen);

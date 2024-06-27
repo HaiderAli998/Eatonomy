@@ -27,11 +27,13 @@ class RecommendedListView extends StatelessWidget {
             } else if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
               return const Center(child: Text('No Data Available'));
             } else {
-              var recommendedCategories = provider.recommendedCategories;
-              var filteredRestaurants = snapshot.data!.docs.where((doc) {
-                var restaurantCategories = List<String>.from(doc['Categories']);
-                return restaurantCategories.any(
-                    (category) => recommendedCategories.contains(category));
+              var userPreferences = provider.recommendedCategories;
+              var allRestaurants = snapshot.data!.docs;
+              var recommendedRestaurantIds = getAIRecommendedRestaurantIds(
+                  userPreferences, allRestaurants);
+
+              var filteredRestaurants = allRestaurants.where((doc) {
+                return recommendedRestaurantIds.contains(doc.id);
               }).toList();
 
               if (filteredRestaurants.isEmpty) {
@@ -89,4 +91,22 @@ class RecommendedListView extends StatelessWidget {
       },
     );
   }
+}
+
+// Mock AI Recommendation Service
+List<String> getAIRecommendedRestaurantIds(
+    List<String> userPreferences, List<DocumentSnapshot> allRestaurants) {
+  // This function returns restaurant IDs that match all user preferences.
+
+  List<String> recommendedRestaurantIds = [];
+
+  for (var restaurant in allRestaurants) {
+    var restaurantCategories = List<String>.from(restaurant['Categories']);
+    if (userPreferences
+        .every((preference) => restaurantCategories.contains(preference))) {
+      recommendedRestaurantIds.add(restaurant.id);
+    }
+  }
+
+  return recommendedRestaurantIds;
 }
