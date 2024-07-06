@@ -1,3 +1,4 @@
+import 'package:eatonomy_food_recommender_app/view/address/delivery_address.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../res/route_observer.dart';
 import '../../utils/routes/routes_name.dart';
@@ -289,8 +290,6 @@ class _EditProfileWidgetState extends State<EditProfileWidget> with RouteAware {
                         final prefs = await SharedPreferences.getInstance();
                         prefs.setString('Name', _username);
                         prefs.setString('Phone', _phoneNumber);
-                        Navigator.pushNamedAndRemoveUntil(context,
-                            RoutesName.navBarScreen, (Route route) => false);
                         // Pass the updated name as result
                       },
                       text: 'Update',
