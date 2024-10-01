@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 
+
 class ConnectivityProvider with ChangeNotifier {
   bool _isConnected = true;
 
@@ -13,9 +14,10 @@ class ConnectivityProvider with ChangeNotifier {
     });
   }
 
+
   Future<void> _checkConnectivity() async {
     final result = await Connectivity().checkConnectivity();
-    _updateConnectionStatus(result);
+    _updateConnectionStatus(result as ConnectivityResult);
   }
 
   void _updateConnectionStatus(ConnectivityResult result) {

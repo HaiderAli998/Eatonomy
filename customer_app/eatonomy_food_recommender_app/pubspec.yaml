@@ -41,14 +41,14 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   firebase_core: ^3.0.0
-  connectivity_plus: ^2.0.3
+  connectivity_plus: ^4.0.0
   firebase_auth: ^5.0.0
   cloud_firestore: ^5.0.0
   firebase_database: ^11.0.0
   google_sign_in: ^6.2.1
   flutter_facebook_auth: ^7.0.0
   shared_preferences: ^2.2.2
-  geolocator: ^12.0.0
+  geolocator: ^13.0.1
   geocoding: ^3.0.0
   permission_handler: ^11.3.0
   firebase_storage: ^12.0.0
@@ -78,7 +78,7 @@ dependencies:
   shared_preferences_foundation: ^2.3.5
   shared_preferences_platform_interface: ^2.3.2
   shared_preferences_web: ^2.3.0
-  smooth_page_indicator: 1.1.0
+  smooth_page_indicator: ^1.2.0+3
   sqflite: ^2.3.2
   timeago: ^3.6.1
   url_launcher: ^6.2.5
@@ -92,7 +92,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_launcher_icons: "^0.13.1"
+  flutter_launcher_icons: ^0.14.1
 
 
 flutter_launcher_icons:
